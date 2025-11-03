@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILLPACK AUTOMATION LLP - Service Report</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #000;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .company {
+            font-weight: bold;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .title {
+            font-size: 19px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 22px;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        td {
+            padding: 6px 0;
+            vertical-align: top;
+        }
+        .label {
+            font-weight: bold;
+            width: 38%;
+            white-space: nowrap;
+            padding-right: 15px;
+        }
+        .input-full {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+            padding: 3px 0;
+            font-family: inherit;
+        }
+        .input-short {
+            width: 180px;
+            border: none;
+            border-bottom: 1px solid #000;
+            font-size: 14px;
+            padding: 3px 0;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+        }
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            transform: scale(1.3);
+        }
+        .radio-inline {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 12px 0;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+        }
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 12px;
+        }
+        .feedback-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            page-break-inside: avoid;
+        }
+        .signature-block {
+            width: 48%;
+            text-align: center;
+        }
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 50px;
+            padding-top: 8px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .print-btn:hover {
+            background: #0d47a1;
+        }
+        .date-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 40px;
+            margin-bottom: 15px;
+        }
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .container {
+                border: none;
+                box-shadow: none;
+                padding: 20px;
+            }
+            .print-btn {
+                display: none !important;
+            }
+            .input-full, .input-short {
+                border-bottom: 1px solid #000 !important;
+                background: transparent !important;
+            }
+            @page {
+                margin: 0.5cm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="container">
+    <div class="header">
+        <div class="company">WILLPACK AUTOMATION LLP</div>
+        <div class="title">Service Report</div>
+    </div>
+
+    <!-- A, B, C, D, E - Left Aligned with Empty Boxes -->
+    <table style="margin-bottom: 20px;">
+        <tr>
+            <td class="label">A. Service FOC / Chargeable:</td>
+            <td><input type="text" class="input-full" placeholder="FOC / Chargeable"></td>
+        </tr>
+        <tr>
+            <td class="label">B. Machine I & C:</td>
+            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
+        </tr>
+        <tr>
+            <td class="label">C. Warranty:</td>
+            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
+        </tr>
+        <tr>
+            <td class="label">D. Spare I & C FOC / Chargeable:</td>
+            <td><input type="text" class="input-full" placeholder="FOC / Chargeable"></td>
+        </tr>
+        <tr>
+            <td class="label">E. Courtesy Visit:</td>
+            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
+        </tr>
+        <tr>
+            <td class="label">F. Others:</td>
+            <td><input type="text" class="input-full"></td>
+        </tr>
+    </table>
+
+    <!-- Start & End Date on Right Side -->
+    <div class="date-row">
+        <div class="date-item">
+            <span>Start of Service Date:</span>
+            <input type="text" class="input-short" placeholder="DD/MM/YYYY">
+        </div>
+        <div class="date-item">
+            <span>End of Service Date:</span>
+            <input type="text" class="input-short" placeholder="DD/MM/YYYY">
+        </div>
+    </div>
+
+    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+
+    <!-- Customer Details -->
+    <div class="section">
+        <div class="section-title">Customer Details</div>
+        <label class="label">Customer Name:</label><br>
+        <input type="text" class="input-full" style="margin: 8px 0;"><br>
+        <label class="label">Address:</label><br>
+        <textarea class="input-full" rows="4" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin: 8px 0;"></textarea>
+        <table style="margin-top: 10px;">
+            <tr>
+                <td class="label">Pin Code:</td>
+                <td><input type="text" class="input-short"></td>
+            </tr>
+        </table>
+    </div>
+
+    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+
+    <!-- Nature of Problem -->
+    <div class="section">
+        <div class="section-title">Nature of Problem</div>
+        <label class="label">Problem Reported:</label><br>
+        <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
+        <table>
+            <tr>
+                <td class="label">System Down?</td>
+                <td><input type="text" class="input-full" placeholder="Yes / No"></td>
+                <td class="label">Machine Type:</td>
+                <td><input type="text" class="input-short"></td>
+            </tr>
+            <tr>
+                <td class="label">Call Reported By:</td>
+                <td><input type="text" class="input-short"></td>
+                <td class="label">Make:</td>
+                <td><input type="text" class="input-short"></td>
+            </tr>
+            <tr>
+                <td class="label">Contact:</td>
+                <td><input type="text" class="input-short"></td>
+                <td class="label">Serial No.:</td>
+                <td><input type="text" class="input-short"></td>
+            </tr>
+        </table>
+    </div>
+
+    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+
+    <!-- Service Details -->
+    <div class="section">
+        <div class="section-title">Service Details</div>
+        <textarea class="input-full" rows="6" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
+        <label class="label">Remarks:</label><br>
+        <textarea class="input-full" rows="2" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
+        <label class="label">Status:</label>
+        <div class="status-grid">
+            <label class="status-item"><input type="radio" name="status" value="Complete"> Complete</label>
+            <label class="status-item"><input type="radio" name="status" value="Incomplete"> Incomplete</label>
+            <label class="status-item"><input type="radio" name="status" value="Pending"> Pending for spares</label>
+            <label class="status-item"><input type="radio" name="status" value="Observation"> Under observation</label>
+            <label class="status-item"><input type="radio" name="status" value="Working"> Working solution provided</label>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Defects Found on Inspection</div>
+        <textarea class="input-full" rows="4" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit;"></textarea>
+    </div>
+
+    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+
+    <!-- Customer Feedback -->
+    <div class="section">
+        <div class="section-title">Customer Feedback</div>
+        <label class="label">Remarks:</label><br>
+        <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 15px;"></textarea>
+        <strong>Please rate this call by choosing an option:</strong>
+        <div class="feedback-grid">
+            <label class="feedback-item"><input type="radio" name="rating" value="Extremely Satisfied"> Extremely Satisfied</label>
+            <label class="feedback-item"><input type="radio" name="rating" value="Satisfied"> Satisfied</label>
+            <label class="feedback-item"><input type="radio" name="rating" value="Dissatisfied"> Dissatisfied</label>
+            <label class="feedback-item"><input type="radio" name="rating" value="Annoyed"> Annoyed</label>
+        </div>
+    </div>
+
+    <table style="margin-top: 20px;">
+        <tr>
+            <td class="label">Name</td>
+            <td><input type="text" class="input-short"></td>
+            <td class="label">Designation</td>
+            <td><input type="text" class="input-short"></td>
+        </tr>
+        <tr>
+            <td class="label">Phone</td>
+            <td><input type="text" class="input-short"></td>
+            <td class="label">Email</td>
+            <td><input type="text" class="input-short"></td>
+        </tr>
+        <tr>
+            <td class="label">Place</td>
+            <td><input type="text" class="input-short"></td>
+            <td class="label">Date</td>
+            <td><input type="text" class="input-short" placeholder="DD/MM/YYYY"></td>
+        </tr>
+    </table>
+
+    <div class="signature-section">
+        <div class="signature-block">
+            <strong>For Customer,</strong>
+            <div class="signature-line">Authorized Signature</div>
+        </div>
+        <div class="signature-block">
+            <strong>For Willpack Automation,</strong>
+            <div class="signature-line">Service Engineer Signature</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
