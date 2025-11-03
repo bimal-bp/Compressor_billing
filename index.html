@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f9f9f9;
             color: #000;
-            padding: 20px;
+            padding: 15px;
             line-height: 1.6;
         }
         .container {
@@ -22,25 +22,25 @@
             margin: auto;
             background: #fff;
             border: 2px solid #000;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         .company {
             font-weight: bold;
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 5px;
         }
         .title {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: bold;
             text-decoration: underline;
         }
         .section {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
         .section-title {
             font-weight: bold;
@@ -59,39 +59,41 @@
         }
         .label {
             font-weight: bold;
-            width: 38%;
             white-space: nowrap;
-            padding-right: 15px;
+            padding-right: 10px;
         }
         .input-full {
             width: 100%;
             border: none;
             border-bottom: 1px solid #000;
-            font-size: 14px;
-            padding: 3px 0;
+            font-size: 16px; /* Larger for mobile */
+            padding: 8px 0;
             font-family: inherit;
         }
         .input-short {
-            width: 180px;
+            width: 100%;
             border: none;
             border-bottom: 1px solid #000;
-            font-size: 14px;
-            padding: 3px 0;
+            font-size: 16px; /* Larger for mobile */
+            padding: 8px 0;
         }
         .checkbox-group {
             display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
         }
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 7px;
-            font-size: 14px;
+            gap: 10px;
+            font-size: 16px;
         }
         .checkbox-item input[type="checkbox"],
         .checkbox-item input[type="radio"] {
-            transform: scale(1.3);
+            transform: scale(1.5); /* Larger for mobile */
+            min-width: 20px;
+            min-height: 20px;
         }
         .radio-inline {
             display: flex;
@@ -99,54 +101,55 @@
             align-items: center;
         }
         .status-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 12px;
             margin: 12px 0;
         }
         .status-item {
             display: flex;
             align-items: center;
-            gap: 7px;
-            font-size: 14px;
+            gap: 10px;
+            font-size: 16px;
         }
         .feedback-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-top: 12px;
         }
         .feedback-item {
             display: flex;
             align-items: center;
-            gap: 7px;
-            font-size: 14px;
+            gap: 10px;
+            font-size: 16px;
         }
         .signature-section {
             display: flex;
-            justify-content: space-between;
-            margin-top: 60px;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
             page-break-inside: avoid;
         }
         .signature-block {
-            width: 48%;
+            width: 100%;
             text-align: center;
         }
         .signature-line {
             border-top: 1px solid #000;
-            margin-top: 50px;
+            margin-top: 40px;
             padding-top: 8px;
             font-size: 14px;
             min-height: 20px;
         }
         .print-btn {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
             background: #1a73e8;
             color: white;
             border: none;
-            padding: 14px 24px;
+            padding: 12px 20px;
             font-size: 16px;
             font-weight: 500;
             border-radius: 8px;
@@ -159,15 +162,91 @@
         }
         .date-row {
             display: flex;
-            justify-content: flex-end;
-            gap: 40px;
+            flex-direction: column;
+            gap: 15px;
             margin-bottom: 15px;
         }
         .date-item {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 5px;
             font-weight: bold;
+        }
+        .mobile-table {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mobile-table-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .mobile-table-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            .container {
+                padding: 30px;
+            }
+            .company {
+                font-size: 22px;
+            }
+            .title {
+                font-size: 19px;
+            }
+            .checkbox-group {
+                flex-direction: row;
+                gap: 25px;
+            }
+            .status-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            .feedback-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .signature-section {
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 60px;
+            }
+            .signature-block {
+                width: 48%;
+            }
+            .signature-line {
+                margin-top: 50px;
+            }
+            .date-row {
+                flex-direction: row;
+                justify-content: flex-end;
+                gap: 40px;
+            }
+            .date-item {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+            }
+            .input-short {
+                width: 180px;
+            }
+            .mobile-table {
+                display: table;
+            }
+            .mobile-table-row {
+                display: table-row;
+                border-bottom: none;
+            }
         }
 
         /* Print Optimization */
@@ -206,35 +285,35 @@
         <div class="title">Service Report</div>
     </div>
 
-    <!-- A, B, C, D, E - Left Aligned with Empty Boxes -->
-    <table style="margin-bottom: 20px;">
-        <tr>
-            <td class="label">A. Service FOC / Chargeable:</td>
-            <td><input type="text" class="input-full" placeholder="FOC / Chargeable"></td>
-        </tr>
-        <tr>
-            <td class="label">B. Machine I & C:</td>
-            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
-        </tr>
-        <tr>
-            <td class="label">C. Warranty:</td>
-            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
-        </tr>
-        <tr>
-            <td class="label">D. Spare I & C FOC / Chargeable:</td>
-            <td><input type="text" class="input-full" placeholder="FOC / Chargeable"></td>
-        </tr>
-        <tr>
-            <td class="label">E. Courtesy Visit:</td>
-            <td><input type="text" class="input-full" placeholder="Yes / No"></td>
-        </tr>
-        <tr>
-            <td class="label">F. Others:</td>
-            <td><input type="text" class="input-full"></td>
-        </tr>
-    </table>
+    <!-- A, B, C, D, E - Mobile optimized -->
+    <div class="mobile-table">
+        <div class="mobile-table-row">
+            <div class="label">A. Service FOC / Chargeable:</div>
+            <input type="text" class="input-full" placeholder="FOC / Chargeable">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">B. Machine I & C:</div>
+            <input type="text" class="input-full" placeholder="Yes / No">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">C. Warranty:</div>
+            <input type="text" class="input-full" placeholder="Yes / No">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">D. Spare I & C FOC / Chargeable:</div>
+            <input type="text" class="input-full" placeholder="FOC / Chargeable">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">E. Courtesy Visit:</div>
+            <input type="text" class="input-full" placeholder="Yes / No">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">F. Others:</div>
+            <input type="text" class="input-full">
+        </div>
+    </div>
 
-    <!-- Start & End Date on Right Side -->
+    <!-- Start & End Date - Mobile optimized -->
     <div class="date-row">
         <div class="date-item">
             <span>Start of Service Date:</span>
@@ -248,57 +327,63 @@
 
     <hr style="border: 1px dashed #ccc; margin: 25px 0;">
 
-    <!-- Customer Details -->
+    <!-- Customer Details - Mobile optimized -->
     <div class="section">
         <div class="section-title">Customer Details</div>
-        <label class="label">Customer Name:</label><br>
-        <input type="text" class="input-full" style="margin: 8px 0;"><br>
-        <label class="label">Address:</label><br>
+        <label class="label">Customer Name:</label>
+        <input type="text" class="input-full" style="margin: 8px 0;">
+        <label class="label">Address:</label>
         <textarea class="input-full" rows="4" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin: 8px 0;"></textarea>
-        <table style="margin-top: 10px;">
-            <tr>
-                <td class="label">Pin Code:</td>
-                <td><input type="text" class="input-short"></td>
-            </tr>
-        </table>
+        <div class="mobile-table">
+            <div class="mobile-table-row">
+                <div class="label">Pin Code:</div>
+                <input type="text" class="input-full">
+            </div>
+        </div>
     </div>
 
     <hr style="border: 1px dashed #ccc; margin: 25px 0;">
 
-    <!-- Nature of Problem -->
+    <!-- Nature of Problem - Mobile optimized -->
     <div class="section">
         <div class="section-title">Nature of Problem</div>
-        <label class="label">Problem Reported:</label><br>
+        <label class="label">Problem Reported:</label>
         <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
-        <table>
-            <tr>
-                <td class="label">System Down?</td>
-                <td><input type="text" class="input-full" placeholder="Yes / No"></td>
-                <td class="label">Machine Type:</td>
-                <td><input type="text" class="input-short"></td>
-            </tr>
-            <tr>
-                <td class="label">Call Reported By:</td>
-                <td><input type="text" class="input-short"></td>
-                <td class="label">Make:</td>
-                <td><input type="text" class="input-short"></td>
-            </tr>
-            <tr>
-                <td class="label">Contact:</td>
-                <td><input type="text" class="input-short"></td>
-                <td class="label">Serial No.:</td>
-                <td><input type="text" class="input-short"></td>
-            </tr>
-        </table>
+        <div class="mobile-table">
+            <div class="mobile-table-row">
+                <div class="label">System Down?</div>
+                <input type="text" class="input-full" placeholder="Yes / No">
+            </div>
+            <div class="mobile-table-row">
+                <div class="label">Machine Type:</div>
+                <input type="text" class="input-full">
+            </div>
+            <div class="mobile-table-row">
+                <div class="label">Call Reported By:</div>
+                <input type="text" class="input-full">
+            </div>
+            <div class="mobile-table-row">
+                <div class="label">Make:</div>
+                <input type="text" class="input-full">
+            </div>
+            <div class="mobile-table-row">
+                <div class="label">Contact:</div>
+                <input type="text" class="input-full">
+            </div>
+            <div class="mobile-table-row">
+                <div class="label">Serial No.:</div>
+                <input type="text" class="input-full">
+            </div>
+        </div>
     </div>
 
     <hr style="border: 1px dashed #ccc; margin: 25px 0;">
 
-    <!-- Service Details -->
+    <!-- Service Details - Mobile optimized -->
     <div class="section">
         <div class="section-title">Service Details</div>
         <textarea class="input-full" rows="6" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
-        <label class="label">Remarks:</label><br>
+        <label class="label">Remarks:</label>
         <textarea class="input-full" rows="2" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
         <label class="label">Status:</label>
         <div class="status-grid">
@@ -317,10 +402,10 @@
 
     <hr style="border: 1px dashed #ccc; margin: 25px 0;">
 
-    <!-- Customer Feedback -->
+    <!-- Customer Feedback - Mobile optimized -->
     <div class="section">
         <div class="section-title">Customer Feedback</div>
-        <label class="label">Remarks:</label><br>
+        <label class="label">Remarks:</label>
         <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 15px;"></textarea>
         <strong>Please rate this call by choosing an option:</strong>
         <div class="feedback-grid">
@@ -331,26 +416,32 @@
         </div>
     </div>
 
-    <table style="margin-top: 20px;">
-        <tr>
-            <td class="label">Name</td>
-            <td><input type="text" class="input-short"></td>
-            <td class="label">Designation</td>
-            <td><input type="text" class="input-short"></td>
-        </tr>
-        <tr>
-            <td class="label">Phone</td>
-            <td><input type="text" class="input-short"></td>
-            <td class="label">Email</td>
-            <td><input type="text" class="input-short"></td>
-        </tr>
-        <tr>
-            <td class="label">Place</td>
-            <td><input type="text" class="input-short"></td>
-            <td class="label">Date</td>
-            <td><input type="text" class="input-short" placeholder="DD/MM/YYYY"></td>
-        </tr>
-    </table>
+    <div class="mobile-table">
+        <div class="mobile-table-row">
+            <div class="label">Name</div>
+            <input type="text" class="input-full">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">Designation</div>
+            <input type="text" class="input-full">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">Phone</div>
+            <input type="text" class="input-full">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">Email</div>
+            <input type="text" class="input-full">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">Place</div>
+            <input type="text" class="input-full">
+        </div>
+        <div class="mobile-table-row">
+            <div class="label">Date</div>
+            <input type="text" class="input-full" placeholder="DD/MM/YYYY">
+        </div>
+    </div>
 
     <div class="signature-section">
         <div class="signature-block">
