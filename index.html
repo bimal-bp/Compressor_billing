@@ -3,457 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WILLPACK AUTOMATION LLP - Service Report</title>
+    <title>Compressor Billing System - October 2025</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
         }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f9f9f9;
-            color: #000;
-            padding: 15px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: #fff;
-            border: 2px solid #000;
+            background-color: #f5f5f5;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4CAF50;
         }
-        .company {
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        .section-title {
-            font-weight: bold;
+        
+        .header h1 {
+            color: #333;
             margin-bottom: 10px;
-            text-decoration: underline;
-            font-size: 16px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
+        
+        .header .date {
+            color: #666;
+            font-size: 1.1em;
         }
-        td {
-            padding: 6px 0;
-            vertical-align: top;
+        
+        .form-group {
+            margin-bottom: 25px;
         }
-        .label {
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: bold;
-            white-space: nowrap;
-            padding-right: 10px;
+            color: #444;
         }
-        .input-full {
+        
+        input, select {
             width: 100%;
-            border: none;
-            border-bottom: 1px solid #000;
-            font-size: 16px; /* Larger for mobile */
-            padding: 8px 0;
-            font-family: inherit;
-        }
-        .input-short {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid #000;
-            font-size: 16px; /* Larger for mobile */
-            padding: 8px 0;
-        }
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 10px;
-        }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
-        .checkbox-item input[type="checkbox"],
-        .checkbox-item input[type="radio"] {
-            transform: scale(1.5); /* Larger for mobile */
-            min-width: 20px;
-            min-height: 20px;
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
         }
-        .radio-inline {
+        
+        .row {
             display: flex;
             gap: 20px;
-            align-items: center;
+            margin-bottom: 25px;
         }
-        .status-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 12px 0;
+        
+        .col {
+            flex: 1;
         }
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-        }
-        .feedback-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .feedback-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-        }
-        .signature-section {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-top: 40px;
-            page-break-inside: avoid;
-        }
-        .signature-block {
-            width: 100%;
-            text-align: center;
-        }
-        .signature-line {
-            border-top: 1px solid #000;
-            margin-top: 40px;
-            padding-top: 8px;
-            font-size: 14px;
-            min-height: 20px;
-        }
-        .print-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1a73e8;
+        
+        .calculate-btn {
+            background-color: #4CAF50;
             color: white;
+            padding: 15px 30px;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 8px;
+            border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
+            width: 100%;
+            transition: background-color 0.3s;
         }
-        .print-btn:hover {
-            background: #0d47a1;
+        
+        .calculate-btn:hover {
+            background-color: #45a049;
         }
-        .date-row {
+        
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .result-item {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            justify-content: space-between;
             margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
-        .date-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        
+        .result-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .result-value {
+            font-size: 1.1em;
+            color: #333;
+        }
+        
+        .total-cost {
+            font-size: 1.3em;
+            color: #4CAF50;
             font-weight: bold;
         }
-        .mobile-table {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .mobile-table-row {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            padding: 8px 0;
-            border-bottom: 1px dashed #ccc;
-        }
-        .mobile-table-row:last-child {
-            border-bottom: none;
-        }
-
-        /* Desktop Styles */
-        @media (min-width: 768px) {
-            body {
-                padding: 20px;
-            }
-            .container {
-                padding: 30px;
-            }
-            .company {
-                font-size: 22px;
-            }
-            .title {
-                font-size: 19px;
-            }
-            .checkbox-group {
-                flex-direction: row;
-                gap: 25px;
-            }
-            .status-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px;
-            }
-            .feedback-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-            }
-            .signature-section {
-                flex-direction: row;
-                justify-content: space-between;
-                margin-top: 60px;
-            }
-            .signature-block {
-                width: 48%;
-            }
-            .signature-line {
-                margin-top: 50px;
-            }
-            .date-row {
-                flex-direction: row;
-                justify-content: flex-end;
-                gap: 40px;
-            }
-            .date-item {
-                flex-direction: row;
-                align-items: center;
-                gap: 10px;
-            }
-            .input-short {
-                width: 180px;
-            }
-            .mobile-table {
-                display: table;
-            }
-            .mobile-table-row {
-                display: table-row;
-                border-bottom: none;
-            }
-        }
-
-        /* Print Optimization */
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-                print-color-adjust: exact;
-                -webkit-print-color-adjust: exact;
-            }
-            .container {
-                border: none;
-                box-shadow: none;
-                padding: 20px;
-            }
-            .print-btn {
-                display: none !important;
-            }
-            .input-full, .input-short {
-                border-bottom: 1px solid #000 !important;
-                background: transparent !important;
-            }
-            @page {
-                margin: 0.5cm;
-            }
+        
+        .rate-info {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-
-<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
-
-<div class="container">
-    <div class="header">
-        <div class="company">WILLPACK AUTOMATION LLP</div>
-        <div class="title">Service Report</div>
-    </div>
-
-    <!-- A, B, C, D, E - Mobile optimized -->
-    <div class="mobile-table">
-        <div class="mobile-table-row">
-            <div class="label">A. Service FOC / Chargeable:</div>
-            <input type="text" class="input-full" placeholder="FOC / Chargeable">
+    <div class="container">
+        <div class="header">
+            <h1>COMPRESSOR BILLING SYSTEM</h1>
+            <div class="date">MONTH OF OCTOBER - 2025</div>
         </div>
-        <div class="mobile-table-row">
-            <div class="label">B. Machine I & C:</div>
-            <input type="text" class="input-full" placeholder="Yes / No">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">C. Warranty:</div>
-            <input type="text" class="input-full" placeholder="Yes / No">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">D. Spare I & C FOC / Chargeable:</div>
-            <input type="text" class="input-full" placeholder="FOC / Chargeable">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">E. Courtesy Visit:</div>
-            <input type="text" class="input-full" placeholder="Yes / No">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">F. Others:</div>
-            <input type="text" class="input-full">
-        </div>
-    </div>
-
-    <!-- Start & End Date - Mobile optimized -->
-    <div class="date-row">
-        <div class="date-item">
-            <span>Start of Service Date:</span>
-            <input type="text" class="input-short" placeholder="DD/MM/YYYY">
-        </div>
-        <div class="date-item">
-            <span>End of Service Date:</span>
-            <input type="text" class="input-short" placeholder="DD/MM/YYYY">
-        </div>
-    </div>
-
-    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
-
-    <!-- Customer Details - Mobile optimized -->
-    <div class="section">
-        <div class="section-title">Customer Details</div>
-        <label class="label">Customer Name:</label>
-        <input type="text" class="input-full" style="margin: 8px 0;">
-        <label class="label">Address:</label>
-        <textarea class="input-full" rows="4" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin: 8px 0;"></textarea>
-        <div class="mobile-table">
-            <div class="mobile-table-row">
-                <div class="label">Pin Code:</div>
-                <input type="text" class="input-full">
+        
+        <form id="compressorForm">
+            <div class="form-group">
+                <label for="billDate">Date</label>
+                <input type="date" id="billDate" value="2025-10-01" required>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="tractorNumber">Tractor Number *</label>
+                        <input type="text" id="tractorNumber" list="tractorList" 
+                               placeholder="Enter Tractor Number" required>
+                        <datalist id="tractorList">
+                            <!-- Tractor numbers from your data -->
+                            <option value="AP31DM4375">
+                            <option value="AP39T2085">
+                            <option value="AP31EH5415">
+                            <option value="AP39U6311">
+                            <option value="AP39AD2185">
+                            <option value="AP31EL0779">
+                            <option value="AP26 TF 5271">
+                            <option value="AP31 1788">
+                            <option value="AP35TB0821">
+                            <option value="AP27BS 8679">
+                            <option value="AP31EQ 5430">
+                            <option value="AP32AV2679">
+                            <option value="AP31NEN 5794">
+                            <option value="AP39CT 1202">
+                            <option value="AP39WC 1160">
+                            <option value="AP39 TJ 1024">
+                            <option value="AP31DM 9316">
+                            <option value="AP31DM 5813">
+                            <option value="AP31DM 4362">
+                            <option value="AP27BS 6692">
+                            <option value="AP07TC6823">
+                            <option value="AP39GA 2814">
+                            <option value="AP37 TF 1293">
+                            <option value="AP37 TF 3362">
+                            <option value="AP07TJ1293">
+                            <option value="AP27UB 6303">
+                            <option value="AP27CD 2762">
+                            <option value="AP39 RN 9933">
+                            <option value="AP31CB2759">
+                            <option value="AP26BR4476">
+                            <option value="AP39W2632">
+                            <option value="AP31TB9631">
+                            <option value="AP27CB2053">
+                            <option value="AP39TL 0311">
+                            <option value="AP39T1609">
+                            <option value="AP31DT1087">
+                            <option value="AP31TN0491">
+                            <option value="AP27TT3215">
+                            <option value="AP40FD6128">
+                        </datalist>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="compressorName">Compressor Name *</label>
+                        <input type="text" id="compressorName" 
+                               placeholder="Will auto-fill based on tractor" readonly>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="numberOfHoles">Number of Holes *</label>
+                        <input type="number" id="numberOfHoles" min="1" 
+                               placeholder="Enter number of holes" required>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="drillingDepth">Drilling Depth (Feet) *</label>
+                        <input type="number" id="drillingDepth" min="1" step="0.5" 
+                               placeholder="Enter drilling depth in feet" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ratePerFoot">Rate per Foot (₹)</label>
+                <input type="number" id="ratePerFoot" value="55" 
+                       placeholder="Enter rate per foot">
+                <div class="rate-info">Standard rate: ₹55 per foot (adjustable)</div>
+            </div>
+            
+            <button type="button" class="calculate-btn" onclick="calculateBill()">
+                CALCULATE TOTAL COST
+            </button>
+        </form>
+        
+        <div id="resultSection" class="result-section">
+            <div class="result-item">
+                <span class="result-label">Date:</span>
+                <span id="resultDate" class="result-value"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Tractor Number:</span>
+                <span id="resultTractor" class="result-value"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Compressor Name:</span>
+                <span id="resultCompressor" class="result-value"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Number of Holes:</span>
+                <span id="resultHoles" class="result-value"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Total Drilling Depth:</span>
+                <span id="resultDepth" class="result-value"></span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Rate per Foot:</span>
+                <span id="resultRate" class="result-value">₹55</span>
+            </div>
+            <div class="result-item total-cost">
+                <span class="result-label">Total Compressor Cost:</span>
+                <span id="resultTotal" class="result-value"></span>
             </div>
         </div>
     </div>
 
-    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+    <script>
+        // Compressor database - mapping tractor numbers to compressor names
+        const compressorDatabase = {
+            // Column 1
+            "AP31DM4375": "KUMAR",
+            "AP39T2085": "LAXMANA RAO", 
+            "AP31EH5415": "TRIMURTHU*8",
+            
+            // Column 4 & 5
+            "AP39U6311": "NOOKA RAJU",
+            "AP39AD2185": "MAHESH",
+            "AP31EL0779": "VEERU NAIDU",
+            
+            // Column 7
+            "AP26 TF 5271": "SURIBABU",
+            "AP31 1788": "SURYA RAO",
+            "AP35TB0821": "VINAY",
+            
+            // Column 10, 11, 12
+            "AP27BS 8679": "N.SRINU",
+            "AP31EQ 5430": "L.SRINU",
+            "AP32AV2679": "G.VENKATARAO",
+            
+            // Column 13, 14, 15
+            "AP31NEN 5794": "TARRA RAJU",
+            "AP39CT 1202": "N.APPARAO",
+            "AP39WC 1160": "MPTC MATURU",
+            
+            // Column 16, 17, 18
+            "AP39 TJ 1024": "RAVI MAHALAXMI",
+            "AP31DM 9316": "G.SRINU",
+            "AP31DM 5813": "KRISHNA",
+            "AP31DM 4362": "KRISHNA",
+            
+            // Column 19, 20, 21
+            "AP27BS 6692": "BABOJI",
+            "AP07TC6823": "BABOJI",
+            "AP39GA 2814": "ALLAM VASU",
+            "AP37 TF 1293": "HANUMANT RAO",
+            "AP37 TF 3362": "HANUMANT RAO",
+            "AP07TJ1293": "HANUMANT RAO",
+            
+            // Column 22, 23, 24
+            "AP27UB 6303": "SATYANNARAYANA",
+            "AP27CD 2762": "KATHI SRINU",
+            "AP39 RN 9933": "RAVI RAMESH",
+            
+            // Column 25, 26, 27
+            "AP31CB2759": "SIVAJI(gunkal lova)",
+            "AP37 TF 3362": "J.RAMNA",
+            "AP26BR4476": "K.SANYASI NAIDU",
+            
+            // Column 28, 29, 30
+            "AP39W2632": "K.ANAND",
+            "AP31TB9631": "SURYA NARAYANA",
+            "AP27CB2053": "SURYA NARAYANA/P.ANAND",
+            
+            // Column 31, 32, 33
+            "AP39TL 0311": "V. SomNaidu/(ADAPA SRINU)",
+            "AP39T1609": "SHIVA-MATHUR",
+            "AP31DT1087": "NOOKU NAIDU",
+            
+            // Column 36, 37, 38
+            "AP31TN0491": "K.RAMA RAO",
+            "AP27TT3215": "J.SHIVA",
+            "AP40FD6128": "ALLU GANESH"
+        };
 
-    <!-- Nature of Problem - Mobile optimized -->
-    <div class="section">
-        <div class="section-title">Nature of Problem</div>
-        <label class="label">Problem Reported:</label>
-        <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
-        <div class="mobile-table">
-            <div class="mobile-table-row">
-                <div class="label">System Down?</div>
-                <input type="text" class="input-full" placeholder="Yes / No">
-            </div>
-            <div class="mobile-table-row">
-                <div class="label">Machine Type:</div>
-                <input type="text" class="input-full">
-            </div>
-            <div class="mobile-table-row">
-                <div class="label">Call Reported By:</div>
-                <input type="text" class="input-full">
-            </div>
-            <div class="mobile-table-row">
-                <div class="label">Make:</div>
-                <input type="text" class="input-full">
-            </div>
-            <div class="mobile-table-row">
-                <div class="label">Contact:</div>
-                <input type="text" class="input-full">
-            </div>
-            <div class="mobile-table-row">
-                <div class="label">Serial No.:</div>
-                <input type="text" class="input-full">
-            </div>
-        </div>
-    </div>
+        // Auto-fill compressor name when tractor number is entered
+        document.getElementById('tractorNumber').addEventListener('input', function() {
+            const tractorNumber = this.value.toUpperCase().trim();
+            const compressorNameField = document.getElementById('compressorName');
+            
+            if (compressorDatabase[tractorNumber]) {
+                compressorNameField.value = compressorDatabase[tractorNumber];
+            } else {
+                compressorNameField.value = '';
+            }
+        });
 
-    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
+        // Calculate the bill
+        function calculateBill() {
+            // Get form values
+            const date = document.getElementById('billDate').value;
+            const tractorNumber = document.getElementById('tractorNumber').value;
+            const compressorName = document.getElementById('compressorName').value;
+            const numberOfHoles = parseInt(document.getElementById('numberOfHoles').value);
+            const drillingDepth = parseFloat(document.getElementById('drillingDepth').value);
+            const ratePerFoot = parseFloat(document.getElementById('ratePerFoot').value);
+            
+            // Validation
+            if (!date || !tractorNumber || !compressorName || !numberOfHoles || !drillingDepth) {
+                alert('Please fill in all required fields!');
+                return;
+            }
+            
+            // Calculate total cost
+            const totalCost = drillingDepth * ratePerFoot;
+            
+            // Format date
+            const formattedDate = new Date(date).toLocaleDateString('en-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Display results
+            document.getElementById('resultDate').textContent = formattedDate;
+            document.getElementById('resultTractor').textContent = tractorNumber;
+            document.getElementById('resultCompressor').textContent = compressorName;
+            document.getElementById('resultHoles').textContent = numberOfHoles.toLocaleString();
+            document.getElementById('resultDepth').textContent = drillingDepth.toFixed(1) + ' feet';
+            document.getElementById('resultRate').textContent = '₹' + ratePerFoot;
+            document.getElementById('resultTotal').textContent = '₹' + totalCost.toFixed(2);
+            
+            // Show result section
+            document.getElementById('resultSection').classList.add('active');
+            
+            // Scroll to results
+            document.getElementById('resultSection').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
 
-    <!-- Service Details - Mobile optimized -->
-    <div class="section">
-        <div class="section-title">Service Details</div>
-        <textarea class="input-full" rows="6" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
-        <label class="label">Remarks:</label>
-        <textarea class="input-full" rows="2" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 10px;"></textarea>
-        <label class="label">Status:</label>
-        <div class="status-grid">
-            <label class="status-item"><input type="radio" name="status" value="Complete"> Complete</label>
-            <label class="status-item"><input type="radio" name="status" value="Incomplete"> Incomplete</label>
-            <label class="status-item"><input type="radio" name="status" value="Pending"> Pending for spares</label>
-            <label class="status-item"><input type="radio" name="status" value="Observation"> Under observation</label>
-            <label class="status-item"><input type="radio" name="status" value="Working"> Working solution provided</label>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-title">Defects Found on Inspection</div>
-        <textarea class="input-full" rows="4" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit;"></textarea>
-    </div>
-
-    <hr style="border: 1px dashed #ccc; margin: 25px 0;">
-
-    <!-- Customer Feedback - Mobile optimized -->
-    <div class="section">
-        <div class="section-title">Customer Feedback</div>
-        <label class="label">Remarks:</label>
-        <textarea class="input-full" rows="3" style="border: none; border-bottom: 1px solid #000; resize: none; font-family: inherit; margin-bottom: 15px;"></textarea>
-        <strong>Please rate this call by choosing an option:</strong>
-        <div class="feedback-grid">
-            <label class="feedback-item"><input type="radio" name="rating" value="Extremely Satisfied"> Extremely Satisfied</label>
-            <label class="feedback-item"><input type="radio" name="rating" value="Satisfied"> Satisfied</label>
-            <label class="feedback-item"><input type="radio" name="rating" value="Dissatisfied"> Dissatisfied</label>
-            <label class="feedback-item"><input type="radio" name="rating" value="Annoyed"> Annoyed</label>
-        </div>
-    </div>
-
-    <div class="mobile-table">
-        <div class="mobile-table-row">
-            <div class="label">Name</div>
-            <input type="text" class="input-full">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">Designation</div>
-            <input type="text" class="input-full">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">Phone</div>
-            <input type="text" class="input-full">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">Email</div>
-            <input type="text" class="input-full">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">Place</div>
-            <input type="text" class="input-full">
-        </div>
-        <div class="mobile-table-row">
-            <div class="label">Date</div>
-            <input type="text" class="input-full" placeholder="DD/MM/YYYY">
-        </div>
-    </div>
-
-    <div class="signature-section">
-        <div class="signature-block">
-            <strong>For Customer,</strong>
-            <div class="signature-line">Authorized Signature</div>
-        </div>
-        <div class="signature-block">
-            <strong>For Willpack Automation,</strong>
-            <div class="signature-line">Service Engineer Signature</div>
-        </div>
-    </div>
-</div>
-
+        // Set default date to today
+        document.getElementById('billDate').valueAsDate = new Date();
+    </script>
 </body>
 </html>
