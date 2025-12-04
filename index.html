@@ -1153,45 +1153,7 @@
             `;
         }
         
-        // Import September 2025 data
-        function importSeptemberData() {
-            // Sample September 2025 data
-            const september2025Data = [
-                {id: 1, date: '2025-09-01', tractorNumber: 'AP31DM4375', compressorName: 'KUMAR', numberOfHoles: 12, drillingDepth: 240, totalCost: 9240},
-                {id: 2, date: '2025-09-01', tractorNumber: 'AP39T2085', compressorName: 'LAXMANA RAO', numberOfHoles: 15, drillingDepth: 280, totalCost: 10780},
-                {id: 3, date: '2025-09-02', tractorNumber: 'AP31EH5415', compressorName: 'TRIMURTHU', numberOfHoles: 10, drillingDepth: 210, totalCost: 8085},
-                {id: 4, date: '2025-09-02', tractorNumber: 'AP39U6311', compressorName: 'NOOKA RAJU', numberOfHoles: 18, drillingDepth: 320, totalCost: 12320},
-                {id: 5, date: '2025-09-03', tractorNumber: 'AP39AD2185', compressorName: 'MAHESH', numberOfHoles: 14, drillingDepth: 260, totalCost: 10010},
-                {id: 6, date: '2025-09-03', tractorNumber: 'AP31EL0779', compressorName: 'VEERU NAIDU', numberOfHoles: 11, drillingDepth: 230, totalCost: 8855},
-                {id: 7, date: '2025-09-04', tractorNumber: 'AP26 TF 5271', compressorName: 'SURIBABU', numberOfHoles: 16, drillingDepth: 290, totalCost: 11165},
-                {id: 8, date: '2025-09-04', tractorNumber: 'AP31 1788', compressorName: 'SURYA RAO', numberOfHoles: 13, drillingDepth: 250, totalCost: 9625},
-                {id: 9, date: '2025-09-05', tractorNumber: 'AP35TB0821', compressorName: 'VINAY', numberOfHoles: 9, drillingDepth: 190, totalCost: 7315},
-                {id: 10, date: '2025-09-05', tractorNumber: 'AP27BS 8679', compressorName: 'N.SRINU', numberOfHoles: 17, drillingDepth: 310, totalCost: 11935},
-                {id: 11, date: '2025-09-06', tractorNumber: 'AP31EQ 5430', compressorName: 'L.SRINU', numberOfHoles: 12, drillingDepth: 245, totalCost: 9432.5},
-                {id: 12, date: '2025-09-06', tractorNumber: 'AP32AV2679', compressorName: 'G.VENKATARAO', numberOfHoles: 15, drillingDepth: 275, totalCost: 10587.5},
-                {id: 13, date: '2025-09-07', tractorNumber: 'AP31NEN 5794', compressorName: 'TARRA RAJU', numberOfHoles: 10, drillingDepth: 220, totalCost: 8470},
-                {id: 14, date: '2025-09-07', tractorNumber: 'AP39CT 1202', compressorName: 'N.APPARAO', numberOfHoles: 14, drillingDepth: 265, totalCost: 10202.5},
-                {id: 15, date: '2025-09-08', tractorNumber: 'AP39WC 1160', compressorName: 'MPTC MATURU', numberOfHoles: 19, drillingDepth: 340, totalCost: 13090},
-                {id: 16, date: '2025-09-08', tractorNumber: 'AP39 TJ 1024', compressorName: 'RAVI MAHALAXMI', numberOfHoles: 13, drillingDepth: 255, totalCost: 9817.5},
-                {id: 17, date: '2025-09-09', tractorNumber: 'AP31DM 9316', compressorName: 'G.SRINU', numberOfHoles: 11, drillingDepth: 235, totalCost: 9047.5},
-                {id: 18, date: '2025-09-09', tractorNumber: 'AP31DM 5813', compressorName: 'KRISHNA', numberOfHoles: 16, drillingDepth: 295, totalCost: 11357.5},
-                {id: 19, date: '2025-09-10', tractorNumber: 'AP31DM 4362', compressorName: 'KRISHNA', numberOfHoles: 14, drillingDepth: 270, totalCost: 10395},
-                {id: 20, date: '2025-09-10', tractorNumber: 'AP27BS 6692', compressorName: 'BABOJI', numberOfHoles: 12, drillingDepth: 242, totalCost: 9317},
-                {id: 21, date: '2025-09-11', tractorNumber: 'AP07TC6823', compressorName: 'BABOJI', numberOfHoles: 15, drillingDepth: 285, totalCost: 10972.5},
-                {id: 22, date: '2025-09-11', tractorNumber: 'AP39GA 2814', compressorName: 'ALLAM VASU', numberOfHoles: 10, drillingDepth: 215, totalCost: 8277.5},
-                {id: 23, date: '2025-09-12', tractorNumber: 'AP37 TF 1293', compressorName: 'HANUMANT RAO', numberOfHoles: 17, drillingDepth: 315, totalCost: 12127.5},
-                {id: 24, date: '2025-09-12', tractorNumber: 'AP37 TF 3362', compressorName: 'HANUMANT RAO', numberOfHoles: 13, drillingDepth: 265, totalCost: 10202.5},
-                {id: 25, date: '2025-09-13', tractorNumber: 'AP07TJ1293', compressorName: 'P.ANAND', numberOfHoles: 11, drillingDepth: 240, totalCost: 9240},
-                {id: 26, date: '2025-09-13', tractorNumber: 'AP27UB 6303', compressorName: 'SATYANNARAYANA', numberOfHoles: 18, drillingDepth: 330, totalCost: 12705},
-                {id: 27, date: '2025-09-14', tractorNumber: 'AP27CD 2762', compressorName: 'KATHI SRINU', numberOfHoles: 12, drillingDepth: 248, totalCost: 9548},
-                {id: 28, date: '2025-09-14', tractorNumber: 'AP39 RN 9933', compressorName: 'RAVI RAMESH', numberOfHoles: 16, drillingDepth: 300, totalCost: 11550},
-                {id: 29, date: '2025-09-15', tractorNumber: 'AP31CB2759', compressorName: 'SIVAJI(gunkal lova)', numberOfHoles: 14, drillingDepth: 275, totalCost: 10587.5},
-                {id: 30, date: '2025-09-15', tractorNumber: 'AP26BR4476', compressorName: 'K.SANYASI NAIDU', numberOfHoles: 10, drillingDepth: 225, totalCost: 8662.5},
-                {id: 31, date: '2025-09-16', tractorNumber: 'AP39W2632', compressorName: 'K.ANAND', numberOfHoles: 15, drillingDepth: 290, totalCost: 11165},
-                {id: 32, date: '2025-09-16', tractorNumber: 'AP31TB9631', compressorName: 'SURYA NARAYANA', numberOfHoles: 13, drillingDepth: 260, totalCost: 10010},
-                {id: 33, date: '2025-09-17', tractorNumber: 'AP27CB2053', compressorName: 'SURYA NARAYANA/P.ANAND', numberOfHoles: 11, drillingDepth: 245, totalCost: 9432.5}
-            ];
-            
+        
             // Remove existing September 2025 data
             billingData = billingData.filter(bill => {
                 const billDate = new Date(bill.date);
