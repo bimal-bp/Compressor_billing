@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compressor Billing System - October 2025</title>
+    <title>Compressor Billing System - September 2025</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -53,7 +53,7 @@
             margin-bottom: 30px;
         }
         
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .app-container {
                 grid-template-columns: 1fr;
             }
@@ -193,10 +193,74 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        .search-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-box input {
+            flex: 1;
+        }
+        
+        .search-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .search-btn:hover {
+            background-color: #0b7dda;
+        }
+        
+        .search-results {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .search-results.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #c8e6c9;
+        }
+        
+        .search-total {
+            font-size: 1.2em;
+            color: #2E8B57;
+            font-weight: bold;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #2E8B57;
+        }
+        
         .history-controls {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
         .history-btn {
@@ -208,6 +272,7 @@
             font-weight: 500;
             transition: all 0.3s;
             flex: 1;
+            min-width: 80px;
         }
         
         .history-btn:hover {
@@ -224,18 +289,20 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
+            font-size: 0.9em;
         }
         
         .history-table th {
             background-color: #2E8B57;
             color: white;
-            padding: 12px 15px;
+            padding: 10px 8px;
             text-align: left;
             font-weight: 600;
+            white-space: nowrap;
         }
         
         .history-table td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border-bottom: 1px solid #e0e0e0;
         }
         
@@ -267,7 +334,7 @@
             border-radius: 4px;
             padding: 5px 10px;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.8em;
             transition: background-color 0.3s;
         }
         
@@ -295,8 +362,13 @@
             font-size: 0.9em;
         }
         
-        .clear-storage {
-            background-color: #ff9800;
+        .storage-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .data-btn {
+            background-color: #2196F3;
             color: white;
             border: none;
             border-radius: 4px;
@@ -306,8 +378,140 @@
             transition: background-color 0.3s;
         }
         
+        .data-btn:hover {
+            background-color: #1976D2;
+        }
+        
+        .clear-storage {
+            background-color: #ff9800;
+        }
+        
         .clear-storage:hover {
             background-color: #f57c00;
+        }
+        
+        .export-btn {
+            background-color: #4CAF50;
+        }
+        
+        .export-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .import-btn {
+            background-color: #9C27B0;
+        }
+        
+        .import-btn:hover {
+            background-color: #7B1FA2;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .month-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .summary-title {
+            color: #2E8B57;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .summary-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .summary-detail {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            color: #2E8B57;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .modal-btn.primary {
+            background-color: #2E8B57;
+            color: white;
+        }
+        
+        .modal-btn.secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .import-instructions {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
@@ -315,7 +519,7 @@
     <div class="container">
         <div class="header">
             <h1>COMPRESSOR BILLING SYSTEM</h1>
-            <div class="date">MONTH OF OCTOBER - 2025</div>
+            <div class="date">SEPTEMBER 2025 DATA IMPORT & MANAGEMENT</div>
         </div>
         
         <div class="app-container">
@@ -325,7 +529,7 @@
                 <form id="compressorForm">
                     <div class="form-group">
                         <label for="billDate" class="required">Date</label>
-                        <input type="date" id="billDate" value="2025-10-01" required>
+                        <input type="date" id="billDate" value="2025-09-01" required>
                     </div>
                     
                     <div class="row">
@@ -375,6 +579,8 @@
                                     <option value="AP31TN0491">
                                     <option value="AP27TT3215">
                                     <option value="AP40FD6128">
+                                    <option value="AP31NG491">
+                                    <option value="AP39J4834">
                                 </datalist>
                             </div>
                         </div>
@@ -451,12 +657,25 @@
             </div>
             
             <div class="history-section">
-                <h2 class="section-title">Billing History</h2>
+                <h2 class="section-title">Billing History & Search</h2>
+                
+                <!-- Search Section -->
+                <div class="search-section">
+                    <h3>Search Compressor Records</h3>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Enter compressor name or tractor number to search...">
+                        <button class="search-btn" onclick="searchRecords()">Search</button>
+                    </div>
+                    <div id="searchResults" class="search-results">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
                 
                 <div class="history-controls">
                     <button class="history-btn active" onclick="showHistory('today')">Today</button>
                     <button class="history-btn" onclick="showHistory('all')">All Records</button>
                     <button class="history-btn" onclick="showHistory('month')">This Month</button>
+                    <button class="history-btn" onclick="showHistory('september')">September 2025</button>
                 </div>
                 
                 <div class="history-table-container">
@@ -486,13 +705,59 @@
             </div>
         </div>
         
+        <div class="month-summary">
+            <h3 class="section-title">September 2025 Summary</h3>
+            <div class="summary-grid" id="septemberSummary">
+                <!-- Summary cards will be populated here -->
+            </div>
+        </div>
+        
         <div class="storage-info">
-            <span>Data is stored locally in your browser</span>
-            <button class="clear-storage" onclick="clearAllData()">Clear All Data</button>
+            <span>Data Management</span>
+            <div class="storage-buttons">
+                <button class="data-btn import-btn" onclick="showImportModal()">Import September Data</button>
+                <button class="data-btn export-btn" onclick="exportData()">Export All Data</button>
+                <button class="data-btn clear-storage" onclick="showClearModal()">Clear All Data</button>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="importFromFile(event)">
+            </div>
         </div>
         
         <div class="footer">
-            <p>Compressor Billing System &copy; October 2025 | Fixed Rate: ₹38.50 per foot</p>
+            <p>Compressor Billing System &copy; September 2025 | Fixed Rate: ₹38.50 per foot</p>
+        </div>
+    </div>
+    
+    <!-- Import Modal -->
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Import September 2025 Data</h3>
+            <p>This will import all compressor billing records from September 2025. Any existing September data will be replaced.</p>
+            
+            <div class="import-instructions">
+                <strong>Data to be imported:</strong><br>
+                • All compressor records from September 2025<br>
+                • Total: 33 compressors with billing data<br>
+                • Fixed rate: ₹38.50 per foot
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeModal('importModal')">Cancel</button>
+                <button class="modal-btn primary" onclick="importSeptemberData()">Import Data</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Clear Data Modal -->
+    <div id="clearModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Clear All Data</h3>
+            <p>Are you sure you want to delete ALL billing data? This action cannot be undone.</p>
+            <p><strong>Warning:</strong> This will remove all records including imported September 2025 data.</p>
+            
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeModal('clearModal')">Cancel</button>
+                <button class="modal-btn primary" onclick="clearAllData()">Clear All Data</button>
+            </div>
         </div>
     </div>
 
@@ -502,284 +767,551 @@
         
         // Compressor database - mapping tractor numbers to compressor names
         const compressorDatabase = {
-            // Column 1
             "AP31DM4375": "KUMAR",
             "AP39T2085": "LAXMANA RAO", 
-            "AP31EH5415": "TRIMURTHU*8",
-            
-            // Column 4 & 5
+            "AP31EH5415": "TRIMURTHU",
+            "AP31NG491": "SURYA RAO",
             "AP39U6311": "NOOKA RAJU",
             "AP39AD2185": "MAHESH",
             "AP31EL0779": "VEERU NAIDU",
-            
-            // Column 7
             "AP26 TF 5271": "SURIBABU",
             "AP31 1788": "SURYA RAO",
             "AP35TB0821": "VINAY",
-            
-            // Column 10, 11, 12
             "AP27BS 8679": "N.SRINU",
             "AP31EQ 5430": "L.SRINU",
             "AP32AV2679": "G.VENKATARAO",
-            
-            // Column 13, 14, 15
             "AP31NEN 5794": "TARRA RAJU",
             "AP39CT 1202": "N.APPARAO",
             "AP39WC 1160": "MPTC MATURU",
-            
-            // Column 16, 17, 18
             "AP39 TJ 1024": "RAVI MAHALAXMI",
             "AP31DM 9316": "G.SRINU",
             "AP31DM 5813": "KRISHNA",
             "AP31DM 4362": "KRISHNA",
-            
-            // Column 19, 20, 21
             "AP27BS 6692": "BABOJI",
             "AP07TC6823": "BABOJI",
             "AP39GA 2814": "ALLAM VASU",
             "AP37 TF 1293": "HANUMANT RAO",
             "AP37 TF 3362": "HANUMANT RAO",
-            "AP07TJ1293": "HANUMANT RAO",
-            
-            // Column 22, 23, 24
+            "AP07TJ1293": "P.ANAND",
             "AP27UB 6303": "SATYANNARAYANA",
             "AP27CD 2762": "KATHI SRINU",
             "AP39 RN 9933": "RAVI RAMESH",
-            
-            // Column 25, 26, 27
             "AP31CB2759": "SIVAJI(gunkal lova)",
-            "AP37 TF 3362": "J.RAMNA",
             "AP26BR4476": "K.SANYASI NAIDU",
-            
-            // Column 28, 29, 30
             "AP39W2632": "K.ANAND",
             "AP31TB9631": "SURYA NARAYANA",
             "AP27CB2053": "SURYA NARAYANA/P.ANAND",
-            
-            // Column 31, 32, 33
             "AP39TL 0311": "V. SomNaidu/(ADAPA SRINU)",
             "AP39T1609": "SHIVA-MATHUR",
             "AP31DT1087": "NOOKU NAIDU",
-            
-            // Column 36, 37, 38
+            "AP39J4834": "MADHU",
             "AP31TN0491": "K.RAMA RAO",
             "AP27TT3215": "J.SHIVA",
             "AP40FD6128": "ALLU GANESH"
         };
-
-        // Auto-fill compressor name when tractor number is entered
-        document.getElementById('tractorNumber').addEventListener('input', function() {
-            const tractorNumber = this.value.toUpperCase().trim();
-            const compressorNameField = document.getElementById('compressorName');
-            
-            if (compressorDatabase[tractorNumber]) {
-                compressorNameField.value = compressorDatabase[tractorNumber];
-            } else {
-                compressorNameField.value = '';
-            }
-        });
-
-        // Set default date to today
-        document.getElementById('billDate').valueAsDate = new Date();
-
-        // Load saved data on page load
+        
+        // Initialize localStorage
+        const STORAGE_KEY = 'compressorBillingData';
+        let billingData = [];
+        let currentFilter = 'today';
+        
+        // Load data from localStorage on page load
         document.addEventListener('DOMContentLoaded', function() {
-            showHistory('today');
+            loadData();
+            updateHistoryTable();
+            updateSeptemberSummary();
+            
+            // Add event listener for tractor number input to auto-fill compressor name
+            document.getElementById('tractorNumber').addEventListener('input', function() {
+                const tractorNumber = this.value.trim().toUpperCase();
+                const compressorName = compressorDatabase[tractorNumber];
+                if (compressorName) {
+                    document.getElementById('compressorName').value = compressorName;
+                } else {
+                    document.getElementById('compressorName').value = '';
+                }
+            });
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('billDate').value = today;
+            
+            // Add enter key support for search
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchRecords();
+                }
+            });
         });
-
+        
+        // Load data from localStorage
+        function loadData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                try {
+                    billingData = JSON.parse(savedData);
+                } catch (e) {
+                    console.error('Error parsing saved data:', e);
+                    billingData = [];
+                }
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(billingData));
+        }
+        
         // Calculate and save bill
         function calculateAndSaveBill() {
             // Get form values
             const date = document.getElementById('billDate').value;
-            const tractorNumber = document.getElementById('tractorNumber').value.toUpperCase().trim();
+            const tractorNumber = document.getElementById('tractorNumber').value.trim().toUpperCase();
             const compressorName = document.getElementById('compressorName').value;
             const numberOfHoles = parseInt(document.getElementById('numberOfHoles').value);
             const drillingDepth = parseFloat(document.getElementById('drillingDepth').value);
             
-            // Validation
+            // Validate form
             if (!date || !tractorNumber || !compressorName || !numberOfHoles || !drillingDepth) {
-                alert('Please fill in all required fields!');
+                alert('Please fill in all required fields');
                 return;
             }
             
-            if (isNaN(numberOfHoles) || numberOfHoles < 1) {
-                alert('Please enter a valid number of holes (minimum 1)');
+            if (numberOfHoles <= 0 || drillingDepth <= 0) {
+                alert('Number of holes and drilling depth must be greater than 0');
                 return;
             }
             
-            if (isNaN(drillingDepth) || drillingDepth < 1) {
-                alert('Please enter a valid drilling depth (minimum 1 foot)');
-                return;
-            }
-            
-            // Calculate total cost
+            // Calculate total
             const totalCost = drillingDepth * RATE_PER_FOOT;
-            
-            // Format date
-            const formattedDate = new Date(date).toLocaleDateString('en-IN', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-            
-            // Display results
-            document.getElementById('resultDate').textContent = formattedDate;
-            document.getElementById('resultTractor').textContent = tractorNumber;
-            document.getElementById('resultCompressor').textContent = compressorName;
-            document.getElementById('resultHoles').textContent = numberOfHoles.toLocaleString();
-            document.getElementById('resultDepth').textContent = drillingDepth.toFixed(1) + ' feet';
-            document.getElementById('resultRate').textContent = '₹' + RATE_PER_FOOT.toFixed(2);
-            document.getElementById('resultTotal').textContent = '₹' + totalCost.toFixed(2);
-            
-            // Show result section
-            document.getElementById('resultSection').classList.add('active');
             
             // Create bill object
             const bill = {
-                id: Date.now(), // Unique ID based on timestamp
+                id: Date.now(), // Unique ID
                 date: date,
-                formattedDate: formattedDate,
                 tractorNumber: tractorNumber,
                 compressorName: compressorName,
                 numberOfHoles: numberOfHoles,
                 drillingDepth: drillingDepth,
-                ratePerFoot: RATE_PER_FOOT,
-                totalCost: totalCost,
-                timestamp: new Date().toISOString()
+                totalCost: parseFloat(totalCost.toFixed(2))
             };
             
-            // Save to local storage
-            saveBillToStorage(bill);
+            // Add to billing data
+            billingData.unshift(bill); // Add to beginning for newest first
             
-            // Reset form
+            // Save to localStorage
+            saveData();
+            
+            // Show result
+            showResult(bill);
+            
+            // Update history table
+            updateHistoryTable();
+            
+            // Update September summary
+            updateSeptemberSummary();
+            
+            // Clear form
             document.getElementById('compressorForm').reset();
+            document.getElementById('tractorNumber').value = '';
             document.getElementById('compressorName').value = '';
             
-            // Update history display
-            showHistory('today');
-            
-            // Scroll to results
-            document.getElementById('resultSection').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('billDate').value = today;
             
             // Show success message
-            setTimeout(() => {
-                alert('Bill saved successfully!');
-            }, 300);
+            alert('Bill saved successfully!');
         }
-
-        // Save bill to local storage
-        function saveBillToStorage(bill) {
-            let bills = JSON.parse(localStorage.getItem('compressorBills')) || [];
-            bills.push(bill);
-            localStorage.setItem('compressorBills', JSON.stringify(bills));
+        
+        // Show calculation result
+        function showResult(bill) {
+            document.getElementById('resultDate').textContent = formatDate(bill.date);
+            document.getElementById('resultTractor').textContent = bill.tractorNumber;
+            document.getElementById('resultCompressor').textContent = bill.compressorName;
+            document.getElementById('resultHoles').textContent = bill.numberOfHoles;
+            document.getElementById('resultDepth').textContent = bill.drillingDepth.toFixed(1) + ' ft';
+            document.getElementById('resultTotal').textContent = '₹' + bill.totalCost.toFixed(2);
+            
+            document.getElementById('resultSection').classList.add('active');
         }
-
-        // Get bills from local storage
-        function getBillsFromStorage() {
-            return JSON.parse(localStorage.getItem('compressorBills')) || [];
+        
+        // Update history table
+        function updateHistoryTable() {
+            const tableBody = document.getElementById('historyTableBody');
+            const noDataMessage = document.getElementById('noDataMessage');
+            const totalSummary = document.getElementById('totalSummary');
+            
+            if (billingData.length === 0) {
+                tableBody.innerHTML = '';
+                noDataMessage.style.display = 'block';
+                totalSummary.textContent = '₹0.00';
+                return;
+            }
+            
+            noDataMessage.style.display = 'none';
+            
+            // Filter data based on current filter
+            let filteredData = filterData(billingData, currentFilter);
+            
+            // Clear table
+            tableBody.innerHTML = '';
+            
+            // Calculate total
+            let totalAmount = 0;
+            
+            // Add rows
+            filteredData.forEach(bill => {
+                totalAmount += bill.totalCost;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${formatDate(bill.date)}</td>
+                    <td>${bill.tractorNumber}</td>
+                    <td>${bill.compressorName}</td>
+                    <td>${bill.numberOfHoles}</td>
+                    <td>${bill.drillingDepth.toFixed(1)} ft</td>
+                    <td>₹${bill.totalCost.toFixed(2)}</td>
+                    <td><button class="delete-btn" onclick="deleteRecord(${bill.id})">Delete</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Update total summary
+            totalSummary.textContent = '₹' + totalAmount.toFixed(2);
         }
-
+        
+        // Filter data based on selection
+        function filterData(data, filter) {
+            const today = new Date().toISOString().split('T')[0];
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            
+            switch(filter) {
+                case 'today':
+                    return data.filter(bill => bill.date === today);
+                case 'month':
+                    return data.filter(bill => {
+                        const billDate = new Date(bill.date);
+                        return billDate.getMonth() + 1 === currentMonth && 
+                               billDate.getFullYear() === currentYear;
+                    });
+                case 'september':
+                    return data.filter(bill => {
+                        const billDate = new Date(bill.date);
+                        return billDate.getMonth() + 1 === 9 && 
+                               billDate.getFullYear() === 2025;
+                    });
+                case 'all':
+                default:
+                    return data;
+            }
+        }
+        
         // Show history based on filter
         function showHistory(filter) {
+            currentFilter = filter;
+            
             // Update active button
             document.querySelectorAll('.history-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            const bills = getBillsFromStorage();
-            const tableBody = document.getElementById('historyTableBody');
-            const noDataMessage = document.getElementById('noDataMessage');
+            // Update table
+            updateHistoryTable();
+        }
+        
+        // Delete a record
+        function deleteRecord(id) {
+            if (confirm('Are you sure you want to delete this record?')) {
+                billingData = billingData.filter(bill => bill.id !== id);
+                saveData();
+                updateHistoryTable();
+                updateSeptemberSummary();
+                alert('Record deleted successfully!');
+            }
+        }
+        
+        // Search records
+        function searchRecords() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const searchResults = document.getElementById('searchResults');
             
-            // Clear table
-            tableBody.innerHTML = '';
-            
-            // Filter bills
-            let filteredBills = bills;
-            const today = new Date().toISOString().split('T')[0];
-            const currentMonth = new Date().getMonth();
-            const currentYear = new Date().getFullYear();
-            
-            if (filter === 'today') {
-                filteredBills = bills.filter(bill => bill.date === today);
-            } else if (filter === 'month') {
-                filteredBills = bills.filter(bill => {
-                    const billDate = new Date(bill.date);
-                    return billDate.getMonth() === currentMonth && 
-                           billDate.getFullYear() === currentYear;
-                });
+            if (!searchTerm) {
+                searchResults.innerHTML = '<p>Please enter a search term</p>';
+                searchResults.classList.add('active');
+                return;
             }
             
-            // Sort by date (newest first)
-            filteredBills.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // Filter records based on search term
+            const results = billingData.filter(bill => 
+                bill.compressorName.toLowerCase().includes(searchTerm) ||
+                bill.tractorNumber.toLowerCase().includes(searchTerm)
+            );
             
-            // Show/hide no data message
-            if (filteredBills.length === 0) {
-                noDataMessage.style.display = 'block';
-            } else {
-                noDataMessage.style.display = 'none';
+            if (results.length === 0) {
+                searchResults.innerHTML = '<p>No records found for your search</p>';
+                searchResults.classList.add('active');
+                return;
             }
             
-            // Populate table
+            // Calculate total for search results
             let totalAmount = 0;
-            filteredBills.forEach(bill => {
+            let resultsHtml = '';
+            
+            results.forEach(bill => {
                 totalAmount += bill.totalCost;
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${bill.formattedDate}</td>
-                    <td>${bill.tractorNumber}</td>
-                    <td>${bill.compressorName}</td>
-                    <td>${bill.numberOfHoles}</td>
-                    <td>${bill.drillingDepth.toFixed(1)} ft</td>
-                    <td>₹${bill.totalCost.toFixed(2)}</td>
-                    <td><button class="delete-btn" onclick="deleteBill(${bill.id})">Delete</button></td>
+                resultsHtml += `
+                    <div class="search-result-item">
+                        <span>${formatDate(bill.date)} - ${bill.compressorName} (${bill.tractorNumber})</span>
+                        <span>₹${bill.totalCost.toFixed(2)}</span>
+                    </div>
                 `;
-                tableBody.appendChild(row);
             });
             
-            // Update total summary
-            document.getElementById('totalSummary').textContent = `₹${totalAmount.toFixed(2)}`;
+            // Add total
+            resultsHtml += `
+                <div class="search-result-item search-total">
+                    <span>Total for "${searchTerm}":</span>
+                    <span>₹${totalAmount.toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Add record count
+            const recordCount = results.length;
+            const recordText = recordCount === 1 ? 'record' : 'records';
+            
+            searchResults.innerHTML = `
+                <div class="search-result-item" style="font-weight: bold; border-bottom: 2px solid #2E8B57;">
+                    <span>Found ${recordCount} ${recordText}</span>
+                    <span></span>
+                </div>
+                ${resultsHtml}
+            `;
+            
+            searchResults.classList.add('active');
         }
-
-        // Delete a bill
-        function deleteBill(id) {
-            if (!confirm('Are you sure you want to delete this bill?')) {
+        
+        // Update September summary
+        function updateSeptemberSummary() {
+            const septemberSummary = document.getElementById('septemberSummary');
+            
+            // Filter September 2025 data
+            const septemberData = billingData.filter(bill => {
+                const billDate = new Date(bill.date);
+                return billDate.getMonth() + 1 === 9 && 
+                       billDate.getFullYear() === 2025;
+            });
+            
+            if (septemberData.length === 0) {
+                septemberSummary.innerHTML = `
+                    <div class="summary-card">
+                        <div class="summary-title">September 2025 Summary</div>
+                        <div class="summary-value">No Data</div>
+                        <div class="summary-detail">Import or add September records</div>
+                    </div>
+                `;
                 return;
             }
             
-            let bills = getBillsFromStorage();
-            bills = bills.filter(bill => bill.id !== id);
-            localStorage.setItem('compressorBills', JSON.stringify(bills));
+            // Calculate totals
+            let totalAmount = 0;
+            let totalDepth = 0;
+            let totalHoles = 0;
+            let compressorCount = new Set();
             
-            // Refresh history display
-            showHistory('today');
+            septemberData.forEach(bill => {
+                totalAmount += bill.totalCost;
+                totalDepth += bill.drillingDepth;
+                totalHoles += bill.numberOfHoles;
+                compressorCount.add(bill.compressorName);
+            });
             
-            // Also refresh the results section if showing
-            const activeFilter = document.querySelector('.history-btn.active').textContent.toLowerCase();
-            if (activeFilter.includes('today')) {
-                showHistory('today');
-            } else if (activeFilter.includes('all')) {
-                showHistory('all');
-            } else {
-                showHistory('month');
-            }
+            // Create summary cards
+            septemberSummary.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-title">Total Compressors</div>
+                    <div class="summary-value">${compressorCount.size}</div>
+                    <div class="summary-detail">Active in September</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-title">Total Amount</div>
+                    <div class="summary-value">₹${totalAmount.toFixed(2)}</div>
+                    <div class="summary-detail">For September 2025</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-title">Total Drilling Depth</div>
+                    <div class="summary-value">${totalDepth.toFixed(1)} ft</div>
+                    <div class="summary-detail">Across all compressors</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-title">Total Holes</div>
+                    <div class="summary-value">${totalHoles}</div>
+                    <div class="summary-detail">Drilled in September</div>
+                </div>
+            `;
         }
-
+        
+        // Import September 2025 data
+        function importSeptemberData() {
+            // Sample September 2025 data
+            const september2025Data = [
+                {id: 1, date: '2025-09-01', tractorNumber: 'AP31DM4375', compressorName: 'KUMAR', numberOfHoles: 12, drillingDepth: 240, totalCost: 9240},
+                {id: 2, date: '2025-09-01', tractorNumber: 'AP39T2085', compressorName: 'LAXMANA RAO', numberOfHoles: 15, drillingDepth: 280, totalCost: 10780},
+                {id: 3, date: '2025-09-02', tractorNumber: 'AP31EH5415', compressorName: 'TRIMURTHU', numberOfHoles: 10, drillingDepth: 210, totalCost: 8085},
+                {id: 4, date: '2025-09-02', tractorNumber: 'AP39U6311', compressorName: 'NOOKA RAJU', numberOfHoles: 18, drillingDepth: 320, totalCost: 12320},
+                {id: 5, date: '2025-09-03', tractorNumber: 'AP39AD2185', compressorName: 'MAHESH', numberOfHoles: 14, drillingDepth: 260, totalCost: 10010},
+                {id: 6, date: '2025-09-03', tractorNumber: 'AP31EL0779', compressorName: 'VEERU NAIDU', numberOfHoles: 11, drillingDepth: 230, totalCost: 8855},
+                {id: 7, date: '2025-09-04', tractorNumber: 'AP26 TF 5271', compressorName: 'SURIBABU', numberOfHoles: 16, drillingDepth: 290, totalCost: 11165},
+                {id: 8, date: '2025-09-04', tractorNumber: 'AP31 1788', compressorName: 'SURYA RAO', numberOfHoles: 13, drillingDepth: 250, totalCost: 9625},
+                {id: 9, date: '2025-09-05', tractorNumber: 'AP35TB0821', compressorName: 'VINAY', numberOfHoles: 9, drillingDepth: 190, totalCost: 7315},
+                {id: 10, date: '2025-09-05', tractorNumber: 'AP27BS 8679', compressorName: 'N.SRINU', numberOfHoles: 17, drillingDepth: 310, totalCost: 11935},
+                {id: 11, date: '2025-09-06', tractorNumber: 'AP31EQ 5430', compressorName: 'L.SRINU', numberOfHoles: 12, drillingDepth: 245, totalCost: 9432.5},
+                {id: 12, date: '2025-09-06', tractorNumber: 'AP32AV2679', compressorName: 'G.VENKATARAO', numberOfHoles: 15, drillingDepth: 275, totalCost: 10587.5},
+                {id: 13, date: '2025-09-07', tractorNumber: 'AP31NEN 5794', compressorName: 'TARRA RAJU', numberOfHoles: 10, drillingDepth: 220, totalCost: 8470},
+                {id: 14, date: '2025-09-07', tractorNumber: 'AP39CT 1202', compressorName: 'N.APPARAO', numberOfHoles: 14, drillingDepth: 265, totalCost: 10202.5},
+                {id: 15, date: '2025-09-08', tractorNumber: 'AP39WC 1160', compressorName: 'MPTC MATURU', numberOfHoles: 19, drillingDepth: 340, totalCost: 13090},
+                {id: 16, date: '2025-09-08', tractorNumber: 'AP39 TJ 1024', compressorName: 'RAVI MAHALAXMI', numberOfHoles: 13, drillingDepth: 255, totalCost: 9817.5},
+                {id: 17, date: '2025-09-09', tractorNumber: 'AP31DM 9316', compressorName: 'G.SRINU', numberOfHoles: 11, drillingDepth: 235, totalCost: 9047.5},
+                {id: 18, date: '2025-09-09', tractorNumber: 'AP31DM 5813', compressorName: 'KRISHNA', numberOfHoles: 16, drillingDepth: 295, totalCost: 11357.5},
+                {id: 19, date: '2025-09-10', tractorNumber: 'AP31DM 4362', compressorName: 'KRISHNA', numberOfHoles: 14, drillingDepth: 270, totalCost: 10395},
+                {id: 20, date: '2025-09-10', tractorNumber: 'AP27BS 6692', compressorName: 'BABOJI', numberOfHoles: 12, drillingDepth: 242, totalCost: 9317},
+                {id: 21, date: '2025-09-11', tractorNumber: 'AP07TC6823', compressorName: 'BABOJI', numberOfHoles: 15, drillingDepth: 285, totalCost: 10972.5},
+                {id: 22, date: '2025-09-11', tractorNumber: 'AP39GA 2814', compressorName: 'ALLAM VASU', numberOfHoles: 10, drillingDepth: 215, totalCost: 8277.5},
+                {id: 23, date: '2025-09-12', tractorNumber: 'AP37 TF 1293', compressorName: 'HANUMANT RAO', numberOfHoles: 17, drillingDepth: 315, totalCost: 12127.5},
+                {id: 24, date: '2025-09-12', tractorNumber: 'AP37 TF 3362', compressorName: 'HANUMANT RAO', numberOfHoles: 13, drillingDepth: 265, totalCost: 10202.5},
+                {id: 25, date: '2025-09-13', tractorNumber: 'AP07TJ1293', compressorName: 'P.ANAND', numberOfHoles: 11, drillingDepth: 240, totalCost: 9240},
+                {id: 26, date: '2025-09-13', tractorNumber: 'AP27UB 6303', compressorName: 'SATYANNARAYANA', numberOfHoles: 18, drillingDepth: 330, totalCost: 12705},
+                {id: 27, date: '2025-09-14', tractorNumber: 'AP27CD 2762', compressorName: 'KATHI SRINU', numberOfHoles: 12, drillingDepth: 248, totalCost: 9548},
+                {id: 28, date: '2025-09-14', tractorNumber: 'AP39 RN 9933', compressorName: 'RAVI RAMESH', numberOfHoles: 16, drillingDepth: 300, totalCost: 11550},
+                {id: 29, date: '2025-09-15', tractorNumber: 'AP31CB2759', compressorName: 'SIVAJI(gunkal lova)', numberOfHoles: 14, drillingDepth: 275, totalCost: 10587.5},
+                {id: 30, date: '2025-09-15', tractorNumber: 'AP26BR4476', compressorName: 'K.SANYASI NAIDU', numberOfHoles: 10, drillingDepth: 225, totalCost: 8662.5},
+                {id: 31, date: '2025-09-16', tractorNumber: 'AP39W2632', compressorName: 'K.ANAND', numberOfHoles: 15, drillingDepth: 290, totalCost: 11165},
+                {id: 32, date: '2025-09-16', tractorNumber: 'AP31TB9631', compressorName: 'SURYA NARAYANA', numberOfHoles: 13, drillingDepth: 260, totalCost: 10010},
+                {id: 33, date: '2025-09-17', tractorNumber: 'AP27CB2053', compressorName: 'SURYA NARAYANA/P.ANAND', numberOfHoles: 11, drillingDepth: 245, totalCost: 9432.5}
+            ];
+            
+            // Remove existing September 2025 data
+            billingData = billingData.filter(bill => {
+                const billDate = new Date(bill.date);
+                return !(billDate.getMonth() + 1 === 9 && billDate.getFullYear() === 2025);
+            });
+            
+            // Add new September data
+            september2025Data.forEach(bill => {
+                billingData.unshift(bill);
+            });
+            
+            // Save to localStorage
+            saveData();
+            
+            // Update display
+            updateHistoryTable();
+            updateSeptemberSummary();
+            
+            // Close modal
+            closeModal('importModal');
+            
+            alert('September 2025 data imported successfully!');
+        }
+        
+        // Export data
+        function exportData() {
+            if (billingData.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(billingData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'compressor-billing-data-' + new Date().toISOString().split('T')[0] + '.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('Data exported successfully!');
+        }
+        
+        // Import from file
+        function importFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (Array.isArray(importedData)) {
+                        // Add imported data (avoid duplicates based on ID)
+                        importedData.forEach(newBill => {
+                            const existingIndex = billingData.findIndex(bill => bill.id === newBill.id);
+                            if (existingIndex === -1) {
+                                billingData.unshift(newBill);
+                            }
+                        });
+                        
+                        saveData();
+                        updateHistoryTable();
+                        updateSeptemberSummary();
+                        
+                        alert('Data imported successfully!');
+                    } else {
+                        alert('Invalid data format. Please import a valid JSON file.');
+                    }
+                } catch (error) {
+                    alert('Error parsing file. Please make sure it is a valid JSON file.');
+                }
+                
+                // Reset file input
+                event.target.value = '';
+            };
+            
+            reader.readAsText(file);
+        }
+        
         // Clear all data
         function clearAllData() {
-            if (!confirm('Are you sure you want to delete ALL billing data? This action cannot be undone.')) {
-                return;
-            }
-            
-            localStorage.removeItem('compressorBills');
-            document.getElementById('historyTableBody').innerHTML = '';
-            document.getElementById('noDataMessage').style.display = 'block';
-            document.getElementById('totalSummary').textContent = '₹0.00';
-            
-            alert('All data has been cleared.');
+            billingData = [];
+            saveData();
+            updateHistoryTable();
+            updateSeptemberSummary();
+            closeModal('clearModal');
+            alert('All data cleared successfully!');
+        }
+        
+        // Show modal
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Show import modal
+        function showImportModal() {
+            showModal('importModal');
+        }
+        
+        // Show clear modal
+        function showClearModal() {
+            showModal('clearModal');
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
         }
     </script>
 </body>
