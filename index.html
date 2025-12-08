@@ -167,6 +167,14 @@
             background: #c82333;
         }
         
+        .btn-info {
+            background: #17a2b8;
+        }
+        
+        .btn-info:hover {
+            background: #138496;
+        }
+        
         .tabs {
             display: flex;
             border-bottom: 1px solid #ddd;
@@ -321,6 +329,42 @@
             flex: 1;
         }
         
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-top: 4px solid #4a6491;
+            text-align: center;
+        }
+        
+        .summary-card h3 {
+            color: #4a6491;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .summary-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .summary-card .subtext {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -357,6 +401,10 @@
                 padding: 12px 10px;
                 font-size: 14px;
             }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -371,12 +419,18 @@
             <div class="tab active" data-tab="entry">New Bill Entry</div>
             <div class="tab" data-tab="search">Search & Reports</div>
             <div class="tab" data-tab="data">All Compressors</div>
+            <div class="tab" data-tab="summary">Summary Report</div>
         </div>
         
         <div class="main-content">
             <div class="sidebar">
                 <div class="tab-content active" id="entry">
                     <h2 class="section-title"><i class="fas fa-plus-circle"></i> New Bill Entry</h2>
+                    
+                    <div class="form-group">
+                        <label for="bill-date">Bill Date</label>
+                        <input type="date" id="bill-date" value="">
+                    </div>
                     
                     <div class="form-group">
                         <label for="compressor-select">Select Compressor</label>
@@ -444,27 +498,33 @@
                 <div class="tab-content" id="search">
                     <h2 class="section-title"><i class="fas fa-search"></i> Search Bills</h2>
                     
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Search by compressor name or tractor number">
-                        <button class="btn" id="search-btn">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    
                     <div class="form-group">
-                        <label for="search-compressor-select">Or Select Compressor</label>
+                        <label for="search-compressor-select">Select Compressor</label>
                         <select id="search-compressor-select">
                             <option value="">-- Select Compressor --</option>
                             <!-- Options will be populated from data -->
                         </select>
                     </div>
                     
-                    <div id="search-results">
+                    <div class="form-group">
+                        <label for="search-date">Filter by Date (Optional)</label>
+                        <input type="date" id="search-date">
+                    </div>
+                    
+                    <button class="btn btn-info" id="apply-filter">
+                        <i class="fas fa-filter"></i> Apply Filter
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="clear-filter">
+                        <i class="fas fa-times"></i> Clear Filter
+                    </button>
+                    
+                    <div id="search-results" style="margin-top: 20px;">
                         <!-- Search results will appear here -->
                         <div class="empty-state">
                             <i class="fas fa-search"></i>
                             <h3>Search for compressor bills</h3>
-                            <p>Enter a compressor name or select from the dropdown to view bill details</p>
+                            <p>Select a compressor to view bill details</p>
                         </div>
                     </div>
                 </div>
@@ -476,6 +536,23 @@
                     <div id="all-compressors-list">
                         <!-- Compressor list will appear here -->
                     </div>
+                </div>
+                
+                <div class="tab-content" id="summary">
+                    <h2 class="section-title"><i class="fas fa-chart-pie"></i> Summary Report</h2>
+                    <p>Complete summary of all compressor bills.</p>
+                    
+                    <div class="summary-cards" id="summary-cards">
+                        <!-- Summary cards will appear here -->
+                    </div>
+                    
+                    <button class="btn btn-success" id="download-summary">
+                        <i class="fas fa-file-pdf"></i> Download Summary PDF
+                    </button>
+                    
+                    <button class="btn btn-info" id="refresh-summary">
+                        <i class="fas fa-sync-alt"></i> Refresh Summary
+                    </button>
                 </div>
             </div>
             
@@ -854,18 +931,28 @@
         const clearFormBtn = document.getElementById('clear-form');
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
-        const searchInput = document.getElementById('search-input');
-        const searchBtn = document.getElementById('search-btn');
         const searchCompressorSelect = document.getElementById('search-compressor-select');
+        const searchDateInput = document.getElementById('search-date');
+        const applyFilterBtn = document.getElementById('apply-filter');
+        const clearFilterBtn = document.getElementById('clear-filter');
         const searchResults = document.getElementById('search-results');
         const allCompressorsList = document.getElementById('all-compressors-list');
         const mainContentArea = document.getElementById('main-content-area');
+        const summaryCards = document.getElementById('summary-cards');
+        const downloadSummaryBtn = document.getElementById('download-summary');
+        const refreshSummaryBtn = document.getElementById('refresh-summary');
+        const billDateInput = document.getElementById('bill-date');
 
         // Initialize the app
         function initApp() {
+            // Set default date to today
+            const today = new Date().toISOString().split('T')[0];
+            billDateInput.value = today;
+            
             loadDataFromStorage();
             populateCompressorSelects();
             displayAllCompressors();
+            updateSummary();
             setupEventListeners();
             calculateTotal();
         }
@@ -894,6 +981,7 @@
             }));
             localStorage.setItem('compressorBills', JSON.stringify(dataToSave));
             appState.allBills = getAllBills();
+            updateSummary();
         }
 
         // Get all bills from all compressors
@@ -963,6 +1051,58 @@
             });
         }
 
+        // Update summary report
+        function updateSummary() {
+            const allBills = getAllBills();
+            
+            // Calculate totals
+            let totalCompressors = compressorData.length;
+            let totalBills = allBills.length;
+            let totalHoles = 0;
+            let totalFeet = 0;
+            let totalAmount = 0;
+            
+            allBills.forEach(bill => {
+                totalHoles += bill.holes;
+                totalFeet += bill.feet;
+                totalAmount += bill.totalAmount;
+            });
+            
+            // Update summary cards
+            summaryCards.innerHTML = `
+                <div class="summary-card">
+                    <h3>Total Compressors</h3>
+                    <div class="value">${totalCompressors}</div>
+                    <div class="subtext">Registered compressors</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Bills</h3>
+                    <div class="value">${totalBills}</div>
+                    <div class="subtext">All bill entries</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Holes</h3>
+                    <div class="value">${totalHoles}</div>
+                    <div class="subtext">All holes drilled</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Feet</h3>
+                    <div class="value">${totalFeet.toFixed(2)}</div>
+                    <div class="subtext">Feet drilled</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Cost</h3>
+                    <div class="value">₹${totalAmount.toFixed(2)}</div>
+                    <div class="subtext">Total payment amount</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Avg per Foot</h3>
+                    <div class="value">₹${totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00'}</div>
+                    <div class="subtext">Average rate per foot</div>
+                </div>
+            `;
+        }
+
         // Setup event listeners
         function setupEventListeners() {
             // Tab switching
@@ -1021,22 +1161,18 @@
             // Clear form
             clearFormBtn.addEventListener('click', clearForm);
             
-            // Search
-            searchBtn.addEventListener('click', performSearch);
-            searchInput.addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') performSearch();
-            });
+            // Apply filter in search
+            applyFilterBtn.addEventListener('click', performSearch);
+            
+            // Clear filter in search
+            clearFilterBtn.addEventListener('click', clearSearchFilter);
             
             // Search compressor select
-            searchCompressorSelect.addEventListener('change', function() {
-                const compressorId = parseInt(this.value);
-                if (compressorId) {
-                    const compressor = compressorData.find(c => c.id === compressorId);
-                    if (compressor) {
-                        showCompressorBills(compressor);
-                    }
-                }
-            });
+            searchCompressorSelect.addEventListener('change', performSearch);
+            
+            // Summary tab buttons
+            downloadSummaryBtn.addEventListener('click', downloadSummaryPDF);
+            refreshSummaryBtn.addEventListener('click', updateSummary);
         }
 
         // Update compressor info display
@@ -1087,6 +1223,13 @@
                 return;
             }
             
+            const billDate = billDateInput.value;
+            if (!billDate) {
+                alert('Please select a bill date');
+                billDateInput.focus();
+                return;
+            }
+            
             const holes = parseInt(holesInput.value);
             const feet = parseFloat(feetInput.value);
             const drillSize = document.querySelector('input[name="drill-size"]:checked').value;
@@ -1109,7 +1252,8 @@
             // Create bill object
             const bill = {
                 id: Date.now(),
-                date: new Date().toLocaleDateString('en-GB'),
+                date: billDate,
+                formattedDate: formatDate(billDate),
                 drillSize: drillSize,
                 holes: holes,
                 feet: feet,
@@ -1133,6 +1277,15 @@
             clearForm();
         }
 
+        // Format date from YYYY-MM-DD to DD/MM/YYYY
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
         // Show bill details in main content area
         function showBillDetails(bill, compressor) {
             mainContentArea.innerHTML = `
@@ -1146,7 +1299,7 @@
                     
                     <div class="bill-row">
                         <span class="bill-label">Bill Date:</span>
-                        <span class="bill-value">${bill.date}</span>
+                        <span class="bill-value">${bill.formattedDate}</span>
                     </div>
                     
                     <div class="bill-row">
@@ -1192,12 +1345,24 @@
 
         // Show all bills for a compressor
         function showCompressorBills(compressor) {
-            if (!compressor.bills || compressor.bills.length === 0) {
+            const filterDate = searchDateInput.value;
+            
+            // Filter bills by date if date is selected
+            let filteredBills = compressor.bills;
+            if (filterDate) {
+                filteredBills = compressor.bills.filter(bill => bill.date === filterDate);
+            }
+            
+            if (!filteredBills || filteredBills.length === 0) {
+                const message = filterDate 
+                    ? `No bills found for ${compressor.name} on ${formatDate(filterDate)}`
+                    : `No bills found for ${compressor.name} yet.`;
+                
                 searchResults.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-file-invoice"></i>
                         <h3>No Bills Found</h3>
-                        <p>No bills have been created for ${compressor.name} yet.</p>
+                        <p>${message}</p>
                     </div>
                 `;
                 
@@ -1208,7 +1373,8 @@
                         <p><strong>Bank Account:</strong> ${compressor.bankAccount}</p>
                         <p><strong>IFSC:</strong> ${compressor.ifsc}</p>
                         <p><strong>PAN:</strong> ${compressor.pan}</p>
-                        <p><strong>Total Bills:</strong> 0</p>
+                        <p><strong>Total Bills:</strong> ${compressor.bills.length}</p>
+                        ${filterDate ? `<p><strong>Filtered Date:</strong> ${formatDate(filterDate)}</p>` : ''}
                     </div>
                 `;
                 return;
@@ -1216,7 +1382,8 @@
             
             // Display in search results
             let billsHTML = `
-                <h3 style="margin-bottom: 15px;">${compressor.name} - Bills (${compressor.bills.length})</h3>
+                <h3 style="margin-bottom: 15px;">${compressor.name} - Bills (${filteredBills.length})</h3>
+                ${filterDate ? `<p style="margin-bottom: 10px; color: #666;">Filtered by date: ${formatDate(filterDate)}</p>` : ''}
                 <table>
                     <thead>
                         <tr>
@@ -1235,14 +1402,14 @@
             let totalFeet = 0;
             let totalAmount = 0;
             
-            compressor.bills.forEach(bill => {
+            filteredBills.forEach(bill => {
                 totalHoles += bill.holes;
                 totalFeet += bill.feet;
                 totalAmount += bill.totalAmount;
                 
                 billsHTML += `
                     <tr>
-                        <td>${bill.date}</td>
+                        <td>${bill.formattedDate}</td>
                         <td>${bill.drillSize === 'both' ? 'Both' : bill.drillSize + '"'}</td>
                         <td>${bill.holes}</td>
                         <td>${bill.feet.toFixed(2)}</td>
@@ -1269,8 +1436,8 @@
                 </table>
                 
                 <div class="action-buttons" style="margin-top: 20px;">
-                    <button class="btn btn-success" onclick="downloadAllBillsAsPDF(${compressor.id})">
-                        <i class="fas fa-file-pdf"></i> Download All Bills as PDF
+                    <button class="btn btn-success" onclick="downloadAllBillsAsPDF(${compressor.id}, '${filterDate}')">
+                        <i class="fas fa-file-pdf"></i> Download Bills PDF
                     </button>
                 </div>
             `;
@@ -1281,6 +1448,7 @@
             mainContentArea.innerHTML = `
                 <div class="bill-details">
                     <h2 class="section-title"><i class="fas fa-chart-bar"></i> Summary for ${compressor.name}</h2>
+                    ${filterDate ? `<p style="color: #666; margin-bottom: 15px;">Filtered by date: ${formatDate(filterDate)}</p>` : ''}
                     
                     <div class="compressor-info">
                         <h3>${compressor.name}</h3>
@@ -1293,6 +1461,11 @@
                     <div class="bill-row">
                         <span class="bill-label">Total Bills:</span>
                         <span class="bill-value">${compressor.bills.length}</span>
+                    </div>
+                    
+                    <div class="bill-row">
+                        <span class="bill-label">Filtered Bills:</span>
+                        <span class="bill-value">${filteredBills.length}</span>
                     </div>
                     
                     <div class="bill-row">
@@ -1326,94 +1499,52 @@
 
         // Perform search
         function performSearch() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            
-            if (!searchTerm) {
-                // If no search term, check if a compressor is selected
-                const selectedCompressorId = parseInt(searchCompressorSelect.value);
-                if (selectedCompressorId) {
-                    const compressor = compressorData.find(c => c.id === selectedCompressorId);
-                    if (compressor) {
-                        showCompressorBills(compressor);
-                    }
-                }
-                return;
-            }
-            
-            // Search by compressor name or tractor number
-            const results = compressorData.filter(compressor => {
-                // Check if name matches
-                if (compressor.name.toLowerCase().includes(searchTerm)) {
-                    return true;
-                }
-                
-                // Check if any tractor number matches
-                if (compressor.tractors.some(tractor => 
-                    tractor.toLowerCase().includes(searchTerm))) {
-                    return true;
-                }
-                
-                return false;
-            });
-            
-            // Display search results
-            if (results.length === 0) {
+            const compressorId = parseInt(searchCompressorSelect.value);
+            if (!compressorId) {
                 searchResults.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search"></i>
-                        <h3>No Results Found</h3>
-                        <p>No compressors found matching "${searchTerm}"</p>
+                        <h3>Select a Compressor</h3>
+                        <p>Please select a compressor to view bill details</p>
                     </div>
                 `;
                 
                 mainContentArea.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search"></i>
-                        <h3>No Results Found</h3>
-                        <p>No compressors found matching "${searchTerm}"</p>
+                        <h3>Select a Compressor</h3>
+                        <p>Please select a compressor to view bill details</p>
                     </div>
                 `;
-            } else if (results.length === 1) {
-                // If only one result, show its bills directly
-                showCompressorBills(results[0]);
-            } else {
-                // Show list of matching compressors
-                let resultsHTML = '<h3 style="margin-bottom: 15px;">Search Results</h3>';
-                
-                results.forEach(compressor => {
-                    resultsHTML += `
-                        <div class="compressor-info" style="margin-bottom: 15px;">
-                            <h3>${compressor.name}</h3>
-                            <p><strong>Tractors:</strong> ${compressor.tractors.length > 0 ? compressor.tractors.join(', ') : 'Not specified'}</p>
-                            <p><strong>Total Bills:</strong> ${compressor.bills.length}</p>
-                            <button class="btn btn-secondary" onclick="showCompressorBillsFromSearch(${compressor.id})">
-                                <i class="fas fa-eye"></i> View Bills
-                            </button>
-                        </div>
-                    `;
-                });
-                
-                searchResults.innerHTML = resultsHTML;
-                
-                mainContentArea.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <h3>Search Results</h3>
-                        <p>Found ${results.length} compressors matching "${searchTerm}"</p>
-                        <p>Select one from the list to view details</p>
-                    </div>
-                `;
+                return;
             }
-        }
-
-        // Show compressor bills from search results
-        window.showCompressorBillsFromSearch = function(compressorId) {
+            
             const compressor = compressorData.find(c => c.id === compressorId);
             if (compressor) {
                 showCompressorBills(compressor);
-                searchCompressorSelect.value = compressorId;
             }
-        };
+        }
+
+        // Clear search filter
+        function clearSearchFilter() {
+            searchCompressorSelect.value = '';
+            searchDateInput.value = '';
+            searchResults.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>Search for compressor bills</h3>
+                    <p>Select a compressor to view bill details</p>
+                </div>
+            `;
+            
+            mainContentArea.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h3>Search for compressor bills</h3>
+                    <p>Select a compressor to view bill details</p>
+                </div>
+            `;
+        }
 
         // Clear form
         function clearForm() {
@@ -1421,6 +1552,10 @@
             feetInput.value = '';
             document.getElementById('size-both').checked = true;
             totalAmountElement.textContent = '₹ 0.00';
+            
+            // Reset date to today
+            const today = new Date().toISOString().split('T')[0];
+            billDateInput.value = today;
             
             if (compressorSelect.value) {
                 calculateTotal();
@@ -1439,7 +1574,7 @@
             
             doc.setFontSize(12);
             doc.setTextColor(100, 100, 100);
-            doc.text('Bill Date: ' + bill.date, 105, 25, { align: 'center' });
+            doc.text('Bill Date: ' + bill.formattedDate, 105, 25, { align: 'center' });
             
             // Add a line
             doc.setDrawColor(74, 100, 145);
@@ -1492,10 +1627,21 @@
         }
 
         // Download all bills for a compressor as PDF
-        window.downloadAllBillsAsPDF = function(compressorId) {
+        window.downloadAllBillsAsPDF = function(compressorId, filterDate = '') {
             const compressor = compressorData.find(c => c.id === compressorId);
             if (!compressor || compressor.bills.length === 0) {
                 alert('No bills found for this compressor');
+                return;
+            }
+            
+            // Filter bills if date is provided
+            let billsToExport = compressor.bills;
+            if (filterDate) {
+                billsToExport = compressor.bills.filter(bill => bill.date === filterDate);
+            }
+            
+            if (billsToExport.length === 0) {
+                alert('No bills found for the selected filter');
                 return;
             }
             
@@ -1512,21 +1658,25 @@
             doc.text(compressor.name, 105, 25, { align: 'center' });
             doc.text('Report Date: ' + new Date().toLocaleDateString('en-GB'), 105, 32, { align: 'center' });
             
+            if (filterDate) {
+                doc.text('Filtered Date: ' + formatDate(filterDate), 105, 39, { align: 'center' });
+            }
+            
             // Compressor details
             doc.setFontSize(12);
             doc.setTextColor(0, 0, 0);
-            doc.text('Bank Account: ' + compressor.bankAccount, 20, 45);
-            doc.text('IFSC Code: ' + compressor.ifsc, 20, 52);
-            doc.text('PAN Card: ' + compressor.pan, 20, 59);
+            doc.text('Bank Account: ' + compressor.bankAccount, 20, 50);
+            doc.text('IFSC Code: ' + compressor.ifsc, 20, 57);
+            doc.text('PAN Card: ' + compressor.pan, 20, 64);
             
             // Add a line
             doc.setDrawColor(74, 100, 145);
             doc.setLineWidth(0.5);
-            doc.line(20, 65, 190, 65);
+            doc.line(20, 70, 190, 70);
             
             // Create table data
-            const tableData = compressor.bills.map(bill => [
-                bill.date,
+            const tableData = billsToExport.map(bill => [
+                bill.formattedDate,
                 bill.drillSize === 'both' ? 'Both' : bill.drillSize + '"',
                 bill.holes,
                 bill.feet.toFixed(2),
@@ -1534,16 +1684,16 @@
             ]);
             
             // Calculate totals
-            const totalHoles = compressor.bills.reduce((sum, bill) => sum + bill.holes, 0);
-            const totalFeet = compressor.bills.reduce((sum, bill) => sum + bill.feet, 0);
-            const totalAmount = compressor.bills.reduce((sum, bill) => sum + bill.totalAmount, 0);
+            const totalHoles = billsToExport.reduce((sum, bill) => sum + bill.holes, 0);
+            const totalFeet = billsToExport.reduce((sum, bill) => sum + bill.feet, 0);
+            const totalAmount = billsToExport.reduce((sum, bill) => sum + bill.totalAmount, 0);
             
             // Add totals row
             tableData.push(['TOTAL', '', totalHoles, totalFeet.toFixed(2), '₹ ' + totalAmount.toFixed(2)]);
             
             // Create table
             doc.autoTable({
-                startY: 70,
+                startY: 75,
                 head: [['Date', 'Drill Size', 'Holes', 'Feet', 'Amount']],
                 body: tableData,
                 headStyles: { fillColor: [74, 100, 145], textColor: [255, 255, 255] },
@@ -1557,8 +1707,118 @@
             });
             
             // Save the PDF
-            doc.save(`Full_Report_${compressor.name.replace(/\s+/g, '_')}.pdf`);
+            const fileName = filterDate 
+                ? `Report_${compressor.name.replace(/\s+/g, '_')}_${filterDate}.pdf`
+                : `Full_Report_${compressor.name.replace(/\s+/g, '_')}.pdf`;
+            doc.save(fileName);
         };
+
+        // Download summary PDF
+        function downloadSummaryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(20);
+            doc.setTextColor(44, 62, 80);
+            doc.text('Compressor System Summary Report', 105, 15, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Generated on: ' + new Date().toLocaleDateString('en-GB'), 105, 25, { align: 'center' });
+            
+            // Get all data
+            const allBills = getAllBills();
+            
+            // Calculate totals
+            let totalCompressors = compressorData.length;
+            let totalBills = allBills.length;
+            let totalHoles = 0;
+            let totalFeet = 0;
+            let totalAmount = 0;
+            
+            allBills.forEach(bill => {
+                totalHoles += bill.holes;
+                totalFeet += bill.feet;
+                totalAmount += bill.totalAmount;
+            });
+            
+            // Add summary section
+            doc.setFontSize(16);
+            doc.setTextColor(44, 62, 80);
+            doc.text('Overall Summary', 20, 40);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            const summaryData = [
+                ['Total Compressors:', totalCompressors],
+                ['Total Bills:', totalBills],
+                ['Total Holes:', totalHoles],
+                ['Total Feet:', totalFeet.toFixed(2)],
+                ['Total Amount:', '₹ ' + totalAmount.toFixed(2)],
+                ['Average per Foot:', '₹ ' + (totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00')]
+            ];
+            
+            let yPos = 50;
+            summaryData.forEach(item => {
+                doc.text(item[0], 20, yPos);
+                doc.text(item[1].toString(), 80, yPos);
+                yPos += 8;
+            });
+            
+            // Add a line
+            doc.setDrawColor(74, 100, 145);
+            doc.setLineWidth(0.5);
+            doc.line(20, yPos + 5, 190, yPos + 5);
+            
+            // Add compressor-wise summary
+            yPos += 15;
+            doc.setFontSize(16);
+            doc.setTextColor(44, 62, 80);
+            doc.text('Compressor-wise Summary', 20, yPos);
+            
+            yPos += 10;
+            
+            // Create table data for compressor summary
+            const tableData = compressorData.map(compressor => {
+                const compressorHoles = compressor.bills.reduce((sum, bill) => sum + bill.holes, 0);
+                const compressorFeet = compressor.bills.reduce((sum, bill) => sum + bill.feet, 0);
+                const compressorAmount = compressor.bills.reduce((sum, bill) => sum + bill.totalAmount, 0);
+                
+                return [
+                    compressor.name.substring(0, 20),
+                    compressor.bills.length,
+                    compressorHoles,
+                    compressorFeet.toFixed(2),
+                    '₹ ' + compressorAmount.toFixed(2)
+                ];
+            });
+            
+            // Create table
+            doc.autoTable({
+                startY: yPos,
+                head: [['Compressor', 'Bills', 'Holes', 'Feet', 'Amount']],
+                body: tableData,
+                headStyles: { fillColor: [74, 100, 145], textColor: [255, 255, 255] },
+                columnStyles: {
+                    0: { cellWidth: 60 },
+                    1: { cellWidth: 20 },
+                    2: { cellWidth: 20 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 40 }
+                },
+                didDrawPage: function(data) {
+                    // Footer
+                    doc.setFontSize(10);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text('Page ' + doc.internal.getNumberOfPages(), 105, 285, { align: 'center' });
+                }
+            });
+            
+            // Save the PDF
+            doc.save('Compressor_System_Summary_Report.pdf');
+        }
 
         // Initialize the application when the page loads
         document.addEventListener('DOMContentLoaded', initApp);
