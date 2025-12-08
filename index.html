@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             padding: 25px;
@@ -53,7 +53,7 @@
             margin-bottom: 25px;
         }
         
-        @media (max-width: 1000px) {
+        @media (max-width: 900px) {
             .app-container {
                 grid-template-columns: 1fr;
             }
@@ -90,7 +90,7 @@
             color: #e74c3c;
         }
         
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #ccc;
@@ -99,12 +99,7 @@
             transition: all 0.3s;
         }
         
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #2E8B57;
             box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
@@ -130,6 +125,10 @@
             border-left: 4px solid #2E8B57;
         }
         
+        .rate-info .rate-value {
+            font-size: 1.1em;
+        }
+        
         .calculate-btn {
             background-color: #2E8B57;
             color: white;
@@ -146,22 +145,6 @@
         
         .calculate-btn:hover {
             background-color: #26734d;
-        }
-        
-        .btn-secondary {
-            background-color: #2196F3;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #0b7dda;
-        }
-        
-        .btn-danger {
-            background-color: #f44336;
-        }
-        
-        .btn-danger:hover {
-            background-color: #d32f2f;
         }
         
         .result-section {
@@ -254,6 +237,23 @@
         .search-results.active {
             display: block;
             animation: fadeIn 0.5s;
+        }
+        
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #c8e6c9;
+        }
+        
+        .search-total {
+            font-size: 1.1em;
+            color: #2E8B57;
+            font-weight: bold;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 2px solid #2E8B57;
         }
         
         .history-controls {
@@ -450,582 +450,167 @@
             color: #666;
             margin-top: 4px;
         }
-        
-        /* Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            padding: 25px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 1000px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #2E8B57;
-        }
-        
-        .modal-title {
-            color: #2E8B57;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #666;
-            line-height: 1;
-        }
-        
-        .close-modal:hover {
-            color: #e74c3c;
-        }
-        
-        .account-details {
-            margin-top: 15px;
-        }
-        
-        .account-item {
-            margin-bottom: 15px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            border-left: 4px solid #2E8B57;
-        }
-        
-        .account-field {
-            display: flex;
-            margin-bottom: 6px;
-        }
-        
-        .account-label {
-            font-weight: 600;
-            min-width: 180px;
-            color: #444;
-        }
-        
-        .account-value {
-            color: #333;
-            flex: 1;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .view-details-btn, .download-btn, .view-account-btn {
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 6px 12px;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: background-color 0.3s;
-        }
-        
-        .view-details-btn:hover, .download-btn:hover, .view-account-btn:hover {
-            background-color: #0b7dda;
-        }
-        
-        .download-btn {
-            background-color: #4CAF50;
-        }
-        
-        .download-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .view-account-btn {
-            background-color: #9C27B0;
-        }
-        
-        .view-account-btn:hover {
-            background-color: #7B1FA2;
-        }
-        
-        /* Compressor Details Table */
-        .compressor-details-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.9em;
-        }
-        
-        .compressor-details-table th {
-            background-color: #2E8B57;
-            color: white;
-            padding: 10px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .compressor-details-table td {
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .compressor-details-table tr:hover {
-            background-color: #f1f8e9;
-        }
-        
-        .compressor-total {
-            font-weight: bold;
-            background-color: #e8f5e9;
-        }
-        
-        /* Hole Details */
-        .hole-details {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        
-        .hole-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .hole-item:last-child {
-            border-bottom: none;
-        }
-        
-        /* Tab Navigation */
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid #e0e0e0;
-            margin-bottom: 20px;
-        }
-        
-        .tab-btn {
-            padding: 12px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .tab-btn.active {
-            color: #2E8B57;
-            border-bottom: 2px solid #2E8B57;
-        }
-        
-        .tab-btn:hover:not(.active) {
-            color: #2E8B57;
-            background-color: #f1f8e9;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Grouped Compressor View */
-        .grouped-view {
-            margin-top: 20px;
-        }
-        
-        .compressor-group {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .group-header {
-            background-color: #2E8B57;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-        
-        .group-header h3 {
-            margin: 0;
-            font-size: 1.1em;
-        }
-        
-        .group-toggle {
-            font-size: 1.2em;
-            transition: transform 0.3s;
-        }
-        
-        .group-content {
-            padding: 15px;
-            background-color: white;
-            display: none;
-        }
-        
-        .group-content.active {
-            display: block;
-        }
-        
-        .group-summary {
-            display: flex;
-            justify-content: space-between;
-            background-color: #f1f8e9;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        
-        .summary-item {
-            text-align: center;
-            padding: 0 15px;
-        }
-        
-        .summary-item .label {
-            font-size: 0.85em;
-            color: #666;
-        }
-        
-        .summary-item .value {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2E8B57;
-        }
-        
-        /* Print Styles */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .modal-content, .modal-content * {
-                visibility: visible;
-            }
-            .modal-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                max-width: 100%;
-                margin: 0;
-                padding: 20px;
-                box-shadow: none;
-            }
-            .modal-header, .action-buttons, .close-modal {
-                display: none !important;
-            }
-        }
-        
-        /* Hole Input Section */
-        .hole-input-section {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .hole-input-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        
-        .hole-number {
-            font-weight: bold;
-            min-width: 40px;
-        }
-        
-        .add-hole-btn, .remove-hole-btn {
-            padding: 8px 12px;
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        
-        .remove-hole-btn {
-            background-color: #f44336;
-        }
-        
-        .holes-summary {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #e8f5e9;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            color: #2E8B57;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>COMPRESSOR BILLING SYSTEM</h1>
-            <div class="subtitle">Detailed Hole Tracking with Customer-wise Grouping</div>
+            <div class="subtitle">Track and Manage Compressor Billing</div>
         </div>
         
-        <!-- Tab Navigation -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab('billing-tab')">New Billing</button>
-            <button class="tab-btn" onclick="openTab('history-tab')">Billing History</button>
-            <button class="tab-btn" onclick="openTab('customers-tab')">Compressor Groups</button>
-            <button class="tab-btn" onclick="openTab('reports-tab')">Reports</button>
-        </div>
-        
-        <!-- Billing Tab -->
-        <div id="billing-tab" class="tab-content active">
-            <div class="app-container">
-                <div class="form-section">
-                    <h2 class="section-title">New Billing Entry with Hole Details</h2>
-                    
-                    <form id="compressorForm">
-                        <div class="form-group">
-                            <label for="billDate" class="required">Date</label>
-                            <input type="date" id="billDate" required>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="tractorNumber" class="required">Tractor Number</label>
-                                    <input type="text" id="tractorNumber" list="tractorList" 
-                                           placeholder="Enter Tractor Number" required>
-                                    <datalist id="tractorList">
-                                        <!-- Tractor numbers from database -->
-                                        <option value="AP39CA2814">
-                                        <option value="AP35V5237">
-                                        <option value="AP07AG6505">
-                                        <option value="AP27CD2762">
-                                        <option value="AP31TT3215">
-                                        <option value="AP33CD4892">
-                                        <option value="AP31DM4375">
-                                        <option value="AP27CA1788">
-                                        <option value="AP31DM9316">
-                                        <option value="AP39CV1559">
-                                        <option value="AP39W2632">
-                                        <option value="AP31EH5415">
-                                        <option value="AP39TT1202">
-                                        <option value="AP39U6311">
-                                        <option value="AP26BR4476">
-                                        <option value="AP27BS8679">
-                                        <option value="AP31EQ5430">
-                                        <option value="AP31DM4362">
-                                        <option value="AP31AV2679">
-                                        <option value="AP31EL0779">
-                                        <option value="TS26T4510">
-                                        <option value="AP39TJ1024">
-                                        <option value="AP27UB6303">
-                                        <option value="AP31EN5794">
-                                        <option value="AP26TF5271">
-                                        <option value="AP31TT2085">
-                                        <option value="AP31CB2759">
-                                        <option value="AP39A4504">
-                                        <option value="AP31TB9631">
-                                        <option value="AP39DZ8233">
-                                        <option value="AP07TJ1293">
-                                        <option value="AP39T1609">
-                                        <option value="AP39RN9933">
-                                        <option value="AP39LT0311">
-                                        <option value="AP35T80821">
-                                        <option value="AP39AD2185">
-                                    </datalist>
-                                </div>
-                            </div>
-                            
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="compressorName" class="required">Compressor Name</label>
-                                    <input type="text" id="compressorName" 
-                                           placeholder="Will auto-fill based on tractor" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="location">Work Location/Site</label>
-                            <input type="text" id="location" placeholder="Enter work location">
-                        </div>
-                        
-                        <div class="hole-input-section">
-                            <h3>Hole Details</h3>
-                            <div id="holeInputsContainer">
-                                <!-- Hole inputs will be generated here -->
-                            </div>
-                            <div class="hole-input-row">
-                                <button type="button" class="add-hole-btn" onclick="addHoleInput()">+ Add Another Hole</button>
-                            </div>
-                            <div id="holesSummary" class="holes-summary">
-                                Total: 0 holes, 0.0 ft
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="remarks">Remarks/Notes</label>
-                            <textarea id="remarks" placeholder="Any additional notes..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="ratePerFoot">Rate per Foot (₹)</label>
-                            <input type="number" id="ratePerFoot" min="0" step="0.01" 
-                                   value="38.50" placeholder="Enter rate per foot">
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="calculate-btn" onclick="calculateAndSaveBill()">
-                                    SAVE BILL WITH HOLE DETAILS
-                                </button>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="calculate-btn btn-secondary" onclick="clearForm()">
-                                    CLEAR FORM
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    
-                    <div id="resultSection" class="result-section">
-                        <div class="result-item">
-                            <span class="result-label">Date:</span>
-                            <span id="resultDate" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Tractor Number:</span>
-                            <span id="resultTractor" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Compressor Name:</span>
-                            <span id="resultCompressor" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Number of Holes:</span>
-                            <span id="resultHoles" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Total Drilling Depth:</span>
-                            <span id="resultDepth" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Rate per Foot:</span>
-                            <span id="resultRate" class="result-value"></span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">Hole Details:</span>
-                            <span id="resultHoleDetails" class="result-value"></span>
-                        </div>
-                        <div class="result-item total-cost">
-                            <span class="result-label">Total Compressor Cost:</span>
-                            <span id="resultTotal" class="result-value"></span>
-                        </div>
-                    </div>
-                </div>
+        <div class="app-container">
+            <div class="form-section">
+                <h2 class="section-title">New Billing Entry</h2>
                 
-                <div class="history-section">
-                    <h2 class="section-title">Today's Entries</h2>
+                <form id="compressorForm">
+                    <div class="form-group">
+                        <label for="billDate" class="required">Date</label>
+                        <input type="date" id="billDate" required>
+                    </div>
                     
-                    <!-- Search Section -->
-                    <div class="search-section">
-                        <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Search by tractor, compressor, or location...">
-                            <button class="search-btn" onclick="searchRecords()">Search</button>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="tractorNumber" class="required">Tractor Number</label>
+                                <input type="text" id="tractorNumber" list="tractorList" 
+                                       placeholder="Enter Tractor Number" required>
+                                <datalist id="tractorList">
+                                    <!-- Tractor numbers from your data -->
+                                    <option value="AP31DM4375">
+                                    <option value="AP39T2085">
+                                    <option value="AP31EH5415">
+                                    <option value="AP39U6311">
+                                    <option value="AP39AD2185">
+                                    <option value="AP31EL0779">
+                                    <option value="AP26 TF 5271">
+                                    <option value="AP31 1788">
+                                    <option value="AP35TB0821">
+                                    <option value="AP27BS 8679">
+                                    <option value="AP31EQ 5430">
+                                    <option value="AP32AV2679">
+                                    <option value="AP31NEN 5794">
+                                    <option value="AP39CT 1202">
+                                    <option value="AP39WC 1160">
+                                    <option value="AP39 TJ 1024">
+                                    <option value="AP31DM 9316">
+                                    <option value="AP31DM 5813">
+                                    <option value="AP31DM 4362">
+                                    <option value="AP27BS 6692">
+                                    <option value="AP07TC6823">
+                                    <option value="AP39GA 2814">
+                                    <option value="AP37 TF 1293">
+                                    <option value="AP37 TF 3362">
+                                    <option value="AP07TJ1293">
+                                    <option value="AP27UB 6303">
+                                    <option value="AP27CD 2762">
+                                    <option value="AP39 RN 9933">
+                                    <option value="AP31CB2759">
+                                    <option value="AP26BR4476">
+                                    <option value="AP39W2632">
+                                    <option value="AP31TB9631">
+                                    <option value="AP27CB2053">
+                                    <option value="AP39TL 0311">
+                                    <option value="AP39T1609">
+                                    <option value="AP31DT1087">
+                                    <option value="AP31TN0491">
+                                    <option value="AP27TT3215">
+                                    <option value="AP40FD6128">
+                                    <option value="AP31NG491">
+                                    <option value="AP39J4834">
+                                </datalist>
+                            </div>
                         </div>
-                        <div id="searchResults" class="search-results">
-                            <!-- Search results will appear here -->
+                        
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="compressorName" class="required">Compressor Name</label>
+                                <input type="text" id="compressorName" 
+                                       placeholder="Will auto-fill based on tractor" readonly>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="history-controls">
-                        <button class="history-btn active" onclick="showHistory('today')">Today</button>
-                        <button class="history-btn" onclick="showHistory('yesterday')">Yesterday</button>
-                        <button class="history-btn" onclick="showHistory('week')">This Week</button>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="numberOfHoles" class="required">Number of Holes</label>
+                                <input type="number" id="numberOfHoles" min="1" 
+                                       placeholder="Enter number of holes" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="drillingDepth" class="required">Drilling Depth (Feet)</label>
+                                <input type="number" id="drillingDepth" min="1" step="0.5" 
+                                       placeholder="Enter drilling depth in feet" required>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="history-table-container">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Tractor</th>
-                                    <th>Compressor</th>
-                                    <th>Holes</th>
-                                    <th>Depth</th>
-                                    <th>Amount</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- History records will be inserted here -->
-                            </tbody>
-                        </table>
-                        <div id="noDataMessage" class="no-data">No records found for today.</div>
+                    <div class="form-group">
+                        <label for="ratePerFoot">Rate per Foot (₹)</label>
+                        <input type="number" id="ratePerFoot" min="0" step="0.01" 
+                               value="38.50" placeholder="Enter rate per foot">
                     </div>
                     
-                    <div class="total-summary">
-                        <span>Today's Total:</span>
-                        <span id="totalSummary">₹0.00</span>
+                    <button type="button" class="calculate-btn" onclick="calculateAndSaveBill()">
+                        CALCULATE & SAVE BILL
+                    </button>
+                </form>
+                
+                <div id="resultSection" class="result-section">
+                    <div class="result-item">
+                        <span class="result-label">Date:</span>
+                        <span id="resultDate" class="result-value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tractor Number:</span>
+                        <span id="resultTractor" class="result-value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Compressor Name:</span>
+                        <span id="resultCompressor" class="result-value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Number of Holes:</span>
+                        <span id="resultHoles" class="result-value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Drilling Depth:</span>
+                        <span id="resultDepth" class="result-value"></span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Rate per Foot:</span>
+                        <span id="resultRate" class="result-value"></span>
+                    </div>
+                    <div class="result-item total-cost">
+                        <span class="result-label">Total Compressor Cost:</span>
+                        <span id="resultTotal" class="result-value"></span>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- History Tab -->
-        <div id="history-tab" class="tab-content">
-            <div class="form-section">
-                <h2 class="section-title">Complete Billing History</h2>
+            
+            <div class="history-section">
+                <h2 class="section-title">Billing History & Search</h2>
                 
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="filterDateFrom">From Date</label>
-                            <input type="date" id="filterDateFrom" onchange="filterHistoryByDate()">
-                        </div>
+                <!-- Search Section -->
+                <div class="search-section">
+                    <h3>Search Compressor Records</h3>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Enter compressor name or tractor number to search...">
+                        <button class="search-btn" onclick="searchRecords()">Search</button>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="filterDateTo">To Date</label>
-                            <input type="date" id="filterDateTo" onchange="filterHistoryByDate()">
-                        </div>
+                    <div id="searchResults" class="search-results">
+                        <!-- Search results will appear here -->
                     </div>
                 </div>
                 
                 <div class="history-controls">
-                    <button class="history-btn active" onclick="filterHistory('all')">All Records</button>
-                    <button class="history-btn" onclick="filterHistory('month')">This Month</button>
-                    <button class="history-btn" onclick="filterHistory('lastMonth')">Last Month</button>
-                    <button class="history-btn" onclick="filterHistory('year')">This Year</button>
+                    <button class="history-btn active" onclick="showHistory('today')">Today</button>
+                    <button class="history-btn" onclick="showHistory('all')">All Records</button>
+                    <button class="history-btn" onclick="showHistory('month')">This Month</button>
                 </div>
                 
                 <div class="history-table-container">
@@ -1035,95 +620,26 @@
                                 <th>Date</th>
                                 <th>Tractor</th>
                                 <th>Compressor</th>
-                                <th>Location</th>
                                 <th>Holes</th>
                                 <th>Depth</th>
-                                <th>Rate</th>
                                 <th>Amount</th>
-                                <th>Actions</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="completeHistoryTableBody">
-                            <!-- Complete history records -->
+                        <tbody id="historyTableBody">
+                            <!-- History records will be inserted here -->
                         </tbody>
                     </table>
-                    <div id="completeNoDataMessage" class="no-data">No billing records found.</div>
+                    <div id="noDataMessage" class="no-data">No records found. Add your first billing entry.</div>
                 </div>
                 
                 <div class="total-summary">
-                    <span>Filtered Total:</span>
-                    <span id="completeTotalSummary">₹0.00</span>
+                    <span>Total Amount:</span>
+                    <span id="totalSummary">₹0.00</span>
                 </div>
             </div>
         </div>
         
-        <!-- Customers Tab -->
-        <div id="customers-tab" class="tab-content">
-            <div class="form-section">
-                <h2 class="section-title">Compressor Customer Groups</h2>
-                
-                <div class="search-section">
-                    <div class="search-box">
-                        <input type="text" id="searchCustomer" placeholder="Search compressor by name..." onkeyup="searchCustomerGroups()">
-                        <button class="search-btn" onclick="searchCustomerGroups()">Search</button>
-                    </div>
-                </div>
-                
-                <div class="grouped-view" id="customerGroups">
-                    <!-- Compressor groups will be generated here -->
-                </div>
-                
-                <div class="total-summary">
-                    <span>All Compressors Total:</span>
-                    <span id="allCompressorsTotal">₹0.00</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Reports Tab -->
-        <div id="reports-tab" class="tab-content">
-            <div class="form-section">
-                <h2 class="section-title">Reports & Analytics</h2>
-                
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="summary-title">Total Records</div>
-                        <div class="summary-value" id="reportTotalRecords">0</div>
-                        <div class="summary-detail">All billing entries</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Amount</div>
-                        <div class="summary-value" id="reportTotalAmount">₹0.00</div>
-                        <div class="summary-detail">Overall billing</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Holes</div>
-                        <div class="summary-value" id="reportTotalHoles">0</div>
-                        <div class="summary-detail">Drilled</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Depth</div>
-                        <div class="summary-value" id="reportTotalDepth">0 ft</div>
-                        <div class="summary-detail">Feet drilled</div>
-                    </div>
-                </div>
-                
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col">
-                        <button class="calculate-btn" onclick="generateMonthlyReport()">Generate Monthly Report</button>
-                    </div>
-                    <div class="col">
-                        <button class="calculate-btn btn-secondary" onclick="generateCompressorWiseReport()">Compressor-wise Report</button>
-                    </div>
-                </div>
-                
-                <div id="reportOutput" class="hole-details" style="margin-top: 20px; display: none;">
-                    <!-- Report output will appear here -->
-                </div>
-            </div>
-        </div>
-        
-        <!-- Month Summary -->
         <div class="month-summary">
             <h3 class="section-title">Current Month Summary</h3>
             <div class="summary-grid" id="monthSummary">
@@ -1142,363 +658,73 @@
         </div>
         
         <div class="footer">
-            <p>Compressor Billing System | Detailed Hole Tracking with Customer Grouping</p>
-        </div>
-    </div>
-
-    <!-- Account Details Modal -->
-    <div id="accountModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Compressor Account Details</h2>
-                <button class="close-modal" onclick="closeModal('accountModal')">&times;</button>
-            </div>
-            <div id="accountDetailsContent" class="account-details">
-                <!-- Account details will be populated here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Compressor Details Modal -->
-    <div id="compressorDetailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="compressorDetailsTitle">Compressor Details</h2>
-                <button class="close-modal" onclick="closeModal('compressorDetailsModal')">&times;</button>
-            </div>
-            <div class="action-buttons">
-                <button class="download-btn" onclick="downloadCompressorReport()">Download PDF</button>
-                <button class="view-account-btn" onclick="showAccountDetails(currentCompressorTractor)">View Account</button>
-            </div>
-            <div id="compressorDetailsContent">
-                <!-- Compressor details will be populated here -->
-            </div>
+            <p>Compressor Billing System | Simple and Efficient Billing Management</p>
         </div>
     </div>
 
     <script>
-        // Comprehensive Compressor database with account details
+        // Compressor database - mapping tractor numbers to compressor names
         const compressorDatabase = {
-            "AP39CA2814": {
-                name: "ALLAM VASU",
-                accountNumber: "40988132071",
-                bankName: "STATE BANK OF INDIA",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "CVOPV6966K"
-            },
-            "AP35V5237": {
-                name: "POLINATI VENKATA SRINIVASA RAO",
-                accountNumber: "6086101003124",
-                bankName: "CANARA BANK",
-                branch: "NEAR BELLAM MARKET, ANAKAPALLI",
-                ifscCode: "CNRB0006086",
-                panCard: "ENNPP6015C"
-            },
-            "AP07AG6505": {
-                name: "POLINATI VENKATA SRINIVASA RAO",
-                accountNumber: "6086101003124",
-                bankName: "CANARA BANK",
-                branch: "NEAR BELLAM MARKET, ANAKAPALLI",
-                ifscCode: "CNRB0006086",
-                panCard: "ENNPP6015C"
-            },
-            "AP27CD2762": {
-                name: "KARANAM SRINIVASA RAO",
-                accountNumber: "110150266393",
-                bankName: "CANARA BANK",
-                branch: "NEAR BELLAM MARKET, ANAKAPALLI",
-                ifscCode: "CNRB0006086",
-                panCard: "BSEPR6431D"
-            },
-            "AP31TT3215": {
-                name: "JOMMALA SIVA",
-                accountNumber: "3249509013",
-                bankName: "KOTAK MAHINDRA BANK",
-                branch: "CHINTAVARI STREET ANAKAPALLI",
-                ifscCode: "KKBK0007812",
-                panCard: "BBWPJ8852M"
-            },
-            "AP33CD4892": {
-                name: "JOMMALA SIVA",
-                accountNumber: "3249509013",
-                bankName: "KOTAK MAHINDRA BANK",
-                branch: "CHINTAVARI STREET ANAKAPALLI",
-                ifscCode: "KKBK0007812",
-                panCard: "BBWPJ8852M"
-            },
-            "AP31DM4375": {
-                name: "L. ARUN KUMAR",
-                accountNumber: "053501508399",
-                bankName: "ICICI BANK",
-                branch: "ANAKAPALLI",
-                ifscCode: "ICIC0000535",
-                panCard: "ANIPL8768P"
-            },
-            "AP27CA1788": {
-                name: "GADI LAXMI",
-                accountNumber: "36953130643",
-                bankName: "STATE BANK OF INDIA",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "BVOPL7103H"
-            },
-            "AP31DM9316": {
-                name: "SRINU SREERAMSETTY",
-                accountNumber: "34991974405",
-                bankName: "STATE BANK OF INDIA",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "JDCPS7095R"
-            },
-            "AP39CV1559": {
-                name: "B. SAMUDRU RAJU",
-                accountNumber: "971004023",
-                bankName: "INDIAN BANK",
-                branch: "ANAKAPALLI",
-                ifscCode: "IDIB000A020",
-                panCard: "CGJPB2625R"
-            },
-            "AP39W2632": {
-                name: "KARANAM ANAND (K.ANAND)",
-                accountNumber: "039301000040901",
-                bankName: "INDIAN OVERSEAS BANK",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "IOBA0000393",
-                panCard: "FVGPK7302M"
-            },
-            "AP31EH5415": {
-                name: "PEDDI SETTY TRIMURTHULU",
-                accountNumber: "8038481228",
-                bankName: "IDBI BANK",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "IDIB000A020",
-                panCard: "EBLPP9933F"
-            },
-            "AP39TT1202": {
-                name: "NEETIPALLI APPARAO",
-                accountNumber: "34675754049",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0006338",
-                panCard: "BKEPN3783Q"
-            },
-            "AP39U6311": {
-                name: "KATA NOOKARAJU",
-                accountNumber: "20304516192",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "CGJPK1884R"
-            },
-            "AP26BR4476": {
-                name: "SANYASI NAIDU",
-                accountNumber: "34443923670",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "CMSPN8453Q"
-            },
-            "AP27BS8679": {
-                name: "NAMBARU SRINIVASA RAO",
-                accountNumber: "34002808173",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "AYGPN8019G"
-            },
-            "AP31EQ5430": {
-                name: "LANKA SRINIVASARAO",
-                accountNumber: "20304515950",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "ANDPL4664M"
-            },
-            "AP31DM4362": {
-                name: "NAGULAPALLI KRISHNA",
-                accountNumber: "32379988581",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "AVYPN2276N"
-            },
-            "AP31AV2679": {
-                name: "GADASALA VENKATARAO",
-                accountNumber: "33967733911",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "BTMPG1103L"
-            },
-            "AP31EL0779": {
-                name: "NAMBARU VENKATAPPARAO (VEERU NAIDU)",
-                accountNumber: "33883632995",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "BKEPN3783Q"
-            },
-            "TS26T4510": {
-                name: "CHAPPAGADDA SIVA SAI SANKAR",
-                accountNumber: "039302000002032",
-                bankName: "INDIAN OVERSEAS BANK",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "IOBA0000393",
-                panCard: "BKWPC2193P"
-            },
-            "AP39TJ1024": {
-                name: "RAVI MAHALAXMI DORA",
-                accountNumber: "063110100168824",
-                bankName: "UNION BANK OF INDIA",
-                branch: "WOODPET BRANCH ANAKAPALLI",
-                ifscCode: "UBIN0806315",
-                panCard: "CEAPR2044K"
-            },
-            "AP27UB6303": {
-                name: "SATYANNARAYANA",
-                accountNumber: "30483532930",
-                bankName: "STATE BANK OF INDIA",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN000805",
-                panCard: "DPIPS5590M"
-            },
-            "AP31EN5794": {
-                name: "TARRA APPALARAJU",
-                accountNumber: "50100134897074",
-                bankName: "HDFC BANK",
-                branch: "OPP. SATYANARAYANA THEATRE, MAIN ROAD ANAKAPALLI",
-                ifscCode: "HDFC0001032",
-                panCard: "ALVPT7398A"
-            },
-            "AP26TF5271": {
-                name: "GADASALA SURIBABU",
-                accountNumber: "039302000002030",
-                bankName: "INDIAN OVERSEAS BANK",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "IOBA0000393",
-                panCard: "QGLPS2039Q"
-            },
-            "AP27BS6692": {
-                name: "PEDISETTI BABOJI",
-                accountNumber: "4145340205",
-                bankName: "KOTAK MAHINDRA BANK",
-                branch: "CHINATAVARI STREET ANAKAPALLI",
-                ifscCode: "KKBK0007812",
-                panCard: "FLHPB5792K"
-            },
-            "AP31TT2085": {
-                name: "GADI PADMA (W/O LAXMANA RAO)",
-                accountNumber: "41074777076",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "CYDPG3473L"
-            },
-            "AP31CB2759": {
-                name: "YELAMALA SIVAJI",
-                accountNumber: "1004005003528",
-                bankName: "KANAKA MAHALAXMI CO-OPERATIVE BANK LTD",
-                branch: "AKKAYYAPALEM, VISAKHAPATNAM",
-                ifscCode: "IBKL0150KMC",
-                panCard: "AKOPY6857B"
-            },
-            "AP39A4504": {
-                name: "GURRAM KRISHNARAO",
-                accountNumber: "50100418811812",
-                bankName: "HDFC BANK",
-                branch: "OPP. SATYANARYANA THEATRE, MAIN ROAD ANAKAPALLI",
-                ifscCode: "HDFC0001032",
-                panCard: "CNTPG6055P"
-            },
-            "AP31TB9631": {
-                name: "ISARAPU SURYANARAYANA",
-                accountNumber: "6086101006038",
-                bankName: "CANARA BANK",
-                branch: "RING ROAD, NEAR BELLAM MARKET, ANAKAPALLI",
-                ifscCode: "CNRB0006086",
-                panCard: "AHQP17955M"
-            },
-            "AP39DZ8233": {
-                name: "KUMARI BALLA (P ANAND)",
-                accountNumber: "386602010016453",
-                bankName: "UNION BANK OF INDIA",
-                branch: "TUMPALA, ANAKAPALLI",
-                ifscCode: "UBIN0538663",
-                panCard: "DWYPB3100D"
-            },
-            "AP07TJ1293": {
-                name: "KUMARI BALLA (P ANAND)",
-                accountNumber: "386602010016453",
-                bankName: "UNION BANK OF INDIA",
-                branch: "TUMPALA, ANAKAPALLI",
-                ifscCode: "UBIN0538663",
-                panCard: "DWYPB3100D"
-            },
-            "AP39T1609": {
-                name: "ALLAM VENKATA SIVAJEE",
-                accountNumber: "42081135431",
-                bankName: "STATE BANK OF INDIA",
-                branch: "MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "RLJPS1208H"
-            },
-            "AP39RN9933": {
-                name: "RAAVI SARVALAKSHMI (W/O RAVI RAMESH)",
-                accountNumber: "063112010002232",
-                bankName: "UNION BANK",
-                branch: "ANAKAPALLI",
-                ifscCode: "UBIN0806315",
-                panCard: "QNZPS1493F"
-            },
-            "AP39LT0311": {
-                name: "VASADI V. SHOMNAIDU (ADAPA SRINU)",
-                accountNumber: "96011524622",
-                bankName: "COASTAL LOCAL AREA BANK LTD",
-                branch: "ANKAPALLE",
-                ifscCode: "COAS0000001",
-                panCard: "EZTPR2341H"
-            },
-            "AP35T80821": {
-                name: "SESHAPU SREELATHA (VINAY)",
-                accountNumber: "33209179511",
-                bankName: "STATE BANK OF INDIA",
-                branch: "NEHRU CHOWK, MAIN ROAD ANAKAPALLI",
-                ifscCode: "SBIN0000805",
-                panCard: "LUGPS3440D"
-            },
-            "AP39AD2185": {
-                name: "KARANAM KRISHNA (MAHESH)",
-                accountNumber: "1003104000148191",
-                bankName: "IDBI BANK",
-                branch: "MAIN ROAD NARSINGARAO PETA ANAKAPALLI",
-                ifscCode: "IBKL0001003",
-                panCard: "MQVPK7059L"
-            }
+            "AP31DM4375": "KUMAR",
+            "AP39T2085": "LAXMANA RAO", 
+            "AP31EH5415": "TRIMURTHU",
+            "AP31NG491": "SURYA RAO",
+            "AP39U6311": "NOOKA RAJU",
+            "AP39AD2185": "MAHESH",
+            "AP31EL0779": "VEERU NAIDU",
+            "AP26 TF 5271": "SURIBABU",
+            "AP31 1788": "SURYA RAO",
+            "AP35TB0821": "VINAY",
+            "AP27BS 8679": "N.SRINU",
+            "AP31EQ 5430": "L.SRINU",
+            "AP32AV2679": "G.VENKATARAO",
+            "AP31NEN 5794": "TARRA RAJU",
+            "AP39CT 1202": "N.APPARAO",
+            "AP39WC 1160": "MPTC MATURU",
+            "AP39 TJ 1024": "RAVI MAHALAXMI",
+            "AP31DM 9316": "G.SRINU",
+            "AP31DM 5813": "KRISHNA",
+            "AP31DM 4362": "KRISHNA",
+            "AP27BS 6692": "BABOJI",
+            "AP07TC6823": "BABOJI",
+            "AP39GA 2814": "ALLAM VASU",
+            "AP37 TF 1293": "HANUMANT RAO",
+            "AP37 TF 3362": "HANUMANT RAO",
+            "AP07TJ1293": "P.ANAND",
+            "AP27UB 6303": "SATYANNARAYANA",
+            "AP27CD 2762": "KATHI SRINU",
+            "AP39 RN 9933": "RAVI RAMESH",
+            "AP31CB2759": "SIVAJI(gunkal lova)",
+            "AP26BR4476": "K.SANYASI NAIDU",
+            "AP39W2632": "K.ANAND",
+            "AP31TB9631": "SURYA NARAYANA",
+            "AP27CB2053": "SURYA NARAYANA/P.ANAND",
+            "AP39TL 0311": "V. SomNaidu/(ADAPA SRINU)",
+            "AP39T1609": "SHIVA-MATHUR",
+            "AP31DT1087": "NOOKU NAIDU",
+            "AP39J4834": "MADHU",
+            "AP31TN0491": "K.RAMA RAO",
+            "AP27TT3215": "J.SHIVA",
+            "AP40FD6128": "ALLU GANESH"
         };
         
         // Initialize localStorage
         const STORAGE_KEY = 'compressorBillingData';
         let billingData = [];
         let currentFilter = 'today';
-        let currentCompressorTractor = '';
-        let currentHoleCount = 1;
         
         // Load data from localStorage on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
-            initializeHoleInputs();
             updateHistoryTable();
             updateMonthSummary();
-            updateReports();
-            loadCustomerGroups();
             
             // Add event listener for tractor number input to auto-fill compressor name
             document.getElementById('tractorNumber').addEventListener('input', function() {
                 const tractorNumber = this.value.trim().toUpperCase();
-                const compressorData = compressorDatabase[tractorNumber];
-                if (compressorData) {
-                    document.getElementById('compressorName').value = compressorData.name;
+                const compressorName = compressorDatabase[tractorNumber];
+                if (compressorName) {
+                    document.getElementById('compressorName').value = compressorName;
                 } else {
                     document.getElementById('compressorName').value = '';
                 }
@@ -1507,8 +733,6 @@
             // Set today's date as default
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('billDate').value = today;
-            document.getElementById('filterDateFrom').value = getFirstDayOfMonth();
-            document.getElementById('filterDateTo').value = today;
             
             // Add enter key support for search
             document.getElementById('searchInput').addEventListener('keypress', function(e) {
@@ -1517,59 +741,6 @@
                 }
             });
         });
-        
-        // Initialize hole inputs
-        function initializeHoleInputs() {
-            const container = document.getElementById('holeInputsContainer');
-            container.innerHTML = '';
-            currentHoleCount = 1;
-            addHoleInput();
-            updateHolesSummary();
-        }
-        
-        // Add hole input
-        function addHoleInput() {
-            const container = document.getElementById('holeInputsContainer');
-            const holeDiv = document.createElement('div');
-            holeDiv.className = 'hole-input-row';
-            holeDiv.id = `hole-${currentHoleCount}`;
-            holeDiv.innerHTML = `
-                <div class="hole-number">Hole ${currentHoleCount}:</div>
-                <input type="number" class="hole-depth" placeholder="Depth (feet)" min="0.5" step="0.5" 
-                       oninput="updateHolesSummary()" style="flex: 2;">
-                <input type="text" class="hole-notes" placeholder="Notes (optional)" style="flex: 3;">
-                ${currentHoleCount > 1 ? '<button type="button" class="remove-hole-btn" onclick="removeHoleInput(' + currentHoleCount + ')">Remove</button>' : ''}
-            `;
-            container.appendChild(holeDiv);
-            currentHoleCount++;
-            updateHolesSummary();
-        }
-        
-        // Remove hole input
-        function removeHoleInput(holeNumber) {
-            const holeDiv = document.getElementById(`hole-${holeNumber}`);
-            if (holeDiv) {
-                holeDiv.remove();
-                updateHolesSummary();
-            }
-        }
-        
-        // Update holes summary
-        function updateHolesSummary() {
-            const holeInputs = document.querySelectorAll('.hole-depth');
-            let totalHoles = 0;
-            let totalDepth = 0;
-            
-            holeInputs.forEach(input => {
-                if (input.value && parseFloat(input.value) > 0) {
-                    totalHoles++;
-                    totalDepth += parseFloat(input.value);
-                }
-            });
-            
-            document.getElementById('holesSummary').innerHTML = 
-                `Total: ${totalHoles} holes, ${totalDepth.toFixed(1)} ft`;
-        }
         
         // Load data from localStorage
         function loadData() {
@@ -1595,54 +766,32 @@
             const date = document.getElementById('billDate').value;
             const tractorNumber = document.getElementById('tractorNumber').value.trim().toUpperCase();
             const compressorName = document.getElementById('compressorName').value;
-            const location = document.getElementById('location').value;
-            const remarks = document.getElementById('remarks').value;
+            const numberOfHoles = parseInt(document.getElementById('numberOfHoles').value);
+            const drillingDepth = parseFloat(document.getElementById('drillingDepth').value);
             const ratePerFoot = parseFloat(document.getElementById('ratePerFoot').value);
             
-            // Get hole details
-            const holes = [];
-            let totalDepth = 0;
-            const holeInputs = document.querySelectorAll('.hole-depth');
-            
-            holeInputs.forEach((input, index) => {
-                if (input.value && parseFloat(input.value) > 0) {
-                    const depth = parseFloat(input.value);
-                    const notes = input.parentNode.querySelector('.hole-notes').value;
-                    holes.push({
-                        holeNumber: index + 1,
-                        depth: depth,
-                        notes: notes
-                    });
-                    totalDepth += depth;
-                }
-            });
-            
             // Validate form
-            if (!date || !tractorNumber || !compressorName || holes.length === 0 || !ratePerFoot) {
-                alert('Please fill in all required fields and add at least one hole');
+            if (!date || !tractorNumber || !compressorName || !numberOfHoles || !drillingDepth || !ratePerFoot) {
+                alert('Please fill in all required fields');
                 return;
             }
             
-            if (ratePerFoot <= 0) {
-                alert('Rate per foot must be greater than 0');
+            if (numberOfHoles <= 0 || drillingDepth <= 0 || ratePerFoot <= 0) {
+                alert('Number of holes, drilling depth and rate must be greater than 0');
                 return;
             }
             
             // Calculate total
-            const totalCost = totalDepth * ratePerFoot;
+            const totalCost = drillingDepth * ratePerFoot;
             
             // Create bill object
             const bill = {
                 id: Date.now(), // Unique ID
                 date: date,
-                time: new Date().toLocaleTimeString('en-IN', {hour12: false, hour: '2-digit', minute:'2-digit'}),
                 tractorNumber: tractorNumber,
                 compressorName: compressorName,
-                location: location,
-                remarks: remarks,
-                holes: holes,
-                numberOfHoles: holes.length,
-                drillingDepth: totalDepth,
+                numberOfHoles: numberOfHoles,
+                drillingDepth: drillingDepth,
                 ratePerFoot: ratePerFoot,
                 totalCost: parseFloat(totalCost.toFixed(2))
             };
@@ -1662,56 +811,31 @@
             // Update month summary
             updateMonthSummary();
             
-            // Update reports
-            updateReports();
-            
-            // Update customer groups
-            loadCustomerGroups();
-            
             // Clear form
-            clearForm();
-            
-            // Show success message
-            alert('Bill saved successfully with ' + holes.length + ' holes!');
-        }
-        
-        // Show calculation result
-        function showResult(bill) {
-            document.getElementById('resultDate').textContent = formatDate(bill.date) + ' ' + bill.time;
-            document.getElementById('resultTractor').textContent = bill.tractorNumber;
-            document.getElementById('resultCompressor').textContent = bill.compressorName;
-            document.getElementById('resultHoles').textContent = bill.numberOfHoles + ' holes';
-            document.getElementById('resultDepth').textContent = bill.drillingDepth.toFixed(1) + ' ft';
-            document.getElementById('resultRate').textContent = '₹' + bill.ratePerFoot.toFixed(2);
-            
-            // Show hole details
-            let holeDetails = '';
-            bill.holes.forEach(hole => {
-                holeDetails += `Hole ${hole.holeNumber}: ${hole.depth}ft`;
-                if (hole.notes) holeDetails += ` (${hole.notes})`;
-                holeDetails += '<br>';
-            });
-            document.getElementById('resultHoleDetails').innerHTML = holeDetails;
-            
-            document.getElementById('resultTotal').textContent = '₹' + bill.totalCost.toFixed(2);
-            
-            document.getElementById('resultSection').classList.add('active');
-        }
-        
-        // Clear form
-        function clearForm() {
             document.getElementById('compressorForm').reset();
             document.getElementById('tractorNumber').value = '';
             document.getElementById('compressorName').value = '';
             document.getElementById('ratePerFoot').value = '38.50';
-            initializeHoleInputs();
             
             // Set today's date
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('billDate').value = today;
             
-            // Hide result section
-            document.getElementById('resultSection').classList.remove('active');
+            // Show success message
+            alert('Bill saved successfully!');
+        }
+        
+        // Show calculation result
+        function showResult(bill) {
+            document.getElementById('resultDate').textContent = formatDate(bill.date);
+            document.getElementById('resultTractor').textContent = bill.tractorNumber;
+            document.getElementById('resultCompressor').textContent = bill.compressorName;
+            document.getElementById('resultHoles').textContent = bill.numberOfHoles;
+            document.getElementById('resultDepth').textContent = bill.drillingDepth.toFixed(1) + ' ft';
+            document.getElementById('resultRate').textContent = '₹' + bill.ratePerFoot.toFixed(2);
+            document.getElementById('resultTotal').textContent = '₹' + bill.totalCost.toFixed(2);
+            
+            document.getElementById('resultSection').classList.add('active');
         }
         
         // Update history table
@@ -1744,67 +868,13 @@
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${bill.time || '--:--'}</td>
-                    <td>${bill.tractorNumber}</td>
-                    <td>${bill.compressorName}</td>
-                    <td>${bill.numberOfHoles}</td>
-                    <td>${bill.drillingDepth.toFixed(1)} ft</td>
-                    <td>₹${bill.totalCost.toFixed(2)}</td>
-                    <td>
-                        <button class="view-account-btn" onclick="viewCompressorDetails('${bill.tractorNumber}')">View</button>
-                        <button class="delete-btn" onclick="deleteRecord(${bill.id})">Delete</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-            
-            // Update total summary
-            totalSummary.textContent = '₹' + totalAmount.toFixed(2);
-        }
-        
-        // Update complete history table
-        function updateCompleteHistoryTable(filteredData) {
-            const tableBody = document.getElementById('completeHistoryTableBody');
-            const noDataMessage = document.getElementById('completeNoDataMessage');
-            const totalSummary = document.getElementById('completeTotalSummary');
-            
-            if (!filteredData || filteredData.length === 0) {
-                tableBody.innerHTML = '';
-                noDataMessage.style.display = 'block';
-                totalSummary.textContent = '₹0.00';
-                return;
-            }
-            
-            noDataMessage.style.display = 'none';
-            
-            // Clear table
-            tableBody.innerHTML = '';
-            
-            // Calculate total
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            
-            // Add rows
-            filteredData.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
                     <td>${formatDate(bill.date)}</td>
                     <td>${bill.tractorNumber}</td>
                     <td>${bill.compressorName}</td>
-                    <td>${bill.location || '--'}</td>
                     <td>${bill.numberOfHoles}</td>
                     <td>${bill.drillingDepth.toFixed(1)} ft</td>
-                    <td>₹${bill.ratePerFoot.toFixed(2)}</td>
                     <td>₹${bill.totalCost.toFixed(2)}</td>
-                    <td>
-                        <button class="view-account-btn" onclick="viewBillDetails(${bill.id})">Details</button>
-                        <button class="delete-btn" onclick="deleteRecord(${bill.id})">Delete</button>
-                    </td>
+                    <td><button class="delete-btn" onclick="deleteRecord(${bill.id})">Delete</button></td>
                 `;
                 tableBody.appendChild(row);
             });
@@ -1816,58 +886,22 @@
         // Filter data based on selection
         function filterData(data, filter) {
             const today = new Date().toISOString().split('T')[0];
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
             const currentMonth = new Date().getMonth() + 1;
             const currentYear = new Date().getFullYear();
-            const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
             
             switch(filter) {
                 case 'today':
                     return data.filter(bill => bill.date === today);
-                case 'yesterday':
-                    return data.filter(bill => bill.date === yesterday);
-                case 'week':
-                    return data.filter(bill => bill.date >= weekAgo);
                 case 'month':
                     return data.filter(bill => {
                         const billDate = new Date(bill.date);
                         return billDate.getMonth() + 1 === currentMonth && 
                                billDate.getFullYear() === currentYear;
                     });
-                case 'lastMonth':
-                    const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
-                    const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-                    return data.filter(bill => {
-                        const billDate = new Date(bill.date);
-                        return billDate.getMonth() + 1 === lastMonth && 
-                               billDate.getFullYear() === lastMonthYear;
-                    });
-                case 'year':
-                    return data.filter(bill => {
-                        const billDate = new Date(bill.date);
-                        return billDate.getFullYear() === currentYear;
-                    });
                 case 'all':
                 default:
                     return data;
             }
-        }
-        
-        // Filter history by date range
-        function filterHistoryByDate() {
-            const fromDate = document.getElementById('filterDateFrom').value;
-            const toDate = document.getElementById('filterDateTo').value;
-            
-            if (!fromDate || !toDate) {
-                updateCompleteHistoryTable(billingData);
-                return;
-            }
-            
-            const filteredData = billingData.filter(bill => 
-                bill.date >= fromDate && bill.date <= toDate
-            );
-            
-            updateCompleteHistoryTable(filteredData);
         }
         
         // Show history based on filter
@@ -1884,336 +918,15 @@
             updateHistoryTable();
         }
         
-        // Filter complete history
-        function filterHistory(filter) {
-            // Update active button
-            document.querySelectorAll('#history-tab .history-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            const filteredData = filterData(billingData, filter);
-            updateCompleteHistoryTable(filteredData);
-        }
-        
         // Delete a record
         function deleteRecord(id) {
             if (confirm('Are you sure you want to delete this record?')) {
                 billingData = billingData.filter(bill => bill.id !== id);
                 saveData();
                 updateHistoryTable();
-                updateCompleteHistoryTable(billingData);
                 updateMonthSummary();
-                updateReports();
-                loadCustomerGroups();
                 alert('Record deleted successfully!');
             }
-        }
-        
-        // View compressor details
-        function viewCompressorDetails(tractorNumber) {
-            currentCompressorTractor = tractorNumber;
-            const compressorData = compressorDatabase[tractorNumber];
-            const compressorRecords = billingData.filter(bill => bill.tractorNumber === tractorNumber);
-            
-            if (compressorRecords.length === 0) {
-                alert('No records found for this compressor');
-                return;
-            }
-            
-            // Calculate totals
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            let totalDays = new Set();
-            
-            compressorRecords.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-                totalDays.add(bill.date);
-            });
-            
-            // Build details HTML
-            let detailsHTML = `
-                <div class="account-item">
-                    <div class="account-field">
-                        <span class="account-label">Tractor Number:</span>
-                        <span class="account-value">${tractorNumber}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Compressor Name:</span>
-                        <span class="account-value">${compressorData ? compressorData.name : 'N/A'}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Days Worked:</span>
-                        <span class="account-value">${totalDays.size}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Holes Drilled:</span>
-                        <span class="account-value">${totalHoles}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Depth:</span>
-                        <span class="account-value">${totalDepth.toFixed(1)} ft</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Amount:</span>
-                        <span class="account-value">₹${totalAmount.toFixed(2)}</span>
-                    </div>
-                </div>
-                
-                <h3>Detailed Work History</h3>
-                <table class="compressor-details-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Location</th>
-                            <th>Holes</th>
-                            <th>Depth (ft)</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            compressorRecords.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(bill => {
-                detailsHTML += `
-                    <tr>
-                        <td>${formatDate(bill.date)}</td>
-                        <td>${bill.location || '--'}</td>
-                        <td>${bill.numberOfHoles}</td>
-                        <td>${bill.drillingDepth.toFixed(1)}</td>
-                        <td>₹${bill.ratePerFoot.toFixed(2)}</td>
-                        <td>₹${bill.totalCost.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            detailsHTML += `
-                    </tbody>
-                    <tfoot>
-                        <tr class="compressor-total">
-                            <td colspan="2">TOTAL</td>
-                            <td>${totalHoles}</td>
-                            <td>${totalDepth.toFixed(1)} ft</td>
-                            <td colspan="2">₹${totalAmount.toFixed(2)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                
-                <h3>Hole Details</h3>
-            `;
-            
-            // Add hole details
-            compressorRecords.forEach(bill => {
-                if (bill.holes && bill.holes.length > 0) {
-                    detailsHTML += `
-                        <div class="hole-details">
-                            <h4>${formatDate(bill.date)} - ${bill.location || 'No location'}</h4>
-                    `;
-                    bill.holes.forEach(hole => {
-                        detailsHTML += `
-                            <div class="hole-item">
-                                <span>Hole ${hole.holeNumber}: ${hole.depth} ft</span>
-                                <span>${hole.notes || ''}</span>
-                            </div>
-                        `;
-                    });
-                    detailsHTML += `</div>`;
-                }
-            });
-            
-            document.getElementById('compressorDetailsTitle').textContent = 
-                `Compressor Details - ${compressorData ? compressorData.name : tractorNumber}`;
-            document.getElementById('compressorDetailsContent').innerHTML = detailsHTML;
-            
-            document.getElementById('compressorDetailsModal').style.display = 'block';
-        }
-        
-        // View bill details
-        function viewBillDetails(billId) {
-            const bill = billingData.find(b => b.id === billId);
-            if (!bill) return;
-            
-            let detailsHTML = `
-                <div class="account-item">
-                    <div class="account-field">
-                        <span class="account-label">Date:</span>
-                        <span class="account-value">${formatDate(bill.date)} ${bill.time || ''}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Tractor Number:</span>
-                        <span class="account-value">${bill.tractorNumber}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Compressor Name:</span>
-                        <span class="account-value">${bill.compressorName}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Location:</span>
-                        <span class="account-value">${bill.location || 'Not specified'}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Number of Holes:</span>
-                        <span class="account-value">${bill.numberOfHoles}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Depth:</span>
-                        <span class="account-value">${bill.drillingDepth.toFixed(1)} ft</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Rate per Foot:</span>
-                        <span class="account-value">₹${bill.ratePerFoot.toFixed(2)}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Amount:</span>
-                        <span class="account-value">₹${bill.totalCost.toFixed(2)}</span>
-                    </div>
-                </div>
-                
-                <h3>Hole Details</h3>
-                <div class="hole-details">
-            `;
-            
-            bill.holes.forEach(hole => {
-                detailsHTML += `
-                    <div class="hole-item">
-                        <span>Hole ${hole.holeNumber}: ${hole.depth} ft</span>
-                        <span>${hole.notes || ''}</span>
-                    </div>
-                `;
-            });
-            
-            detailsHTML += `</div>`;
-            
-            if (bill.remarks) {
-                detailsHTML += `
-                    <h3>Remarks</h3>
-                    <div class="hole-details">
-                        <p>${bill.remarks}</p>
-                    </div>
-                `;
-            }
-            
-            document.getElementById('compressorDetailsTitle').textContent = 'Bill Details';
-            document.getElementById('compressorDetailsContent').innerHTML = detailsHTML;
-            document.getElementById('compressorDetailsModal').style.display = 'block';
-        }
-        
-        // Show account details
-        function showAccountDetails(tractorNumber = null) {
-            const modal = document.getElementById('accountModal');
-            const content = document.getElementById('accountDetailsContent');
-            
-            if (tractorNumber) {
-                // Show specific tractor account
-                const tractorData = compressorDatabase[tractorNumber];
-                if (tractorData) {
-                    content.innerHTML = createAccountDetailsHTML(tractorNumber, tractorData);
-                } else {
-                    content.innerHTML = `<div class="account-item"><p>No account details found for tractor number: ${tractorNumber}</p></div>`;
-                }
-            } else {
-                // Show all compressors
-                content.innerHTML = '<h3>All Compressor Account Details</h3>';
-                
-                // Group compressors by name to avoid duplicates
-                const groupedData = {};
-                
-                Object.keys(compressorDatabase).forEach(tractor => {
-                    const data = compressorDatabase[tractor];
-                    const key = data.name;
-                    
-                    if (!groupedData[key]) {
-                        groupedData[key] = {
-                            tractors: [tractor],
-                            data: data
-                        };
-                    } else {
-                        groupedData[key].tractors.push(tractor);
-                    }
-                });
-                
-                // Display all compressors
-                Object.keys(groupedData).sort().forEach(name => {
-                    const item = groupedData[name];
-                    const tractorList = item.tractors.join(', ');
-                    
-                    content.innerHTML += `
-                        <div class="account-item">
-                            <div class="account-field">
-                                <span class="account-label">Compressor Name:</span>
-                                <span class="account-value">${name}</span>
-                            </div>
-                            <div class="account-field">
-                                <span class="account-label">Tractor Numbers:</span>
-                                <span class="account-value">${tractorList}</span>
-                            </div>
-                            <div class="account-field">
-                                <span class="account-label">Account Number:</span>
-                                <span class="account-value">${item.data.accountNumber}</span>
-                            </div>
-                            <div class="account-field">
-                                <span class="account-label">Bank:</span>
-                                <span class="account-value">${item.data.bankName}</span>
-                            </div>
-                            <div class="account-field">
-                                <span class="account-label">IFSC Code:</span>
-                                <span class="account-value">${item.data.ifscCode}</span>
-                            </div>
-                            <div class="account-field">
-                                <span class="account-label">PAN Card:</span>
-                                <span class="account-value">${item.data.panCard}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            modal.style.display = 'block';
-        }
-        
-        // Create account details HTML
-        function createAccountDetailsHTML(tractorNumber, data) {
-            return `
-                <div class="account-item">
-                    <div class="account-field">
-                        <span class="account-label">Tractor Number:</span>
-                        <span class="account-value">${tractorNumber}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Compressor Name:</span>
-                        <span class="account-value">${data.name}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Account Number:</span>
-                        <span class="account-value">${data.accountNumber}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Bank Name:</span>
-                        <span class="account-value">${data.bankName}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Branch:</span>
-                        <span class="account-value">${data.branch}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">IFSC Code:</span>
-                        <span class="account-value">${data.ifscCode}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">PAN Card Number:</span>
-                        <span class="account-value">${data.panCard}</span>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Close modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
         }
         
         // Search records
@@ -2230,8 +943,7 @@
             // Filter records based on search term
             const results = billingData.filter(bill => 
                 bill.compressorName.toLowerCase().includes(searchTerm) ||
-                bill.tractorNumber.toLowerCase().includes(searchTerm) ||
-                (bill.location && bill.location.toLowerCase().includes(searchTerm))
+                bill.tractorNumber.toLowerCase().includes(searchTerm)
             );
             
             if (results.length === 0) {
@@ -2242,18 +954,14 @@
             
             // Calculate total for search results
             let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
             let resultsHtml = '';
             
             results.forEach(bill => {
                 totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
                 resultsHtml += `
                     <div class="search-result-item">
                         <span>${formatDate(bill.date)} - ${bill.compressorName} (${bill.tractorNumber})</span>
-                        <span>${bill.numberOfHoles} holes, ${bill.drillingDepth.toFixed(1)}ft - ₹${bill.totalCost.toFixed(2)}</span>
+                        <span>₹${bill.totalCost.toFixed(2)}</span>
                     </div>
                 `;
             });
@@ -2262,7 +970,7 @@
             resultsHtml += `
                 <div class="search-result-item search-total">
                     <span>Total for "${searchTerm}":</span>
-                    <span>${totalHoles} holes, ${totalDepth.toFixed(1)}ft - ₹${totalAmount.toFixed(2)}</span>
+                    <span>₹${totalAmount.toFixed(2)}</span>
                 </div>
             `;
             
@@ -2279,257 +987,6 @@
             `;
             
             searchResults.classList.add('active');
-        }
-        
-        // Load customer groups
-        function loadCustomerGroups() {
-            const container = document.getElementById('customerGroups');
-            const allCompressorsTotal = document.getElementById('allCompressorsTotal');
-            
-            if (billingData.length === 0) {
-                container.innerHTML = '<div class="no-data">No compressor records found</div>';
-                allCompressorsTotal.textContent = '₹0.00';
-                return;
-            }
-            
-            // Group by compressor name
-            const groups = {};
-            let grandTotal = 0;
-            
-            billingData.forEach(bill => {
-                const key = bill.compressorName;
-                if (!groups[key]) {
-                    groups[key] = {
-                        tractorNumbers: new Set(),
-                        bills: [],
-                        totalAmount: 0,
-                        totalHoles: 0,
-                        totalDepth: 0
-                    };
-                }
-                groups[key].tractorNumbers.add(bill.tractorNumber);
-                groups[key].bills.push(bill);
-                groups[key].totalAmount += bill.totalCost;
-                groups[key].totalHoles += bill.numberOfHoles;
-                groups[key].totalDepth += bill.drillingDepth;
-                grandTotal += bill.totalCost;
-            });
-            
-            // Build HTML for each group
-            let groupsHTML = '';
-            
-            Object.keys(groups).sort().forEach(compressorName => {
-                const group = groups[compressorName];
-                const tractorList = Array.from(group.tractorNumbers).join(', ');
-                
-                groupsHTML += `
-                    <div class="compressor-group">
-                        <div class="group-header" onclick="toggleGroup('${compressorName}')">
-                            <h3>${compressorName}</h3>
-                            <span class="group-toggle">▼</span>
-                        </div>
-                        <div class="group-summary">
-                            <div class="summary-item">
-                                <div class="value">${group.bills.length}</div>
-                                <div class="label">Entries</div>
-                            </div>
-                            <div class="summary-item">
-                                <div class="value">${group.totalHoles}</div>
-                                <div class="label">Holes</div>
-                            </div>
-                            <div class="summary-item">
-                                <div class="value">${group.totalDepth.toFixed(1)}</div>
-                                <div class="label">Feet</div>
-                            </div>
-                            <div class="summary-item">
-                                <div class="value">₹${group.totalAmount.toFixed(2)}</div>
-                                <div class="label">Amount</div>
-                            </div>
-                        </div>
-                        <div class="group-content" id="group-${compressorName}">
-                            <p><strong>Tractor Numbers:</strong> ${tractorList}</p>
-                            <table class="compressor-details-table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Tractor</th>
-                                        <th>Location</th>
-                                        <th>Holes</th>
-                                        <th>Depth</th>
-                                        <th>Amount</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                `;
-                
-                group.bills.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(bill => {
-                    groupsHTML += `
-                        <tr>
-                            <td>${formatDate(bill.date)}</td>
-                            <td>${bill.tractorNumber}</td>
-                            <td>${bill.location || '--'}</td>
-                            <td>${bill.numberOfHoles}</td>
-                            <td>${bill.drillingDepth.toFixed(1)} ft</td>
-                            <td>₹${bill.totalCost.toFixed(2)}</td>
-                            <td>
-                                <button class="view-account-btn" onclick="viewBillDetails(${bill.id})">View</button>
-                                <button class="view-account-btn" style="background-color: #4CAF50;" onclick="downloadBillPDF(${bill.id})">PDF</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                groupsHTML += `
-                                </tbody>
-                            </table>
-                            <div class="action-buttons">
-                                <button class="download-btn" onclick="downloadCompressorGroupReport('${compressorName}')">Download Group Report</button>
-                                <button class="view-account-btn" onclick="viewCompressorGroupDetails('${compressorName}')">View All Details</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = groupsHTML;
-            allCompressorsTotal.textContent = '₹' + grandTotal.toFixed(2);
-        }
-        
-        // Toggle group visibility
-        function toggleGroup(compressorName) {
-            const groupContent = document.getElementById(`group-${compressorName}`);
-            const groupToggle = event.currentTarget.querySelector('.group-toggle');
-            
-            if (groupContent.classList.contains('active')) {
-                groupContent.classList.remove('active');
-                groupToggle.textContent = '▼';
-            } else {
-                groupContent.classList.add('active');
-                groupToggle.textContent = '▲';
-            }
-        }
-        
-        // Search customer groups
-        function searchCustomerGroups() {
-            const searchTerm = document.getElementById('searchCustomer').value.trim().toLowerCase();
-            const groups = document.querySelectorAll('.compressor-group');
-            
-            if (!searchTerm) {
-                groups.forEach(group => group.style.display = 'block');
-                return;
-            }
-            
-            groups.forEach(group => {
-                const compressorName = group.querySelector('h3').textContent.toLowerCase();
-                if (compressorName.includes(searchTerm)) {
-                    group.style.display = 'block';
-                } else {
-                    group.style.display = 'none';
-                }
-            });
-        }
-        
-        // View compressor group details
-        function viewCompressorGroupDetails(compressorName) {
-            const groupRecords = billingData.filter(bill => bill.compressorName === compressorName);
-            
-            if (groupRecords.length === 0) {
-                alert('No records found for this compressor');
-                return;
-            }
-            
-            // Calculate totals
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            let totalDays = new Set();
-            let tractorNumbers = new Set();
-            
-            groupRecords.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-                totalDays.add(bill.date);
-                tractorNumbers.add(bill.tractorNumber);
-            });
-            
-            // Build details HTML
-            let detailsHTML = `
-                <div class="account-item">
-                    <div class="account-field">
-                        <span class="account-label">Compressor Name:</span>
-                        <span class="account-value">${compressorName}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Tractor Numbers:</span>
-                        <span class="account-value">${Array.from(tractorNumbers).join(', ')}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Days Worked:</span>
-                        <span class="account-value">${totalDays.size}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Holes Drilled:</span>
-                        <span class="account-value">${totalHoles}</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Depth:</span>
-                        <span class="account-value">${totalDepth.toFixed(1)} ft</span>
-                    </div>
-                    <div class="account-field">
-                        <span class="account-label">Total Amount:</span>
-                        <span class="account-value">₹${totalAmount.toFixed(2)}</span>
-                    </div>
-                </div>
-                
-                <h3>Detailed Work History</h3>
-                <table class="compressor-details-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Tractor</th>
-                            <th>Location</th>
-                            <th>Holes</th>
-                            <th>Depth (ft)</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            groupRecords.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(bill => {
-                detailsHTML += `
-                    <tr>
-                        <td>${formatDate(bill.date)}</td>
-                        <td>${bill.tractorNumber}</td>
-                        <td>${bill.location || '--'}</td>
-                        <td>${bill.numberOfHoles}</td>
-                        <td>${bill.drillingDepth.toFixed(1)}</td>
-                        <td>₹${bill.ratePerFoot.toFixed(2)}</td>
-                        <td>₹${bill.totalCost.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            detailsHTML += `
-                    </tbody>
-                    <tfoot>
-                        <tr class="compressor-total">
-                            <td colspan="3">TOTAL</td>
-                            <td>${totalHoles}</td>
-                            <td>${totalDepth.toFixed(1)} ft</td>
-                            <td colspan="2">₹${totalAmount.toFixed(2)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            `;
-            
-            document.getElementById('compressorDetailsTitle').textContent = `Compressor Group Details - ${compressorName}`;
-            document.getElementById('compressorDetailsContent').innerHTML = detailsHTML;
-            
-            document.getElementById('compressorDetailsModal').style.display = 'block';
         }
         
         // Update month summary
@@ -2595,234 +1052,6 @@
             `;
         }
         
-        // Update reports
-        function updateReports() {
-            document.getElementById('reportTotalRecords').textContent = billingData.length;
-            
-            if (billingData.length === 0) {
-                document.getElementById('reportTotalAmount').textContent = '₹0.00';
-                document.getElementById('reportTotalHoles').textContent = '0';
-                document.getElementById('reportTotalDepth').textContent = '0 ft';
-                return;
-            }
-            
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            
-            billingData.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-            });
-            
-            document.getElementById('reportTotalAmount').textContent = '₹' + totalAmount.toFixed(2);
-            document.getElementById('reportTotalHoles').textContent = totalHoles;
-            document.getElementById('reportTotalDepth').textContent = totalDepth.toFixed(1) + ' ft';
-        }
-        
-        // Generate monthly report
-        function generateMonthlyReport() {
-            const currentMonth = new Date().getMonth() + 1;
-            const currentYear = new Date().getFullYear();
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                              "July", "August", "September", "October", "November", "December"];
-            
-            const monthData = billingData.filter(bill => {
-                const billDate = new Date(bill.date);
-                return billDate.getMonth() + 1 === currentMonth && 
-                       billDate.getFullYear() === currentYear;
-            });
-            
-            if (monthData.length === 0) {
-                document.getElementById('reportOutput').innerHTML = 
-                    '<p>No data available for ' + monthNames[currentMonth-1] + ' ' + currentYear + '</p>';
-                document.getElementById('reportOutput').style.display = 'block';
-                return;
-            }
-            
-            // Calculate totals
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            let compressorStats = {};
-            
-            monthData.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-                
-                if (!compressorStats[bill.compressorName]) {
-                    compressorStats[bill.compressorName] = {
-                        tractorNumbers: new Set(),
-                        amount: 0,
-                        holes: 0,
-                        depth: 0
-                    };
-                }
-                compressorStats[bill.compressorName].tractorNumbers.add(bill.tractorNumber);
-                compressorStats[bill.compressorName].amount += bill.totalCost;
-                compressorStats[bill.compressorName].holes += bill.numberOfHoles;
-                compressorStats[bill.compressorName].depth += bill.drillingDepth;
-            });
-            
-            // Build report HTML
-            let reportHTML = `
-                <h3>Monthly Report: ${monthNames[currentMonth-1]} ${currentYear}</h3>
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="summary-title">Total Compressors</div>
-                        <div class="summary-value">${Object.keys(compressorStats).length}</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Amount</div>
-                        <div class="summary-value">₹${totalAmount.toFixed(2)}</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Holes</div>
-                        <div class="summary-value">${totalHoles}</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-title">Total Depth</div>
-                        <div class="summary-value">${totalDepth.toFixed(1)} ft</div>
-                    </div>
-                </div>
-                
-                <h4>Compressor-wise Breakdown</h4>
-                <table class="compressor-details-table">
-                    <thead>
-                        <tr>
-                            <th>Compressor</th>
-                            <th>Tractor(s)</th>
-                            <th>Holes</th>
-                            <th>Depth (ft)</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            Object.keys(compressorStats).sort().forEach(compressor => {
-                const stats = compressorStats[compressor];
-                reportHTML += `
-                    <tr>
-                        <td>${compressor}</td>
-                        <td>${Array.from(stats.tractorNumbers).join(', ')}</td>
-                        <td>${stats.holes}</td>
-                        <td>${stats.depth.toFixed(1)}</td>
-                        <td>₹${stats.amount.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            reportHTML += `
-                    </tbody>
-                    <tfoot>
-                        <tr class="compressor-total">
-                            <td colspan="2">TOTAL</td>
-                            <td>${totalHoles}</td>
-                            <td>${totalDepth.toFixed(1)} ft</td>
-                            <td>₹${totalAmount.toFixed(2)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            `;
-            
-            document.getElementById('reportOutput').innerHTML = reportHTML;
-            document.getElementById('reportOutput').style.display = 'block';
-        }
-        
-        // Generate compressor-wise report
-        function generateCompressorWiseReport() {
-            if (billingData.length === 0) {
-                document.getElementById('reportOutput').innerHTML = 
-                    '<p>No data available for generating reports</p>';
-                document.getElementById('reportOutput').style.display = 'block';
-                return;
-            }
-            
-            // Group by compressor
-            const compressorStats = {};
-            
-            billingData.forEach(bill => {
-                if (!compressorStats[bill.compressorName]) {
-                    compressorStats[bill.compressorName] = {
-                        tractorNumbers: new Set(),
-                        amount: 0,
-                        holes: 0,
-                        depth: 0,
-                        entries: 0
-                    };
-                }
-                compressorStats[bill.compressorName].tractorNumbers.add(bill.tractorNumber);
-                compressorStats[bill.compressorName].amount += bill.totalCost;
-                compressorStats[bill.compressorName].holes += bill.numberOfHoles;
-                compressorStats[bill.compressorName].depth += bill.drillingDepth;
-                compressorStats[bill.compressorName].entries++;
-            });
-            
-            // Sort by amount (highest first)
-            const sortedCompressors = Object.keys(compressorStats).sort((a, b) => 
-                compressorStats[b].amount - compressorStats[a].amount);
-            
-            // Build report HTML
-            let reportHTML = `
-                <h3>Compressor-wise Report (All Time)</h3>
-                <table class="compressor-details-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Compressor</th>
-                            <th>Tractor(s)</th>
-                            <th>Entries</th>
-                            <th>Holes</th>
-                            <th>Depth (ft)</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            
-            sortedCompressors.forEach((compressor, index) => {
-                const stats = compressorStats[compressor];
-                totalAmount += stats.amount;
-                totalHoles += stats.holes;
-                totalDepth += stats.depth;
-                
-                reportHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${compressor}</td>
-                        <td>${Array.from(stats.tractorNumbers).join(', ')}</td>
-                        <td>${stats.entries}</td>
-                        <td>${stats.holes}</td>
-                        <td>${stats.depth.toFixed(1)}</td>
-                        <td>₹${stats.amount.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-            
-            reportHTML += `
-                    </tbody>
-                    <tfoot>
-                        <tr class="compressor-total">
-                            <td colspan="4">TOTAL</td>
-                            <td>${totalHoles}</td>
-                            <td>${totalDepth.toFixed(1)} ft</td>
-                            <td>₹${totalAmount.toFixed(2)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-            `;
-            
-            document.getElementById('reportOutput').innerHTML = reportHTML;
-            document.getElementById('reportOutput').style.display = 'block';
-        }
-        
         // Export data
         function exportData() {
             if (billingData.length === 0) {
@@ -2864,10 +1093,7 @@
                         
                         saveData();
                         updateHistoryTable();
-                        updateCompleteHistoryTable(billingData);
                         updateMonthSummary();
-                        updateReports();
-                        loadCustomerGroups();
                         
                         alert('Data imported successfully!');
                     } else {
@@ -2890,268 +1116,9 @@
                 billingData = [];
                 saveData();
                 updateHistoryTable();
-                updateCompleteHistoryTable(billingData);
                 updateMonthSummary();
-                updateReports();
-                loadCustomerGroups();
                 alert('All data cleared successfully!');
             }
-        }
-        
-        // Tab navigation
-        function openTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all tab buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show the selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to the clicked button
-            event.currentTarget.classList.add('active');
-            
-            // Load data for specific tabs
-            if (tabName === 'customers-tab') {
-                loadCustomerGroups();
-            } else if (tabName === 'history-tab') {
-                updateCompleteHistoryTable(billingData);
-            } else if (tabName === 'reports-tab') {
-                updateReports();
-            }
-        }
-        
-        // Download compressor report as PDF
-        function downloadCompressorReport() {
-            const modalContent = document.getElementById('compressorDetailsModal').querySelector('.modal-content');
-            const originalContent = modalContent.innerHTML;
-            
-            // Create a print-friendly version
-            modalContent.innerHTML = document.getElementById('compressorDetailsContent').innerHTML;
-            
-            // Add header
-            const header = document.createElement('div');
-            header.innerHTML = `
-                <h2>${document.getElementById('compressorDetailsTitle').textContent}</h2>
-                <p>Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
-                <hr>
-            `;
-            modalContent.prepend(header);
-            
-            // Print
-            window.print();
-            
-            // Restore original content
-            modalContent.innerHTML = originalContent;
-        }
-        
-        // Download bill as PDF
-        function downloadBillPDF(billId) {
-            const bill = billingData.find(b => b.id === billId);
-            if (!bill) return;
-            
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>Bill Details - ${bill.compressorName}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h1 { color: #2E8B57; }
-                        .bill-info { margin: 20px 0; }
-                        .bill-field { margin: 5px 0; }
-                        .label { font-weight: bold; }
-                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        th { background-color: #2E8B57; color: white; padding: 10px; }
-                        td { border: 1px solid #ddd; padding: 8px; }
-                        .total { font-weight: bold; font-size: 1.2em; }
-                        .footer { margin-top: 30px; font-size: 0.9em; color: #666; }
-                    </style>
-                </head>
-                <body>
-                    <h1>Compressor Bill Details</h1>
-                    <div class="bill-info">
-                        <div class="bill-field"><span class="label">Date:</span> ${formatDate(bill.date)} ${bill.time || ''}</div>
-                        <div class="bill-field"><span class="label">Tractor Number:</span> ${bill.tractorNumber}</div>
-                        <div class="bill-field"><span class="label">Compressor Name:</span> ${bill.compressorName}</div>
-                        <div class="bill-field"><span class="label">Location:</span> ${bill.location || 'Not specified'}</div>
-                        <div class="bill-field"><span class="label">Total Holes:</span> ${bill.numberOfHoles}</div>
-                        <div class="bill-field"><span class="label">Total Depth:</span> ${bill.drillingDepth.toFixed(1)} ft</div>
-                        <div class="bill-field"><span class="label">Rate per Foot:</span> ₹${bill.ratePerFoot.toFixed(2)}</div>
-                    </div>
-                    
-                    <h3>Hole Details</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Hole No.</th>
-                                <th>Depth (ft)</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `);
-            
-            bill.holes.forEach(hole => {
-                printWindow.document.write(`
-                    <tr>
-                        <td>${hole.holeNumber}</td>
-                        <td>${hole.depth}</td>
-                        <td>${hole.notes || ''}</td>
-                    </tr>
-                `);
-            });
-            
-            printWindow.document.write(`
-                        </tbody>
-                    </table>
-                    
-                    <div class="total">
-                        <strong>Total Amount: ₹${bill.totalCost.toFixed(2)}</strong>
-                    </div>
-                    
-                    ${bill.remarks ? `<div class="bill-field"><span class="label">Remarks:</span> ${bill.remarks}</div>` : ''}
-                    
-                    <div class="footer">
-                        <p>Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
-                        <p>Compressor Billing System</p>
-                    </div>
-                </body>
-                </html>
-            `);
-            
-            printWindow.document.close();
-            printWindow.print();
-        }
-        
-        // Download compressor group report
-        function downloadCompressorGroupReport(compressorName) {
-            const groupRecords = billingData.filter(bill => bill.compressorName === compressorName);
-            
-            if (groupRecords.length === 0) {
-                alert('No records found for this compressor');
-                return;
-            }
-            
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>Compressor Group Report - ${compressorName}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h1 { color: #2E8B57; }
-                        .summary { margin: 20px 0; }
-                        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
-                        .summary-card { border: 1px solid #ddd; padding: 15px; text-align: center; }
-                        .summary-value { font-size: 1.5em; font-weight: bold; color: #2E8B57; }
-                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-                        th { background-color: #2E8B57; color: white; padding: 10px; }
-                        td { border: 1px solid #ddd; padding: 8px; }
-                        .total-row { font-weight: bold; background-color: #f0f0f0; }
-                        .footer { margin-top: 30px; font-size: 0.9em; color: #666; }
-                    </style>
-                </head>
-                <body>
-                    <h1>Compressor Group Report</h1>
-                    <h2>${compressorName}</h2>
-            `);
-            
-            // Calculate totals
-            let totalAmount = 0;
-            let totalHoles = 0;
-            let totalDepth = 0;
-            let totalDays = new Set();
-            let tractorNumbers = new Set();
-            
-            groupRecords.forEach(bill => {
-                totalAmount += bill.totalCost;
-                totalHoles += bill.numberOfHoles;
-                totalDepth += bill.drillingDepth;
-                totalDays.add(bill.date);
-                tractorNumbers.add(bill.tractorNumber);
-            });
-            
-            printWindow.document.write(`
-                <div class="summary">
-                    <p><strong>Tractor Numbers:</strong> ${Array.from(tractorNumbers).join(', ')}</p>
-                    <p><strong>Total Days Worked:</strong> ${totalDays.size}</p>
-                </div>
-                
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="summary-value">${groupRecords.length}</div>
-                        <div>Total Entries</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value">${totalHoles}</div>
-                        <div>Total Holes</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value">${totalDepth.toFixed(1)}</div>
-                        <div>Total Feet</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value">₹${totalAmount.toFixed(2)}</div>
-                        <div>Total Amount</div>
-                    </div>
-                </div>
-                
-                <h3>Detailed Work History</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Tractor</th>
-                            <th>Location</th>
-                            <th>Holes</th>
-                            <th>Depth (ft)</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `);
-            
-            groupRecords.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(bill => {
-                printWindow.document.write(`
-                    <tr>
-                        <td>${formatDate(bill.date)}</td>
-                        <td>${bill.tractorNumber}</td>
-                        <td>${bill.location || '--'}</td>
-                        <td>${bill.numberOfHoles}</td>
-                        <td>${bill.drillingDepth.toFixed(1)}</td>
-                        <td>₹${bill.ratePerFoot.toFixed(2)}</td>
-                        <td>₹${bill.totalCost.toFixed(2)}</td>
-                    </tr>
-                `);
-            });
-            
-            printWindow.document.write(`
-                    </tbody>
-                    <tfoot>
-                        <tr class="total-row">
-                            <td colspan="3">TOTAL</td>
-                            <td>${totalHoles}</td>
-                            <td>${totalDepth.toFixed(1)} ft</td>
-                            <td colspan="2">₹${totalAmount.toFixed(2)}</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                
-                <div class="footer">
-                    <p>Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
-                    <p>Compressor Billing System</p>
-                </div>
-            `);
-            
-            printWindow.document.close();
-            printWindow.print();
         }
         
         // Format date
@@ -3162,25 +1129,6 @@
                 month: '2-digit',
                 year: 'numeric'
             });
-        }
-        
-        // Get first day of current month
-        function getFirstDayOfMonth() {
-            const date = new Date();
-            return new Date(date.getFullYear(), date.getMonth(), 1).toISOString().split('T')[0];
-        }
-        
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const accountModal = document.getElementById('accountModal');
-            const compressorModal = document.getElementById('compressorDetailsModal');
-            
-            if (event.target == accountModal) {
-                accountModal.style.display = 'none';
-            }
-            if (event.target == compressorModal) {
-                compressorModal.style.display = 'none';
-            }
         }
     </script>
 </body>
