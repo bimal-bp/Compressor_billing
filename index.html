@@ -529,6 +529,42 @@
             color: #2c3e50;
         }
         
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+        
+        .day-cell {
+            text-align: center;
+            padding: 8px 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .day-cell:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .day-cell.present {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+        
+        .day-cell.absent {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -589,6 +625,16 @@
             
             .nmr-attendance-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .attendance-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .attendance-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -1184,7 +1230,8 @@
             currentCompressor: null,
             currentBill: null,
             allBills: [],
-            currentMonth: null
+            currentMonth: null,
+            editingAttendance: null
         };
 
         // DOM Elements
@@ -1279,7 +1326,6 @@
             localStorage.setItem('nmrAttendance', JSON.stringify(nmrDataToSave));
             
             appState.allBills = getAllBills();
-            updateSummary();
         }
 
         // Get all bills from all compressors
@@ -1390,7 +1436,7 @@
             });
         }
 
-        // Update summary report in row format
+        // Update summary report with cards
         function updateSummary() {
             const allBills = getAllBills();
             const ftdBills = getFTDBills();
@@ -1440,97 +1486,116 @@
                 ytdAmount += bill.totalAmount;
             });
             
-            // Update summary in row format
+            // Update summary in sidebar
             summaryDetails.innerHTML = `
-                <div class="summary-row">
-                    <div class="summary-item">
-                        <h4>Total Compressors</h4>
+                <div class="summary-item">
+                    <h4>Total Compressors</h4>
+                    <div class="value">${totalCompressors}</div>
+                    <div class="subtext">Registered compressors</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Total Bills</h4>
+                    <div class="value">${totalBills}</div>
+                    <div class="subtext">All bill entries</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Total Cost</h4>
+                    <div class="value">₹${totalAmount.toFixed(2)}</div>
+                    <div class="subtext">Total payment amount</div>
+                </div>
+            `;
+            
+            // Show cards in main content area
+            mainContentArea.innerHTML = `
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <h3>Total Compressors</h3>
                         <div class="value">${totalCompressors}</div>
                         <div class="subtext">Registered compressors</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>Total Bills</h4>
+                    
+                    <div class="summary-card">
+                        <h3>Total Bills</h3>
                         <div class="value">${totalBills}</div>
                         <div class="subtext">All bill entries</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>Total Holes</h4>
+                    
+                    <div class="summary-card">
+                        <h3>Total Holes</h3>
                         <div class="value">${totalHoles}</div>
                         <div class="subtext">All holes drilled</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>Total Feet</h4>
+                    
+                    <div class="summary-card">
+                        <h3>Total Feet</h3>
                         <div class="value">${totalFeet.toFixed(2)}</div>
                         <div class="subtext">All feet drilled</div>
                     </div>
-                </div>
-                
-                <div class="summary-row">
-                    <div class="summary-item">
-                        <h4>Total Cost</h4>
+                    
+                    <div class="summary-card">
+                        <h3>Total Amount</h3>
                         <div class="value">₹${totalAmount.toFixed(2)}</div>
                         <div class="subtext">Total payment amount</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>FTD Amount</h4>
+                    
+                    <div class="summary-card ftd">
+                        <h3>FTD Amount</h3>
                         <div class="value">₹${ftdAmount.toFixed(2)}</div>
                         <div class="subtext">Financial Year To Date</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>MTD Amount</h4>
+                    
+                    <div class="summary-card mtd">
+                        <h3>MTD Amount</h3>
                         <div class="value">₹${mtdAmount.toFixed(2)}</div>
                         <div class="subtext">Month To Date</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>YTD Amount</h4>
+                    
+                    <div class="summary-card ytd">
+                        <h3>YTD Amount</h3>
                         <div class="value">₹${ytdAmount.toFixed(2)}</div>
                         <div class="subtext">Year To Date</div>
                     </div>
-                </div>
-                
-                <div class="summary-row">
-                    <div class="summary-item">
-                        <h4>Avg Rate/Foot</h4>
+                    
+                    <div class="summary-card">
+                        <h3>Avg Rate/Foot</h3>
                         <div class="value">₹${totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00'}</div>
                         <div class="subtext">Average rate per foot</div>
                     </div>
-                    <div class="summary-item">
-                        <h4>Avg Holes/Bill</h4>
-                        <div class="value">${totalBills > 0 ? (totalHoles/totalBills).toFixed(1) : '0.0'}</div>
-                        <div class="subtext">Average holes per bill</div>
-                    </div>
-                    <div class="summary-item">
-                        <h4>Avg Feet/Bill</h4>
-                        <div class="value">${totalBills > 0 ? (totalFeet/totalBills).toFixed(2) : '0.00'}</div>
-                        <div class="subtext">Average feet per bill</div>
-                    </div>
-                    <div class="summary-item">
-                        <h4>Avg Amount/Bill</h4>
-                        <div class="value">₹${totalBills > 0 ? (totalAmount/totalBills).toFixed(2) : '0.00'}</div>
-                        <div class="subtext">Average amount per bill</div>
-                    </div>
                 </div>
                 
-                <div class="summary-row">
-                    <div class="summary-item">
-                        <h4>FTD Holes</h4>
-                        <div class="value">${ftdHoles}</div>
-                        <div class="subtext">Financial Year To Date</div>
-                    </div>
-                    <div class="summary-item">
-                        <h4>FTD Feet</h4>
-                        <div class="value">${ftdFeet.toFixed(2)}</div>
-                        <div class="subtext">Financial Year To Date</div>
-                    </div>
-                    <div class="summary-item">
-                        <h4>MTD Holes</h4>
-                        <div class="value">${mtdHoles}</div>
-                        <div class="subtext">Month To Date</div>
-                    </div>
-                    <div class="summary-item">
-                        <h4>MTD Feet</h4>
-                        <div class="value">${mtdFeet.toFixed(2)}</div>
-                        <div class="subtext">Month To Date</div>
+                <div class="report-section">
+                    <h3>Detailed Breakdown</h3>
+                    <div class="summary-row">
+                        <div class="summary-item">
+                            <h4>FTD Holes</h4>
+                            <div class="value">${ftdHoles}</div>
+                            <div class="subtext">Financial Year To Date</div>
+                        </div>
+                        <div class="summary-item">
+                            <h4>FTD Feet</h4>
+                            <div class="value">${ftdFeet.toFixed(2)}</div>
+                            <div class="subtext">Financial Year To Date</div>
+                        </div>
+                        <div class="summary-item">
+                            <h4>MTD Holes</h4>
+                            <div class="value">${mtdHoles}</div>
+                            <div class="subtext">Month To Date</div>
+                        </div>
+                        <div class="summary-item">
+                            <h4>MTD Feet</h4>
+                            <div class="value">${mtdFeet.toFixed(2)}</div>
+                            <div class="subtext">Month To Date</div>
+                        </div>
+                        <div class="summary-item">
+                            <h4>YTD Holes</h4>
+                            <div class="value">${ytdHoles}</div>
+                            <div class="subtext">Year To Date</div>
+                        </div>
+                        <div class="summary-item">
+                            <h4>YTD Feet</h4>
+                            <div class="value">${ytdFeet.toFixed(2)}</div>
+                            <div class="subtext">Year To Date</div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -1567,7 +1632,13 @@
                     } else if (tabId === 'summary') {
                         updateSummary();
                     } else if (tabId === 'nmr-attendance') {
-                        generateNMRAttendanceReport();
+                        mainContentArea.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-user-check"></i>
+                                <h3>NMR Attendance</h3>
+                                <p>Select a month and click "Generate Attendance" to view NMR attendance records</p>
+                            </div>
+                        `;
                     }
                 });
             });
@@ -1752,13 +1823,19 @@
                         <button class="btn btn-info" onclick="generateNMRAttendanceReport()">
                             <i class="fas fa-sync-alt"></i> Refresh
                         </button>
+                        <button class="btn btn-warning" onclick="markAllPresent()">
+                            <i class="fas fa-check-circle"></i> Mark All Present
+                        </button>
+                        <button class="btn btn-danger" onclick="markAllAbsent()">
+                            <i class="fas fa-times-circle"></i> Mark All Absent
+                        </button>
                     </div>
                 </div>
-                
-                <div class="nmr-attendance-grid">
             `;
             
-            // Add NMR cards
+            // Add NMR cards with attendance grid
+            attendanceHTML += `<div class="nmr-attendance-grid">`;
+            
             nmrData.forEach((nmr, index) => {
                 const monthAttendance = nmr.attendance[monthValue] || {};
                 let presentDays = 0;
@@ -1766,14 +1843,15 @@
                 
                 // Count present/absent days
                 for (let day = 1; day <= daysInMonth; day++) {
-                    if (monthAttendance[day]) {
+                    const status = monthAttendance[day];
+                    if (status === true || status === 'present') {
                         presentDays++;
-                    } else {
+                    } else if (status === false || status === 'absent') {
                         absentDays++;
+                    } else {
+                        absentDays++; // Default to absent if not set
                     }
                 }
-                
-                const attendanceRate = daysInMonth > 0 ? Math.round((presentDays / daysInMonth) * 100) : 0;
                 
                 attendanceHTML += `
                     <div class="nmr-card">
@@ -1784,19 +1862,39 @@
                         </div>
                         <div class="nmr-details">
                             <span class="nmr-label">Present Days:</span>
-                            <span class="nmr-value present">${presentDays}</span>
+                            <span class="nmr-value">${presentDays}</span>
                         </div>
                         <div class="nmr-details">
                             <span class="nmr-label">Absent Days:</span>
-                            <span class="nmr-value absent">${absentDays}</span>
+                            <span class="nmr-value">${absentDays}</span>
                         </div>
-                        <div class="nmr-details">
-                            <span class="nmr-label">Attendance Rate:</span>
-                            <span class="nmr-value">${attendanceRate}%</span>
+                        
+                        <div class="attendance-grid" data-nmr-id="${nmr.id}" data-month="${monthValue}">
+                `;
+                
+                // Create day cells
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const status = monthAttendance[day];
+                    const isPresent = status === true || status === 'present';
+                    const isAbsent = status === false || status === 'absent';
+                    const cellClass = isPresent ? 'present' : (isAbsent ? 'absent' : '');
+                    
+                    attendanceHTML += `
+                        <div class="day-cell ${cellClass}" data-day="${day}" onclick="toggleAttendance(${nmr.id}, '${monthValue}', ${day})">
+                            <div class="day-number">${day}</div>
+                            <div>${isPresent ? 'P' : (isAbsent ? 'A' : '-')}</div>
+                        </div>
+                    `;
+                }
+                
+                attendanceHTML += `
                         </div>
                         <div class="action-buttons" style="margin-top: 10px;">
-                            <button class="btn btn-secondary" onclick="editNMRAttendance(${nmr.id}, '${monthValue}')" style="padding: 8px 12px; font-size: 14px;">
-                                <i class="fas fa-edit"></i> Edit
+                            <button class="btn btn-success" onclick="markAllDays(${nmr.id}, '${monthValue}', 'present')" style="padding: 5px 10px; font-size: 12px;">
+                                <i class="fas fa-check"></i> All Present
+                            </button>
+                            <button class="btn btn-danger" onclick="markAllDays(${nmr.id}, '${monthValue}', 'absent')" style="padding: 5px 10px; font-size: 12px;">
+                                <i class="fas fa-times"></i> All Absent
                             </button>
                         </div>
                     </div>
@@ -1810,73 +1908,44 @@
             appState.currentMonth = monthValue;
         }
 
-        // Get month name
-        function getMonthName(month) {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"];
-            return monthNames[month - 1];
-        }
-
-        // Edit NMR attendance
-        window.editNMRAttendance = function(nmrId, monthValue) {
+        // Toggle attendance for a specific day
+        window.toggleAttendance = function(nmrId, monthValue, day) {
             const nmr = nmrData.find(n => n.id === nmrId);
             if (!nmr) return;
             
-            const year = parseInt(monthValue.substring(0, 4));
-            const month = parseInt(monthValue.substring(5, 7));
-            const daysInMonth = new Date(year, month, 0).getDate();
-            const monthAttendance = nmr.attendance[monthValue] || {};
-            
-            let editHTML = `
-                <div class="report-section">
-                    <h3>Edit Attendance for ${nmr.name}</h3>
-                    <p>${getMonthName(month)} ${year} - ${daysInMonth} days</p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 20px;">
-            `;
-            
-            // Create day checkboxes
-            for (let day = 1; day <= daysInMonth; day++) {
-                const isPresent = monthAttendance[day] || false;
-                editHTML += `
-                    <div style="text-align: center; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                        <div style="font-weight: bold; margin-bottom: 5px;">${day}</div>
-                        <input type="checkbox" id="day-${day}" ${isPresent ? 'checked' : ''} data-day="${day}" style="transform: scale(1.5);">
-                        <label for="day-${day}" style="display: block; margin-top: 5px;">${isPresent ? 'Present' : 'Absent'}</label>
-                    </div>
-                `;
+            // Initialize attendance object if not exists
+            if (!nmr.attendance[monthValue]) {
+                nmr.attendance[monthValue] = {};
             }
             
-            editHTML += `
-                    </div>
-                    
-                    <div class="action-buttons" style="margin-top: 20px;">
-                        <button class="btn btn-success" onclick="saveNMRAttendanceChanges(${nmrId}, '${monthValue}')">
-                            <i class="fas fa-save"></i> Save Changes
-                        </button>
-                        <button class="btn btn-secondary" onclick="generateNMRAttendanceReport()">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            `;
+            const currentStatus = nmr.attendance[monthValue][day];
             
-            mainContentArea.innerHTML = editHTML;
-            
-            // Add event listeners to checkboxes
-            for (let day = 1; day <= daysInMonth; day++) {
-                const checkbox = document.getElementById(`day-${day}`);
-                if (checkbox) {
-                    checkbox.addEventListener('change', function() {
-                        const label = this.nextElementSibling;
-                        label.textContent = this.checked ? 'Present' : 'Absent';
-                    });
-                }
+            // Toggle status: present -> absent -> not set -> present
+            if (currentStatus === true || currentStatus === 'present') {
+                nmr.attendance[monthValue][day] = 'absent';
+            } else if (currentStatus === false || currentStatus === 'absent') {
+                delete nmr.attendance[monthValue][day];
+            } else {
+                nmr.attendance[monthValue][day] = 'present';
             }
+            
+            // Save changes
+            saveDataToStorage();
+            
+            // Update the UI
+            const dayCell = document.querySelector(`.attendance-grid[data-nmr-id="${nmrId}"][data-month="${monthValue}"] .day-cell[data-day="${day}"]`);
+            if (dayCell) {
+                const newStatus = nmr.attendance[monthValue][day];
+                dayCell.className = 'day-cell ' + (newStatus === 'present' ? 'present' : (newStatus === 'absent' ? 'absent' : ''));
+                dayCell.innerHTML = `<div class="day-number">${day}</div><div>${newStatus === 'present' ? 'P' : (newStatus === 'absent' ? 'A' : '-')}</div>`;
+            }
+            
+            // Update the counts
+            updateNMRAttendanceCounts(nmrId, monthValue);
         };
 
-        // Save NMR attendance changes
-        window.saveNMRAttendanceChanges = function(nmrId, monthValue) {
+        // Mark all days for a specific NMR
+        window.markAllDays = function(nmrId, monthValue, status) {
             const nmr = nmrData.find(n => n.id === nmrId);
             if (!nmr) return;
             
@@ -1889,21 +1958,130 @@
                 nmr.attendance[monthValue] = {};
             }
             
-            // Update attendance from checkboxes
+            // Set all days to specified status
             for (let day = 1; day <= daysInMonth; day++) {
-                const checkbox = document.getElementById(`day-${day}`);
-                if (checkbox) {
-                    nmr.attendance[monthValue][day] = checkbox.checked;
+                if (status === 'present') {
+                    nmr.attendance[monthValue][day] = 'present';
+                } else if (status === 'absent') {
+                    nmr.attendance[monthValue][day] = 'absent';
                 }
             }
             
-            // Save to local storage
+            // Save changes
             saveDataToStorage();
-            alert('Attendance saved successfully!');
             
-            // Return to attendance report
+            // Regenerate the attendance report
             generateNMRAttendanceReport();
         };
+
+        // Mark all NMRs as present for all days
+        window.markAllPresent = function() {
+            const monthValue = appState.currentMonth || attendanceMonthInput.value;
+            if (!monthValue) {
+                alert('Please generate attendance first');
+                return;
+            }
+            
+            if (!confirm('Mark all NMR personnel as present for all days this month?')) {
+                return;
+            }
+            
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
+            
+            nmrData.forEach(nmr => {
+                if (!nmr.attendance[monthValue]) {
+                    nmr.attendance[monthValue] = {};
+                }
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    nmr.attendance[monthValue][day] = 'present';
+                }
+            });
+            
+            // Save changes
+            saveDataToStorage();
+            
+            // Regenerate the attendance report
+            generateNMRAttendanceReport();
+        };
+
+        // Mark all NMRs as absent for all days
+        window.markAllAbsent = function() {
+            const monthValue = appState.currentMonth || attendanceMonthInput.value;
+            if (!monthValue) {
+                alert('Please generate attendance first');
+                return;
+            }
+            
+            if (!confirm('Mark all NMR personnel as absent for all days this month?')) {
+                return;
+            }
+            
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
+            
+            nmrData.forEach(nmr => {
+                if (!nmr.attendance[monthValue]) {
+                    nmr.attendance[monthValue] = {};
+                }
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    nmr.attendance[monthValue][day] = 'absent';
+                }
+            });
+            
+            // Save changes
+            saveDataToStorage();
+            
+            // Regenerate the attendance report
+            generateNMRAttendanceReport();
+        };
+
+        // Update NMR attendance counts
+        function updateNMRAttendanceCounts(nmrId, monthValue) {
+            const nmr = nmrData.find(n => n.id === nmrId);
+            if (!nmr) return;
+            
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
+            const monthAttendance = nmr.attendance[monthValue] || {};
+            
+            let presentDays = 0;
+            let absentDays = 0;
+            
+            // Count present/absent days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const status = monthAttendance[day];
+                if (status === true || status === 'present') {
+                    presentDays++;
+                } else if (status === false || status === 'absent') {
+                    absentDays++;
+                } else {
+                    absentDays++; // Default to absent if not set
+                }
+            }
+            
+            // Update the counts display
+            const nmrCard = document.querySelector(`.nmr-card:nth-child(${nmrId})`);
+            if (nmrCard) {
+                const presentElement = nmrCard.querySelector('.nmr-details:nth-child(3) .nmr-value');
+                const absentElement = nmrCard.querySelector('.nmr-details:nth-child(4) .nmr-value');
+                
+                if (presentElement) presentElement.textContent = presentDays;
+                if (absentElement) absentElement.textContent = absentDays;
+            }
+        }
+
+        // Get month name
+        function getMonthName(month) {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            return monthNames[month - 1];
+        }
 
         // Save NMR attendance data
         function saveNMRAttendanceData() {
@@ -2364,51 +2542,37 @@
             
             // Create table data
             const tableData = [];
-            let totalPresent = 0;
-            let totalAbsent = 0;
             
             nmrData.forEach((nmr, index) => {
                 const monthAttendance = nmr.attendance[monthValue] || {};
                 let presentDays = 0;
+                let absentDays = 0;
                 
-                // Count present days
+                // Count present/absent days
                 for (let day = 1; day <= daysInMonth; day++) {
-                    if (monthAttendance[day]) {
+                    const status = monthAttendance[day];
+                    if (status === true || status === 'present') {
                         presentDays++;
+                    } else if (status === false || status === 'absent') {
+                        absentDays++;
+                    } else {
+                        absentDays++;
                     }
                 }
-                
-                const absentDays = daysInMonth - presentDays;
-                const attendanceRate = daysInMonth > 0 ? Math.round((presentDays / daysInMonth) * 100) : 0;
                 
                 tableData.push([
                     index + 1,
                     nmr.name,
                     nmr.designation,
                     presentDays,
-                    absentDays,
-                    `${attendanceRate}%`
+                    absentDays
                 ]);
-                
-                totalPresent += presentDays;
-                totalAbsent += absentDays;
             });
-            
-            // Add totals row
-            const totalAttendanceRate = daysInMonth > 0 ? Math.round((totalPresent / (nmrData.length * daysInMonth)) * 100) : 0;
-            tableData.push([
-                '',
-                'TOTAL',
-                '',
-                totalPresent,
-                totalAbsent,
-                `${totalAttendanceRate}%`
-            ]);
             
             // Create table
             doc.autoTable({
                 startY: 40,
-                head: [['S.No.', 'Name', 'Designation', 'Present Days', 'Absent Days', 'Attendance %']],
+                head: [['S.No.', 'Name', 'Designation', 'Present Days', 'Absent Days']],
                 body: tableData,
                 headStyles: { fillColor: [74, 100, 145], textColor: [255, 255, 255] },
                 footStyles: { fillColor: [232, 244, 255] },
