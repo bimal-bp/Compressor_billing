@@ -456,6 +456,79 @@
             padding: 10px 20px;
         }
         
+        .summary-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .summary-item {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid #4a6491;
+        }
+        
+        .summary-item h4 {
+            color: #4a6491;
+            font-size: 14px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .summary-item .value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .summary-item .subtext {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .nmr-attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .nmr-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 3px solid #17a2b8;
+        }
+        
+        .nmr-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .nmr-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .nmr-label {
+            color: #666;
+        }
+        
+        .nmr-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -505,6 +578,18 @@
             .attendance-table td {
                 padding: 8px;
             }
+            
+            .summary-row {
+                flex-direction: column;
+            }
+            
+            .summary-item {
+                min-width: 100%;
+            }
+            
+            .nmr-attendance-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -520,7 +605,7 @@
             <div class="tab" data-tab="search">Search & Reports</div>
             <div class="tab" data-tab="data">All Compressors</div>
             <div class="tab" data-tab="summary">Summary Report</div>
-            <div class="tab" data-tab="attendance">Compressor Attendance</div>
+            <div class="tab" data-tab="nmr-attendance">NMR Attendance</div>
         </div>
         
         <div class="main-content">
@@ -643,8 +728,13 @@
                     <h2 class="section-title"><i class="fas fa-chart-pie"></i> Summary Report</h2>
                     <p>Complete summary of all compressor bills.</p>
                     
-                    <div class="summary-cards" id="summary-cards">
-                        <!-- Summary cards will appear here -->
+                    <div id="summary-details">
+                        <!-- Summary details will appear here -->
+                        <div class="empty-state">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Loading Summary</h3>
+                            <p>Click refresh to load summary data</p>
+                        </div>
                     </div>
                     
                     <button class="btn btn-success" id="download-summary">
@@ -656,17 +746,12 @@
                     </button>
                 </div>
                 
-                <div class="tab-content" id="attendance">
-                    <h2 class="section-title"><i class="fas fa-calendar-check"></i> Attendance Settings</h2>
+                <div class="tab-content" id="nmr-attendance">
+                    <h2 class="section-title"><i class="fas fa-user-check"></i> NMR Attendance</h2>
                     
                     <div class="form-group">
                         <label for="attendance-month">Select Month</label>
                         <input type="month" id="attendance-month" value="">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Working Days in Month</label>
-                        <input type="number" id="working-days" min="1" max="31" value="26" placeholder="Working days">
                     </div>
                     
                     <button class="btn btn-info" id="generate-attendance">
@@ -678,9 +763,8 @@
                     </button>
                     
                     <div class="compressor-info" style="margin-top: 20px;">
-                        <h3>Attendance Legend</h3>
-                        <p><span class="present" style="padding: 2px 5px;">Present</span> - Compressor worked that day</p>
-                        <p><span class="absent" style="padding: 2px 5px;">Absent</span> - No work recorded</p>
+                        <h3>About NMR</h3>
+                        <p>Non-Mining Royalty (NMR) personnel attendance tracking for drilling operations.</p>
                     </div>
                 </div>
             </div>
@@ -826,7 +910,7 @@
             },
             {
                 id: 13,
- name: "SANYASI NAIDU",
+                name: "SANYASI NAIDU",
                 tractors: ["AP26 BR 4476"],
                 bankAccount: "34443923670",
                 ifsc: "SBIN0000805",
@@ -1076,12 +1160,31 @@
             }
         ];
 
+        // NMR Personnel Data (15 names A-Z)
+        const nmrData = [
+            { id: 1, name: "A. SRINIVAS RAO", designation: "Supervisor", attendance: {} },
+            { id: 2, name: "B. VENKAT RAO", designation: "Operator", attendance: {} },
+            { id: 3, name: "C. RAJESH KUMAR", designation: "Assistant", attendance: {} },
+            { id: 4, name: "D. MOHAN REDDY", designation: "Technician", attendance: {} },
+            { id: 5, name: "E. SURESH BABU", designation: "Operator", attendance: {} },
+            { id: 6, name: "F. RAMESH KUMAR", designation: "Assistant", attendance: {} },
+            { id: 7, name: "G. SATISH KUMAR", designation: "Supervisor", attendance: {} },
+            { id: 8, name: "H. PRASAD RAO", designation: "Technician", attendance: {} },
+            { id: 9, name: "I. KARTHIK REDDY", designation: "Operator", attendance: {} },
+            { id: 10, name: "J. ANAND KUMAR", designation: "Assistant", attendance: {} },
+            { id: 11, name: "K. VIJAY KUMAR", designation: "Supervisor", attendance: {} },
+            { id: 12, name: "L. RAVI TEJA", designation: "Technician", attendance: {} },
+            { id: 13, name: "M. NAVEEN KUMAR", designation: "Operator", attendance: {} },
+            { id: 14, name: "N. PAVAN KUMAR", designation: "Assistant", attendance: {} },
+            { id: 15, name: "O. SAI KUMAR", designation: "Technician", attendance: {} }
+        ];
+
         // Application state
         const appState = {
             currentCompressor: null,
             currentBill: null,
             allBills: [],
-            currentMonthAttendance: null
+            currentMonth: null
         };
 
         // DOM Elements
@@ -1105,12 +1208,11 @@
         const searchResults = document.getElementById('search-results');
         const allCompressorsList = document.getElementById('all-compressors-list');
         const mainContentArea = document.getElementById('main-content-area');
-        const summaryCards = document.getElementById('summary-cards');
+        const summaryDetails = document.getElementById('summary-details');
         const downloadSummaryBtn = document.getElementById('download-summary');
         const refreshSummaryBtn = document.getElementById('refresh-summary');
         const billDateInput = document.getElementById('bill-date');
         const attendanceMonthInput = document.getElementById('attendance-month');
-        const workingDaysInput = document.getElementById('working-days');
         const generateAttendanceBtn = document.getElementById('generate-attendance');
         const saveAttendanceBtn = document.getElementById('save-attendance');
 
@@ -1134,29 +1236,48 @@
 
         // Load data from local storage
         function loadDataFromStorage() {
-            const storedData = localStorage.getItem('compressorBills');
-            if (storedData) {
-                const parsedData = JSON.parse(storedData);
+            // Load compressor bills
+            const storedCompressorData = localStorage.getItem('compressorBills');
+            if (storedCompressorData) {
+                const parsedData = JSON.parse(storedCompressorData);
                 parsedData.forEach((storedCompressor, index) => {
                     if (compressorData[index]) {
                         compressorData[index].bills = storedCompressor.bills || [];
-                        compressorData[index].attendance = storedCompressor.attendance || {};
                     }
                 });
-                
-                // Update app state
-                appState.allBills = getAllBills();
             }
+            
+            // Load NMR attendance
+            const storedNMRAttendance = localStorage.getItem('nmrAttendance');
+            if (storedNMRAttendance) {
+                const parsedAttendance = JSON.parse(storedNMRAttendance);
+                parsedAttendance.forEach((storedNMR, index) => {
+                    if (nmrData[index]) {
+                        nmrData[index].attendance = storedNMR.attendance || {};
+                    }
+                });
+            }
+            
+            // Update app state
+            appState.allBills = getAllBills();
         }
 
         // Save data to local storage
         function saveDataToStorage() {
-            const dataToSave = compressorData.map(compressor => ({
+            // Save compressor bills
+            const compressorDataToSave = compressorData.map(compressor => ({
                 id: compressor.id,
-                bills: compressor.bills,
-                attendance: compressor.attendance
+                bills: compressor.bills
             }));
-            localStorage.setItem('compressorBills', JSON.stringify(dataToSave));
+            localStorage.setItem('compressorBills', JSON.stringify(compressorDataToSave));
+            
+            // Save NMR attendance
+            const nmrDataToSave = nmrData.map(nmr => ({
+                id: nmr.id,
+                attendance: nmr.attendance
+            }));
+            localStorage.setItem('nmrAttendance', JSON.stringify(nmrDataToSave));
+            
             appState.allBills = getAllBills();
             updateSummary();
         }
@@ -1269,7 +1390,7 @@
             });
         }
 
-        // Update summary report with enhanced cards
+        // Update summary report in row format
         function updateSummary() {
             const allBills = getAllBills();
             const ftdBills = getFTDBills();
@@ -1319,47 +1440,98 @@
                 ytdAmount += bill.totalAmount;
             });
             
-            // Update summary cards
-            summaryCards.innerHTML = `
-                <div class="summary-card">
-                    <h3>Total Compressors</h3>
-                    <div class="value">${totalCompressors}</div>
-                    <div class="subtext">Registered compressors</div>
+            // Update summary in row format
+            summaryDetails.innerHTML = `
+                <div class="summary-row">
+                    <div class="summary-item">
+                        <h4>Total Compressors</h4>
+                        <div class="value">${totalCompressors}</div>
+                        <div class="subtext">Registered compressors</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Total Bills</h4>
+                        <div class="value">${totalBills}</div>
+                        <div class="subtext">All bill entries</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Total Holes</h4>
+                        <div class="value">${totalHoles}</div>
+                        <div class="subtext">All holes drilled</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Total Feet</h4>
+                        <div class="value">${totalFeet.toFixed(2)}</div>
+                        <div class="subtext">All feet drilled</div>
+                    </div>
                 </div>
-                <div class="summary-card">
-                    <h3>Total Bills</h3>
-                    <div class="value">${totalBills}</div>
-                    <div class="subtext">All bill entries</div>
+                
+                <div class="summary-row">
+                    <div class="summary-item">
+                        <h4>Total Cost</h4>
+                        <div class="value">₹${totalAmount.toFixed(2)}</div>
+                        <div class="subtext">Total payment amount</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>FTD Amount</h4>
+                        <div class="value">₹${ftdAmount.toFixed(2)}</div>
+                        <div class="subtext">Financial Year To Date</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>MTD Amount</h4>
+                        <div class="value">₹${mtdAmount.toFixed(2)}</div>
+                        <div class="subtext">Month To Date</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>YTD Amount</h4>
+                        <div class="value">₹${ytdAmount.toFixed(2)}</div>
+                        <div class="subtext">Year To Date</div>
+                    </div>
                 </div>
-                <div class="summary-card">
-                    <h3>Total Feet</h3>
-                    <div class="value">${totalFeet.toFixed(2)}</div>
-                    <div class="subtext">All feet drilled</div>
+                
+                <div class="summary-row">
+                    <div class="summary-item">
+                        <h4>Avg Rate/Foot</h4>
+                        <div class="value">₹${totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00'}</div>
+                        <div class="subtext">Average rate per foot</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Avg Holes/Bill</h4>
+                        <div class="value">${totalBills > 0 ? (totalHoles/totalBills).toFixed(1) : '0.0'}</div>
+                        <div class="subtext">Average holes per bill</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Avg Feet/Bill</h4>
+                        <div class="value">${totalBills > 0 ? (totalFeet/totalBills).toFixed(2) : '0.00'}</div>
+                        <div class="subtext">Average feet per bill</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>Avg Amount/Bill</h4>
+                        <div class="value">₹${totalBills > 0 ? (totalAmount/totalBills).toFixed(2) : '0.00'}</div>
+                        <div class="subtext">Average amount per bill</div>
+                    </div>
                 </div>
-                <div class="summary-card">
-                    <h3>Total Cost</h3>
-                    <div class="value">₹${totalAmount.toFixed(2)}</div>
-                    <div class="subtext">Total payment amount</div>
-                </div>
-                <div class="summary-card ftd">
-                    <h3>FTD Amount</h3>
-                    <div class="value">₹${ftdAmount.toFixed(2)}</div>
-                    <div class="subtext">Financial Year To Date</div>
-                </div>
-                <div class="summary-card mtd">
-                    <h3>MTD Amount</h3>
-                    <div class="value">₹${mtdAmount.toFixed(2)}</div>
-                    <div class="subtext">Month To Date</div>
-                </div>
-                <div class="summary-card ytd">
-                    <h3>YTD Amount</h3>
-                    <div class="value">₹${ytdAmount.toFixed(2)}</div>
-                    <div class="subtext">Year To Date</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Avg Rate/Foot</h3>
-                    <div class="value">₹${totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00'}</div>
-                    <div class="subtext">Average rate per foot</div>
+                
+                <div class="summary-row">
+                    <div class="summary-item">
+                        <h4>FTD Holes</h4>
+                        <div class="value">${ftdHoles}</div>
+                        <div class="subtext">Financial Year To Date</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>FTD Feet</h4>
+                        <div class="value">${ftdFeet.toFixed(2)}</div>
+                        <div class="subtext">Financial Year To Date</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>MTD Holes</h4>
+                        <div class="value">${mtdHoles}</div>
+                        <div class="subtext">Month To Date</div>
+                    </div>
+                    <div class="summary-item">
+                        <h4>MTD Feet</h4>
+                        <div class="value">${mtdFeet.toFixed(2)}</div>
+                        <div class="subtext">Month To Date</div>
+                    </div>
                 </div>
             `;
         }
@@ -1394,8 +1566,8 @@
                         `;
                     } else if (tabId === 'summary') {
                         updateSummary();
-                    } else if (tabId === 'attendance') {
-                        generateAttendanceReport();
+                    } else if (tabId === 'nmr-attendance') {
+                        generateNMRAttendanceReport();
                     }
                 });
             });
@@ -1440,8 +1612,8 @@
             refreshSummaryBtn.addEventListener('click', updateSummary);
             
             // Attendance buttons
-            generateAttendanceBtn.addEventListener('click', generateAttendanceReport);
-            saveAttendanceBtn.addEventListener('click', saveAttendanceData);
+            generateAttendanceBtn.addEventListener('click', generateNMRAttendanceReport);
+            saveAttendanceBtn.addEventListener('click', saveNMRAttendanceData);
         }
 
         // Update compressor info display
@@ -1533,9 +1705,6 @@
             // Add bill to compressor
             appState.currentCompressor.bills.push(bill);
             
-            // Update attendance for this compressor
-            updateCompressorAttendance(appState.currentCompressor.id, billDate);
-            
             // Save to local storage
             saveDataToStorage();
             
@@ -1549,22 +1718,6 @@
             clearForm();
         }
 
-        // Update compressor attendance based on bill date
-        function updateCompressorAttendance(compressorId, billDate) {
-            const compressor = compressorData.find(c => c.id === compressorId);
-            if (!compressor) return;
-            
-            const yearMonth = billDate.substring(0, 7); // YYYY-MM
-            const day = parseInt(billDate.substring(8, 10));
-            
-            if (!compressor.attendance[yearMonth]) {
-                compressor.attendance[yearMonth] = {};
-            }
-            
-            // Mark as present for this day
-            compressor.attendance[yearMonth][day] = true;
-        }
-
         // Format date from YYYY-MM-DD to DD/MM/YYYY
         function formatDate(dateString) {
             const date = new Date(dateString);
@@ -1574,8 +1727,8 @@
             return `${day}/${month}/${year}`;
         }
 
-        // Generate attendance report
-        function generateAttendanceReport() {
+        // Generate NMR attendance report
+        function generateNMRAttendanceReport() {
             const monthValue = attendanceMonthInput.value;
             if (!monthValue) {
                 alert('Please select a month first');
@@ -1585,177 +1738,177 @@
             const year = parseInt(monthValue.substring(0, 4));
             const month = parseInt(monthValue.substring(5, 7));
             const daysInMonth = new Date(year, month, 0).getDate();
-            const workingDays = parseInt(workingDaysInput.value) || daysInMonth;
             
-            // Create attendance data
-            const attendanceData = compressorData.map(compressor => {
-                const monthAttendance = compressor.attendance[monthValue] || {};
-                const days = [];
-                
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    const hasBill = compressor.bills.some(bill => bill.date === dateStr);
-                    days.push({
-                        day: day,
-                        present: hasBill || monthAttendance[day] === true
-                    });
-                }
-                
-                return {
-                    name: compressor.name,
-                    days: days,
-                    totalPresent: days.filter(d => d.present).length
-                };
-            });
-            
-            // Display attendance report
-            displayAttendanceReport(attendanceData, year, month, daysInMonth, workingDays);
-        }
-
-        // Display attendance report in main content area
-        function displayAttendanceReport(attendanceData, year, month, daysInMonth, workingDays) {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"];
-            
-            let reportHTML = `
+            // Create attendance grid
+            let attendanceHTML = `
                 <div class="report-section">
-                    <h2><i class="fas fa-calendar-alt"></i> Compressor Attendance Report</h2>
-                    <p><strong>Month:</strong> ${monthNames[month-1]} ${year}</p>
-                    <p><strong>Total Days:</strong> ${daysInMonth} | <strong>Working Days:</strong> ${workingDays}</p>
+                    <h3>NMR Attendance for ${getMonthName(month)} ${year}</h3>
+                    <p>Total Days in Month: ${daysInMonth}</p>
                     
                     <div class="report-controls">
-                        <button class="btn btn-success" onclick="downloadAttendancePDF()">
+                        <button class="btn btn-success" onclick="downloadNMRAttendancePDF()">
                             <i class="fas fa-file-pdf"></i> Download PDF
                         </button>
-                        <button class="btn btn-info" onclick="generateAttendanceReport()">
+                        <button class="btn btn-info" onclick="generateNMRAttendanceReport()">
                             <i class="fas fa-sync-alt"></i> Refresh
                         </button>
                     </div>
                 </div>
                 
-                <div class="report-section">
-                    <h3>Attendance Summary</h3>
-                    <div class="summary-cards">
+                <div class="nmr-attendance-grid">
             `;
             
-            // Calculate summary statistics
-            const totalPresentDays = attendanceData.reduce((sum, compressor) => sum + compressor.totalPresent, 0);
-            const avgAttendance = attendanceData.length > 0 ? (totalPresentDays / attendanceData.length).toFixed(1) : 0;
-            const attendanceRate = (totalPresentDays / (attendanceData.length * workingDays) * 100).toFixed(1);
-            
-            reportHTML += `
-                <div class="summary-card">
-                    <h3>Total Compressors</h3>
-                    <div class="value">${attendanceData.length}</div>
-                    <div class="subtext">Active compressors</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Total Present Days</h3>
-                    <div class="value">${totalPresentDays}</div>
-                    <div class="subtext">All working days</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Avg Attendance</h3>
-                    <div class="value">${avgAttendance}</div>
-                    <div class="subtext">Days per compressor</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Attendance Rate</h3>
-                    <div class="value">${attendanceRate}%</div>
-                    <div class="subtext">Overall attendance</div>
-                </div>
+            // Add NMR cards
+            nmrData.forEach((nmr, index) => {
+                const monthAttendance = nmr.attendance[monthValue] || {};
+                let presentDays = 0;
+                let absentDays = 0;
+                
+                // Count present/absent days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    if (monthAttendance[day]) {
+                        presentDays++;
+                    } else {
+                        absentDays++;
+                    }
+                }
+                
+                const attendanceRate = daysInMonth > 0 ? Math.round((presentDays / daysInMonth) * 100) : 0;
+                
+                attendanceHTML += `
+                    <div class="nmr-card">
+                        <div class="nmr-name">${index + 1}. ${nmr.name}</div>
+                        <div class="nmr-details">
+                            <span class="nmr-label">Designation:</span>
+                            <span class="nmr-value">${nmr.designation}</span>
+                        </div>
+                        <div class="nmr-details">
+                            <span class="nmr-label">Present Days:</span>
+                            <span class="nmr-value present">${presentDays}</span>
+                        </div>
+                        <div class="nmr-details">
+                            <span class="nmr-label">Absent Days:</span>
+                            <span class="nmr-value absent">${absentDays}</span>
+                        </div>
+                        <div class="nmr-details">
+                            <span class="nmr-label">Attendance Rate:</span>
+                            <span class="nmr-value">${attendanceRate}%</span>
+                        </div>
+                        <div class="action-buttons" style="margin-top: 10px;">
+                            <button class="btn btn-secondary" onclick="editNMRAttendance(${nmr.id}, '${monthValue}')" style="padding: 8px 12px; font-size: 14px;">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="report-section">
-                    <h3>Daily Attendance Details</h3>
-                    <div style="overflow-x: auto;">
-                        <table class="attendance-table">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2">Compressor Name</th>
-                                    <th colspan="${daysInMonth}">Days of Month</th>
-                                    <th rowspan="2">Total<br>Present</th>
-                                    <th rowspan="2">Attendance<br>Rate</th>
-                                </tr>
-                                <tr>
-            `;
-            
-            // Add day headers
-            for (let day = 1; day <= daysInMonth; day++) {
-                reportHTML += `<th class="date-header">${day}</th>`;
-            }
-            
-            reportHTML += `
-                                </tr>
-                            </thead>
-                            <tbody>
-            `;
-            
-            // Add compressor rows
-            attendanceData.forEach(compressor => {
-                reportHTML += `<tr>
-                    <td class="compressor-name">${compressor.name}</td>`;
-                
-                // Add day cells
-                compressor.days.forEach(day => {
-                    reportHTML += `<td class="${day.present ? 'present' : 'absent'}">${day.present ? 'P' : ''}</td>`;
-                });
-                
-                // Add totals
-                const attendanceRate = workingDays > 0 ? Math.round((compressor.totalPresent / workingDays) * 100) : 0;
-                reportHTML += `
-                    <td><strong>${compressor.totalPresent}</strong></td>
-                    <td><strong>${attendanceRate}%</strong></td>
-                </tr>`;
+                `;
             });
             
-            // Add footer row
-            reportHTML += `<tr>
-                <td class="compressor-name"><strong>TOTAL/AVG</strong></td>`;
+            attendanceHTML += `</div>`;
             
+            // Show in main content area
+            mainContentArea.innerHTML = attendanceHTML;
+            appState.currentMonth = monthValue;
+        }
+
+        // Get month name
+        function getMonthName(month) {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            return monthNames[month - 1];
+        }
+
+        // Edit NMR attendance
+        window.editNMRAttendance = function(nmrId, monthValue) {
+            const nmr = nmrData.find(n => n.id === nmrId);
+            if (!nmr) return;
+            
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
+            const monthAttendance = nmr.attendance[monthValue] || {};
+            
+            let editHTML = `
+                <div class="report-section">
+                    <h3>Edit Attendance for ${nmr.name}</h3>
+                    <p>${getMonthName(month)} ${year} - ${daysInMonth} days</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 20px;">
+            `;
+            
+            // Create day checkboxes
             for (let day = 1; day <= daysInMonth; day++) {
-                const presentCount = attendanceData.filter(compressor => compressor.days[day-1].present).length;
-                reportHTML += `<td class="date-header"><strong>${presentCount}</strong></td>`;
+                const isPresent = monthAttendance[day] || false;
+                editHTML += `
+                    <div style="text-align: center; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <div style="font-weight: bold; margin-bottom: 5px;">${day}</div>
+                        <input type="checkbox" id="day-${day}" ${isPresent ? 'checked' : ''} data-day="${day}" style="transform: scale(1.5);">
+                        <label for="day-${day}" style="display: block; margin-top: 5px;">${isPresent ? 'Present' : 'Absent'}</label>
+                    </div>
+                `;
             }
             
-            const avgPresent = (totalPresentDays / attendanceData.length).toFixed(1);
-            reportHTML += `
-                <td><strong>${avgPresent}</strong></td>
-                <td><strong>${attendanceRate}%</strong></td>
-            </tr>`;
-            
-            reportHTML += `
-                            </tbody>
-                        </table>
+            editHTML += `
+                    </div>
+                    
+                    <div class="action-buttons" style="margin-top: 20px;">
+                        <button class="btn btn-success" onclick="saveNMRAttendanceChanges(${nmrId}, '${monthValue}')">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button class="btn btn-secondary" onclick="generateNMRAttendanceReport()">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
                     </div>
                 </div>
             `;
             
-            mainContentArea.innerHTML = reportHTML;
+            mainContentArea.innerHTML = editHTML;
             
-            // Store current attendance data for PDF export
-            appState.currentMonthAttendance = {
-                data: attendanceData,
-                year: year,
-                month: month,
-                monthName: monthNames[month-1],
-                daysInMonth: daysInMonth,
-                workingDays: workingDays
-            };
-        }
+            // Add event listeners to checkboxes
+            for (let day = 1; day <= daysInMonth; day++) {
+                const checkbox = document.getElementById(`day-${day}`);
+                if (checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        const label = this.nextElementSibling;
+                        label.textContent = this.checked ? 'Present' : 'Absent';
+                    });
+                }
+            }
+        };
 
-        // Save attendance data
-        function saveAttendanceData() {
-            const monthValue = attendanceMonthInput.value;
-            if (!monthValue) {
-                alert('Please select a month first');
-                return;
+        // Save NMR attendance changes
+        window.saveNMRAttendanceChanges = function(nmrId, monthValue) {
+            const nmr = nmrData.find(n => n.id === nmrId);
+            if (!nmr) return;
+            
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
+            
+            // Initialize attendance object if not exists
+            if (!nmr.attendance[monthValue]) {
+                nmr.attendance[monthValue] = {};
             }
             
-            // Attendance is already saved when bills are added
+            // Update attendance from checkboxes
+            for (let day = 1; day <= daysInMonth; day++) {
+                const checkbox = document.getElementById(`day-${day}`);
+                if (checkbox) {
+                    nmr.attendance[monthValue][day] = checkbox.checked;
+                }
+            }
+            
+            // Save to local storage
             saveDataToStorage();
-            alert('Attendance data saved successfully!');
+            alert('Attendance saved successfully!');
+            
+            // Return to attendance report
+            generateNMRAttendanceReport();
+        };
+
+        // Save NMR attendance data
+        function saveNMRAttendanceData() {
+            saveDataToStorage();
+            alert('NMR attendance data saved successfully!');
         }
 
         // Show bill details in main content area
@@ -2185,87 +2338,90 @@
             doc.save(fileName);
         };
 
-        // Download attendance PDF
-        window.downloadAttendancePDF = function() {
-            if (!appState.currentMonthAttendance) {
-                alert('Please generate attendance report first');
+        // Download NMR attendance PDF
+        window.downloadNMRAttendancePDF = function() {
+            const monthValue = appState.currentMonth || attendanceMonthInput.value;
+            if (!monthValue) {
+                alert('Please select a month first');
                 return;
             }
             
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('landscape');
-            const attendance = appState.currentMonthAttendance;
+            const doc = new jsPDF();
+            const year = parseInt(monthValue.substring(0, 4));
+            const month = parseInt(monthValue.substring(5, 7));
+            const daysInMonth = new Date(year, month, 0).getDate();
             
             // Add title
             doc.setFontSize(20);
             doc.setTextColor(44, 62, 80);
-            doc.text('Compressor Attendance Report', 148, 15, { align: 'center' });
+            doc.text('NMR Attendance Report', 105, 15, { align: 'center' });
             
             doc.setFontSize(12);
             doc.setTextColor(100, 100, 100);
-            doc.text(`${attendance.monthName} ${attendance.year}`, 148, 25, { align: 'center' });
-            doc.text(`Generated on: ${new Date().toLocaleDateString('en-GB')}`, 148, 32, { align: 'center' });
+            doc.text(`${getMonthName(month)} ${year}`, 105, 25, { align: 'center' });
+            doc.text(`Generated on: ${new Date().toLocaleDateString('en-GB')}`, 105, 32, { align: 'center' });
             
             // Create table data
-            const tableData = attendance.data.map(compressor => {
-                const row = [compressor.name];
+            const tableData = [];
+            let totalPresent = 0;
+            let totalAbsent = 0;
+            
+            nmrData.forEach((nmr, index) => {
+                const monthAttendance = nmr.attendance[monthValue] || {};
+                let presentDays = 0;
                 
-                // Add day columns
-                for (let i = 0; i < attendance.daysInMonth; i++) {
-                    row.push(compressor.days[i].present ? 'P' : '');
+                // Count present days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    if (monthAttendance[day]) {
+                        presentDays++;
+                    }
                 }
                 
-                // Add totals
-                row.push(compressor.totalPresent.toString());
-                const attendanceRate = attendance.workingDays > 0 ? 
-                    Math.round((compressor.totalPresent / attendance.workingDays) * 100) : 0;
-                row.push(`${attendanceRate}%`);
+                const absentDays = daysInMonth - presentDays;
+                const attendanceRate = daysInMonth > 0 ? Math.round((presentDays / daysInMonth) * 100) : 0;
                 
-                return row;
+                tableData.push([
+                    index + 1,
+                    nmr.name,
+                    nmr.designation,
+                    presentDays,
+                    absentDays,
+                    `${attendanceRate}%`
+                ]);
+                
+                totalPresent += presentDays;
+                totalAbsent += absentDays;
             });
             
-            // Create headers
-            const headers = ['Compressor Name'];
-            for (let i = 1; i <= attendance.daysInMonth; i++) {
-                headers.push(i.toString());
-            }
-            headers.push('Present Days');
-            headers.push('Attendance %');
+            // Add totals row
+            const totalAttendanceRate = daysInMonth > 0 ? Math.round((totalPresent / (nmrData.length * daysInMonth)) * 100) : 0;
+            tableData.push([
+                '',
+                'TOTAL',
+                '',
+                totalPresent,
+                totalAbsent,
+                `${totalAttendanceRate}%`
+            ]);
             
             // Create table
             doc.autoTable({
                 startY: 40,
-                head: [headers],
+                head: [['S.No.', 'Name', 'Designation', 'Present Days', 'Absent Days', 'Attendance %']],
                 body: tableData,
                 headStyles: { fillColor: [74, 100, 145], textColor: [255, 255, 255] },
-                columnStyles: {
-                    0: { cellWidth: 60 },
-                    ...Array.from({length: attendance.daysInMonth}, (_, i) => ({[i+1]: {cellWidth: 10}}))
-                },
-                didDrawCell: function(data) {
-                    // Color code present/absent cells
-                    if (data.column.index > 0 && data.column.index <= attendance.daysInMonth && data.cell.raw === 'P') {
-                        doc.setFillColor(212, 237, 218);
-                        doc.setTextColor(21, 87, 36);
-                        doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
-                        doc.setTextColor(21, 87, 36);
-                    } else if (data.column.index > 0 && data.column.index <= attendance.daysInMonth && data.cell.raw === '') {
-                        doc.setFillColor(248, 215, 218);
-                        doc.setTextColor(114, 28, 36);
-                        doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
-                        doc.setTextColor(114, 28, 36);
-                    }
-                },
+                footStyles: { fillColor: [232, 244, 255] },
                 didDrawPage: function(data) {
                     // Footer
                     doc.setFontSize(10);
                     doc.setTextColor(100, 100, 100);
-                    doc.text(`Page ${doc.internal.getNumberOfPages()}`, 210, 200, { align: 'center' });
+                    doc.text('Page ' + doc.internal.getNumberOfPages(), 105, 285, { align: 'center' });
                 }
             });
             
             // Save the PDF
-            doc.save(`Attendance_${attendance.monthName}_${attendance.year}.pdf`);
+            doc.save(`NMR_Attendance_${getMonthName(month)}_${year}.pdf`);
         };
 
         // Download summary PDF
