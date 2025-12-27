@@ -1215,11 +1215,7 @@
 
  // Update summary in sidebar
  summaryDetails.innerHTML = `
- <div class="summary-item">
- <h4>Total Compressors</h4>
- <div class="value">${totalCompressors}</div>
- <div class="subtext">Registered compressors</div>
- </div>
+
  <div class="summary-item">
  <h4>Total Bills</h4>
  <div class="value">${totalBills}</div>
@@ -1234,12 +1230,7 @@
 
  // Show cards in main content area
  mainContentArea.innerHTML = `
- <div class="summary-cards">
- <div class="summary-card">
- <h3>Total Compressors</h3>
- <div class="value">${totalCompressors}</div>
- <div class="subtext">Registered compressors</div>
- </div>
+ 
 
  <div class="summary-card">
  <h3>Total Bills</h3>
@@ -1277,19 +1268,7 @@
  <div class="subtext">Month To Date</div>
  </div>
 
- <div class="summary-card ytd">
- <h3>YTD Amount</h3>
- <div class="value">₹${ytdAmount.toFixed(2)}</div>
- <div class="subtext">Year To Date</div>
- </div>
-
- <div class="summary-card">
- <h3>Avg Rate/Foot</h3>
- <div class="value">₹${totalFeet > 0 ? (totalAmount/totalFeet).toFixed(2) : '0.00'}</div>
- <div class="subtext">Average rate per foot</div>
- </div>
- </div>
-
+ 
  <div class="report-section">
  <h3>Detailed Breakdown</h3>
  <div class="summary-row">
@@ -1313,15 +1292,7 @@
  <div class="value">${mtdFeet.toFixed(2)}</div>
  <div class="subtext">Month To Date</div>
  </div>
- <div class="summary-item">
- <h4>YTD Holes</h4>
- <div class="value">${ytdHoles}</div>
- <div class="subtext">Year To Date</div>
- </div>
- <div class="summary-item">
- <h4>YTD Feet</h4>
- <div class="value">${ytdFeet.toFixed(2)}</div>
- <div class="subtext">Year To Date</div>
+ 
  </div>
  </div>
  </div>
