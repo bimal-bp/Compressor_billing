@@ -71,31 +71,41 @@
  margin-right: 10px;
  color: #4a6491;
  }
- .form-group {
+ .entry-table {
+ width: 100%;
+ border-collapse: collapse;
  margin-bottom: 20px;
  }
- label {
- display: block;
- margin-bottom: 8px;
+ .entry-table th {
+ background-color: #f8f9fa;
+ padding: 12px;
+ text-align: left;
  font-weight: 600;
  color: #444;
+ border-bottom: 1px solid #ddd;
+ width: 30%;
  }
- select, input {
+ .entry-table td {
+ padding: 12px;
+ border-bottom: 1px solid #ddd;
+ }
+ .entry-table input,
+ .entry-table select {
  width: 100%;
- padding: 12px 15px;
+ padding: 8px 12px;
  border: 1px solid #ddd;
- border-radius: 5px;
- font-size: 16px;
+ border-radius: 4px;
+ font-size: 14px;
  transition: border 0.3s;
  }
- select:focus, input:focus {
+ .entry-table input:focus,
+ .entry-table select:focus {
  border-color: #4a6491;
  outline: none;
  }
  .radio-group {
  display: flex;
- gap: 20px;
- margin-top: 5px;
+ gap: 15px;
  }
  .radio-option {
  display: flex;
@@ -103,7 +113,7 @@
  }
  .radio-option input {
  width: auto;
- margin-right: 8px;
+ margin-right: 5px;
  }
  .btn {
  display: inline-block;
@@ -395,6 +405,14 @@
  .attendance-grid {
  grid-template-columns: repeat(5, 1fr);
  }
+ .entry-table th,
+ .entry-table td {
+ padding: 8px;
+ }
+ .entry-table th {
+ width: 100%;
+ text-align: left;
+ }
  }
  @media (max-width: 480px) {
  .attendance-grid {
@@ -418,48 +436,58 @@
  <div class="sidebar">
  <div class="tab-content active" id="entry">
  <h2 class="section-title"><i class="fas fa-plus-circle"></i> New Bill Entry</h2>
- <div class="form-group">
- <label for="company-name">Company Name</label>
- <input type="text" id="company-name" placeholder="Enter company name">
- </div>
- <div class="form-group">
- <label for="branch">Branch</label>
- <input type="text" id="branch" placeholder="Enter branch">
- </div>
- <div class="form-group">
- <label for="bill-date">Bill Date</label>
- <input type="date" id="bill-date" value="">
- </div>
- <div class="form-group">
- <label for="shift">Shift</label>
+ <table class="entry-table">
+ <tr>
+ <th>Company Name</th>
+ <td><input type="text" id="company-name" placeholder="Enter company name"></td>
+ </tr>
+ <tr>
+ <th>Branch</th>
+ <td><input type="text" id="branch" placeholder="Enter branch"></td>
+ </tr>
+ <tr>
+ <th>Bill Date</th>
+ <td><input type="date" id="bill-date" value=""></td>
+ </tr>
+ <tr>
+ <th>Shift</th>
+ <td>
  <select id="shift">
  <option value="">-- Select Shift --</option>
  <option value="Morning">Morning</option>
  <option value="Afternoon">Afternoon</option>
  <option value="Night">Night</option>
  </select>
- </div>
- <div class="form-group">
- <label for="compressor-select">Select Compressor</label>
+ </td>
+ </tr>
+ <tr>
+ <th>Select Compressor</th>
+ <td>
  <select id="compressor-select">
  <option value="">-- Select Compressor --</option>
  <!-- Options will be populated from data -->
  </select>
- </div>
- <div class="form-group" id="tractor-select-group" style="display: none;">
- <label for="tractor-select">Select Tractor</label>
+ </td>
+ </tr>
+ <tr id="tractor-select-row" style="display: none;">
+ <th>Select Tractor</th>
+ <td>
  <select id="tractor-select">
  <option value="">-- Select Tractor --</option>
  <!-- Options will be populated dynamically -->
  </select>
- </div>
+ </td>
+ </tr>
+ </table>
  <div class="compressor-info" id="compressor-info" style="display: none;">
  <h3 id="selected-compressor-name">Compressor Name</h3>
  <div id="tractor-details">Tractor details will appear here</div>
  <div id="bank-details">Bank details will appear here</div>
  </div>
- <div class="form-group">
- <label>Drill Size</label>
+ <table class="entry-table">
+ <tr>
+ <th>Drill Size</th>
+ <td>
  <div class="radio-group">
  <div class="radio-option">
  <input type="radio" id="size-5" name="drill-size" value="5">
@@ -474,19 +502,21 @@
  <label for="size-both">Both</label>
  </div>
  </div>
- </div>
- <div class="form-group">
- <label for="holes">Total Holes</label>
- <input type="number" id="holes" min="0" step="1" placeholder="Enter number of holes">
- </div>
- <div class="form-group">
- <label for="feet">Total Feet</label>
- <input type="number" id="feet" min="0" step="0.01" placeholder="Enter total feet">
- </div>
- <div class="form-group">
- <label for="rate">Rate per Foot (₹)</label>
- <input type="number" id="rate" value="30.75" step="0.01" readonly>
- </div>
+ </td>
+ </tr>
+ <tr>
+ <th>Total Holes</th>
+ <td><input type="number" id="holes" min="0" step="1" placeholder="Enter number of holes"></td>
+ </tr>
+ <tr>
+ <th>Total Feet</th>
+ <td><input type="number" id="feet" min="0" step="0.01" placeholder="Enter total feet"></td>
+ </tr>
+ <tr>
+ <th>Rate per Foot (₹)</th>
+ <td><input type="number" id="rate" value="30.75" step="0.01" readonly></td>
+ </tr>
+ </table>
  <div class="bill-details">
  <div class="bill-row">
  <span class="bill-label">Total Amount:</span>
@@ -890,7 +920,7 @@
  const billDateInput = document.getElementById('bill-date');
  const shiftSelect = document.getElementById('shift');
  const compressorSelect = document.getElementById('compressor-select');
- const tractorSelectGroup = document.getElementById('tractor-select-group');
+ const tractorSelectRow = document.getElementById('tractor-select-row');
  const tractorSelect = document.getElementById('tractor-select');
  const compressorInfo = document.getElementById('compressor-info');
  const selectedCompressorName = document.getElementById('selected-compressor-name');
@@ -1224,7 +1254,7 @@
  // Populate tractor select for compressors with multiple tractors
  function populateTractorSelect(compressor) {
  if (compressor.tractors.length > 1) {
- tractorSelectGroup.style.display = 'block';
+ tractorSelectRow.style.display = 'table-row';
  tractorSelect.innerHTML = '<option value="">-- Select Tractor --</option>';
  compressor.tractors.forEach((tractor, index) => {
  const option = document.createElement('option');
@@ -1238,7 +1268,7 @@
  }
  // Hide tractor select
  function hideTractorSelect() {
- tractorSelectGroup.style.display = 'none';
+ tractorSelectRow.style.display = 'none';
  tractorSelect.value = '';
  }
  // Update compressor info display
